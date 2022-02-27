@@ -13,7 +13,6 @@ class HomeHeader extends Component {
 
   render() {
     let languageCheck = this.props.language;
-    console.log(languageCheck);
 
     return (
       <React.Fragment>
@@ -170,6 +169,7 @@ class HomeHeader extends Component {
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.user.isLoggedIn,
+    userInfo: state.user.userInfo,
     language: state.app.language,
   };
 };
