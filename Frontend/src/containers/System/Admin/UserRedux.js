@@ -6,6 +6,7 @@ import 'react-image-lightbox/style.css';
 import { LANGUAGES } from "../../../utils";
 import * as actions from "../../../store/actions"
 import './UserRedux.scss'
+import TabelManageUser from './TabelManageUser'
 
 class UserRedux extends Component {
   constructor(props) {
@@ -16,7 +17,6 @@ class UserRedux extends Component {
       roleArr: [],
       previewImgURL: '',
       isOpen: false,
-
       email: '',
       password: '',
       firstName: '',
@@ -60,6 +60,21 @@ class UserRedux extends Component {
       })
     }
 
+    if (prevProps.listUsers !== this.props.listUsers) {
+      this.setState({
+        email: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+        phoneNumber: '',
+        address: '',
+        gender: '',
+        position: '',
+        role: '',
+        avatar: '',
+      });
+    }
+
   }
 
   handleOnchangeImage = (event) => {
@@ -96,7 +111,7 @@ class UserRedux extends Component {
       gender: this.state.gender,
       roleId: this.state.role,
       positionId: this.state.position,
-    })
+    });
   };
 
   checkValidateInput = () => {
@@ -279,17 +294,21 @@ class UserRedux extends Component {
                 </div>
 
               </div>
-              <div className="col-12 mt-3">
+              <div className="col-12 my-3">
                 <button className="btn btn-primary"
                   onClick={() => this.handleSaveUser()}
                 >
                   <FormattedMessage id="manage-user.save" />
                 </button>
               </div>
+
+              <div className="col-12 mb-5">
+                <TabelManageUser />
+
+              </div>
             </div>
           </div>
         </div>
-
 
         {this.state.isOpen === true &&
           <Lightbox
@@ -310,6 +329,7 @@ const mapStateToProps = (state) => {
     roleRedux: state.admin.roles,
     positionRedux: state.admin.positions,
     isLoadingGenderRedux: state.admin.isLoadingGender,
+    listUsers: state.admin.users,
   };
 };
 
@@ -318,10 +338,8 @@ const mapDispatchToProps = (dispatch) => {
     getGenderStart: () => dispatch(actions.fetchGenderStart()),
     getPositionStart: () => dispatch(actions.fetchPositionStart()),
     getRoleStart: () => dispatch(actions.fetchRoleStart()),
-    createNewUser: (data) => dispatch(actions.createNewUser(data))
-    // processLogout: () => dispatch(actions.processLogout()),
-    // changeLanguageAppRedux: (language) =>
-    //   dispatch(actions.changeLanguageApp(language)),
+    createNewUser: (data) => dispatch(actions.createNewUser(data)),
+    fetchUserRedux: () => dispatch(actions.fetchAllUsersStart()),
   };
 };
 
