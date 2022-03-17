@@ -1,11 +1,12 @@
-import { connectRouter } from "connected-react-router";
 import { combineReducers } from "redux";
-import { persistReducer } from "redux-persist";
-import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
-import storage from "redux-persist/lib/storage";
-import adminReducer from "./adminReducer";
+import { connectRouter } from "connected-react-router";
+
 import appReducer from "./appReducer";
 import userReducer from "./userReducer";
+
+import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
+import storage from "redux-persist/lib/storage";
+import { persistReducer } from "redux-persist";
 
 const persistCommonConfig = {
   storage: storage,
@@ -29,5 +30,4 @@ export default (history) =>
     router: connectRouter(history),
     user: persistReducer(userPersistConfig, userReducer),
     app: persistReducer(appPersistConfig, appReducer),
-    admin: adminReducer,
   });
