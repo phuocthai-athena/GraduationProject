@@ -26,7 +26,7 @@ const adminReducer = (state = initialState, action) => {
         ...copyState,
       }
 
-    case actionTypes.FETCH_GENDER_FAIDED:
+    case actionTypes.FETCH_GENDER_FAILDED:
       copyState = { ...state };
       copyState.isLoadingGender = false;
       copyState.genders = [];
@@ -42,7 +42,7 @@ const adminReducer = (state = initialState, action) => {
         ...copyState,
       }
 
-    case actionTypes.FETCH_POSITION_FAIDED:
+    case actionTypes.FETCH_POSITION_FAILDED:
       copyState = { ...state };
       copyState.positions = [];
       return {
@@ -57,7 +57,7 @@ const adminReducer = (state = initialState, action) => {
         ...copyState,
       }
 
-    case actionTypes.FETCH_ROLE_FAIDED:
+    case actionTypes.FETCH_ROLE_FAILDED:
       copyState = { ...state };
       copyState.roles = [];
       return {
