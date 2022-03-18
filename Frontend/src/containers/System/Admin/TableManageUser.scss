@@ -1,20 +1,20 @@
-#TabelManageUser {
+#TableManageUser {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
   }
-  #TabelManageUser td,
-  #TabelManageUser th {
+  #TableManageUser td,
+  #TableManageUser th {
     border: 1px solid #ddd;
     padding: 8px;
   }
-  #TabelManageUser tr:nth-child(even) {
+  #TableManageUser tr:nth-child(even) {
     background-color: #f2f2f2;
   }
-  #TabelManageUser tr:hover {
+  #TableManageUser tr:hover {
     background-color: #ddd;
   }
-  #TabelManageUser th {
+  #TableManageUser th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;

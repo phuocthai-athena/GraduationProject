@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import "./TabelManageUser.scss";
+import "./TableManageUser.scss";
 import * as actions from "../../../store/actions"
 
 
 
-class TabelManageUser extends Component {
+class TableManageUser extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -28,12 +28,16 @@ class TabelManageUser extends Component {
         this.props.deleteAUserRedux(user.id);
     };
 
+    handleEditUser = (user) => {
+        this.props.handleEditUserFormParentKey(user)
+    };
+
     render() {
         // console.log(this.props.listUsers);
         let arrUsers = this.state.usersRedux;
         return (
 
-            <table id="TabelManageUser">
+            <table id="TableManageUser">
                 <tbody>
                     <tr>
                         <th>Email</th>
@@ -51,14 +55,12 @@ class TabelManageUser extends Component {
                                     <td>{item.lastName}</td>
                                     <td>{item.address}</td>
                                     <td>
-                                        <button
-                                            className="btn-edit"
-
+                                        <button className="btn-edit"
+                                            onClick={() => this.handleEditUser(item)}
                                         >
                                             <i className="fas fa-pencil-alt"></i>
                                         </button>
-                                        <button
-                                            className="btn-delete"
+                                        <button className="btn-delete"
                                             onClick={() => this.handleDeleteUser(item)}
                                         >
                                             <i className="fas fa-trash"></i>
@@ -91,4 +93,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TabelManageUser);
+export default connect(mapStateToProps, mapDispatchToProps)(TableManageUser);

@@ -64,12 +64,12 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...copyState,
       }
-    case actionTypes.FETCH_USERS_SUCCESS:
+    case actionTypes.FETCH_ALL_USERS_SUCCESS:
       state.users = action.users;
       return {
         ...state,
       }
-    case actionTypes.FETCH_USERS_FAILDED:
+    case actionTypes.FETCH_ALL_USERS_FAILDED:
       state.users = [];
       return {
         ...state,
