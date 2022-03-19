@@ -29,6 +29,7 @@ class OutstandingDoctor extends Component {
     let { language } = this.props;
     //slider ít hơn 4 thì toang giao diện, hàm dưới để fix data
     arrDoctors = arrDoctors.concat(arrDoctors).concat(arrDoctors);
+    console.log("ease+y", arrDoctors);
     return (
       <div className="section-share section-outstanding-doctor">
         <div className="specialty-container">
