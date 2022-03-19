@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import Slider from "react-slick";
 import * as actions from "../../../store/actions";
@@ -29,13 +30,14 @@ class OutstandingDoctor extends Component {
     let { language } = this.props;
     //slider ít hơn 4 thì toang giao diện, hàm dưới để fix data
     arrDoctors = arrDoctors.concat(arrDoctors).concat(arrDoctors);
-    console.log("ease+y", arrDoctors);
     return (
       <div className="section-share section-outstanding-doctor">
         <div className="specialty-container">
           <div className="specialty-header">
-            <span className="title-section">Bác sĩ nổi bật tuần qua</span>
-            <button className="btn-section">Xem thêm</button>
+            <span className="title-section">
+              <FormattedMessage id="homepage.outstanding-doctor"/>
+            </span>
+            <button className="btn-section"><FormattedMessage id="homepage.more-infor"/></button>
           </div>
           <div className="specialty-body">
             <Slider {...this.props.settings}>
@@ -48,8 +50,8 @@ class OutstandingDoctor extends Component {
                       "binary"
                     );
                   }
-                  let nameVi = `${item.positionData.valueVi}, ${item.lastName}, ${item.firstName}`;
-                  let nameEn = `${item.positionData.valueEn}, ${item.firstName}, ${item.lastName}`;
+                  let nameVi = `${item.positionData.valueVi}, ${item.firstName} ${item.lastName}`;
+                  let nameEn = `${item.positionData.valueEn}, ${item.lastName} ${item.firstName}`;
                   return (
                     <div className="section-customize">
                       <div className="customize-border">
