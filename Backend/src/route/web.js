@@ -1,4 +1,5 @@
 import express from "express";
+import doctorController from "../controllers/doctorController";
 import homeController from "../controllers/homeController";
 import userController from "../controllers/userController";
 
@@ -25,6 +26,9 @@ let initWebRoutes = (app) => {
 
   // Api allcode
   router.get("/api/allcode", userController.getAllCode);
+  router.get("/api/top-doctor-home", doctorController.getTopDoctorHome);
+  router.get("/api/get-all-doctors", doctorController.getAllDoctors);
+  router.post("/api/save-infor-doctors", doctorController.postInforDoctor);
 
   return app.use("/", router);
 };

@@ -63,5 +63,9 @@
     "image": "Ảnh đại diện",
     "save": "Tạo người dùng",
     "edit": "Cập nhật người dùng"
+  },
+  "homepage":{
+    "outstanding-doctor":"Bác sĩ nổi bật tuần qua",
+    "more-infor":"Xem thêm"
   }
 }
