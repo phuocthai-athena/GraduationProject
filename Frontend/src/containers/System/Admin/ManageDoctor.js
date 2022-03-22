@@ -73,6 +73,7 @@ class ManageDoctor extends Component {
       description: this.state.description,
       doctorId: this.state.selectedDoctor.value,
     });
+    console.log(this.state);
   };
 
   handleChange = (selectedDoctor) => {
@@ -112,7 +113,7 @@ class ManageDoctor extends Component {
           <MdEditor
             style={{ height: "500px" }}
             renderHTML={(text) => mdParser.render(text)}
-            onChange={() => this.handleEditorChange}
+            onChange={this.handleEditorChange}
           />
         </div>
         <button
@@ -136,7 +137,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchAllDoctors: () => dispatch(actions.fetchAllDoctors()),
-    saveDetailDoctor: () => dispatch(actions.saveDetailDoctor()),
+    saveDetailDoctor: (data) => dispatch(actions.saveDetailDoctor(data)),
   };
 };
 
