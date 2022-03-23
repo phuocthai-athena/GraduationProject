@@ -10,8 +10,29 @@ import HomeFooter from "./HomeFooter";
 import "./HomePage.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import BookingModal from "../Patient/Doctor/Modal/BookingModal";
 
 class HomePage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpenModalBooking: false,
+      dataScheduleTimeModal: {},
+    };
+  }
+  handleClickScheduleTime = (time) => {
+    this.setState({
+      isOpenModalBooking: true,
+      dataScheduleTimeModal: time,
+    });
+  };
+
+  handleCloseModal = () => {
+    this.setState({
+      isOpenModalBooking: false,
+    });
+  };
+
   render() {
     let settings = {
       dots: false,
@@ -20,6 +41,7 @@ class HomePage extends Component {
       slidesToShow: 4,
       slidesToScroll: 1,
     };
+    let { isOpenModalBooking, dataScheduleTimeModal } = this.state;
     return (
       <div>
         <HomeHeader />
@@ -28,6 +50,14 @@ class HomePage extends Component {
         <OutstandingDoctor settings={settings} />
         <HandBook settings={settings} />
         <About />
+        <button onClick={() => this.handleClickScheduleTime(123)}>
+          Show modal
+        </button>
+        <BookingModal
+          isOpenModalBooking={isOpenModalBooking}
+          handleCloseModal={this.handleCloseModal}
+          dataTime={dataScheduleTimeModal}
+        />
         <HomeFooter />
       </div>
     );
