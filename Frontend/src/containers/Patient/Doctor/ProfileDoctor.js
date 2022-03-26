@@ -5,6 +5,9 @@ import "./ProfileDoctor.scss";
 import { getProfileDoctorById } from "../../../services/userService";
 import { LANGUAGES } from "../../../utils";
 import NumberFormat from "react-number-format";
+import _ from "lodash";
+import moment from "moment";
+import localization from "moment/locale/vi";
 
 class ProfileDoctor extends Component {
     constructor(props) {
@@ -37,10 +40,35 @@ class ProfileDoctor extends Component {
         }
     }
 
+    renderTimeBooking = (dataTime) => {
+        let { language } = this.props;
+
+        if (dataTime && !_.isEmpty(dataTime)) {
+            let date;
+            if (language === LANGUAGES.VI) {
+                date = moment.unix(+dataTime.date / 1000).format("dddd - DD/MM/YYYY");
+            } else {
+                date = moment.unix(+dataTime.date / 1000).format("ddd - MM/DD/YYYY");
+            }
+            let time =
+                language === LANGUAGES.VI
+                    ? dataTime.timeTypeData.valueVi
+                    : dataTime.timeTypeData.valueEn;
+            return (
+                <>
+                    <div>
+                        {time} - {date}
+                    </div>
+                    <div>Miễn phí đặt lịch</div>
+                </>
+            );
+        }
+        return <></>;
+    };
+
     render() {
         let { dataProfile } = this.state;
-        let { language } = this.props;
-        console.log(dataProfile);
+        let { language, dataTime, isShowDescriptionDoctor } = this.props;
         let nameVi = "",
             nameEn = "";
         // if (dataProfile && dataProfile.positionData) {
@@ -68,10 +96,27 @@ class ProfileDoctor extends Component {
                     <div className="content-right">
                         <div className="up">{language === LANGUAGES.VI ? nameVi : nameEn}</div>
                         <div className="down">
-                            {/* {dataProfile && dataProfile.Markdown && dataProfile.Markdown.description && <span>sdfgsfdgsdfg</span>} */}
-                            Bác sĩ đầu ngành chuyên khoa Tâm thần, tâm bệnh Nguyên Viện trưởng Viện
-                            Sức khỏe Tâm thần quốc gia, Bệnh viện Bạch Mai Nguyên Phó Chủ nhiệm Bộ
-                            môn Tâm thần trường Đại học Y Hà Nội
+                            {/* {isShowDescriptionDoctor === true ? (
+                                <>
+                                    {dataProfile &&
+                                        dataProfile.Markdown &&
+                                        dataProfile.Markdown.description && (
+                                            <span>sdfgsfdgsdfg</span>
+                                        )}
+                                </>
+                            ) : (
+                                <>{this.renderTimeBooking()}</>
+                            )} */}
+
+                            {isShowDescriptionDoctor === true ? (
+                                <>
+                                    Bác sĩ đầu ngành chuyên khoa Tâm thần, tâm bệnh Nguyên Viện
+                                    trưởng Viện Sức khỏe Tâm thần quốc gia, Bệnh viện Bạch Mai
+                                    Nguyên Phó Chủ nhiệm Bộ môn Tâm thần trường Đại học Y Hà Nội
+                                </>
+                            ) : (
+                                <>{this.renderTimeBooking(dataTime)}</>
+                            )}
                         </div>
                     </div>
                 </div>

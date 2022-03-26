@@ -24,7 +24,13 @@ class BookingModal extends Component {
         let doctorId = dataTime && !_.isEmpty(dataTime.doctorId) ? dataTime.doctorId : "";
         return (
             <div>
-                <Modal isOpen={isOpenModalBooking} centered backdrop="true" size="lg" className="booking-modal-container">
+                <Modal
+                    isOpen={isOpenModalBooking}
+                    centered
+                    backdrop="true"
+                    size="lg"
+                    className="booking-modal-container"
+                >
                     <div className="booking-modal-content">
                         <div className="booking-modal-header">
                             <span className="left">Thông tin đặt lịch khám bệnh</span>
@@ -33,9 +39,12 @@ class BookingModal extends Component {
                             </span>
                         </div>
                         <div className="booking-modal-body">
-                            {/* {JSON.stringify(dataTime)} */}
                             <div className="doctor-info">
-                                <ProfileDoctor doctorId={doctorId} />
+                                <ProfileDoctor
+                                    doctorId={doctorId}
+                                    dataTime={dataTime}
+                                    isShowDescriptionDoctor={false}
+                                />
                             </div>
                             <div className="row">
                                 <div className="col-6 form-group">

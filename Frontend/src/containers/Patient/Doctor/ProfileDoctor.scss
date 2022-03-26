@@ -1,9 +1,11 @@
 .intro-doctor {
     display: flex;
     .content-left {
-        background: center center no-repeat;
-        width: 90px;
-        height: 90px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 80px;
+        height: 80px;
         border-radius: 50%;
     }
     .content-right {
@@ -18,4 +20,7 @@
             text-align: justify;
         }
     }
+}
+.price {
+    margin-top: 5px;
 }

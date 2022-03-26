@@ -41,6 +41,7 @@ class HomePage extends Component {
             slidesToShow: 4,
             slidesToScroll: 1,
         };
+
         let { isOpenModalBooking, dataScheduleTimeModal } = this.state;
         return (
             <div>
@@ -50,8 +51,27 @@ class HomePage extends Component {
                 <OutstandingDoctor settings={settings} />
                 <HandBook settings={settings} />
                 <About />
-                <button onClick={() => this.handleClickScheduleTime({ doctorId: "2" })}>Show modal</button>
-                <BookingModal isOpenModalBooking={isOpenModalBooking} handleCloseModal={this.handleCloseModal} dataTime={dataScheduleTimeModal} />
+                <button
+                    onClick={() =>
+                        this.handleClickScheduleTime({
+                            doctorId: "2",
+                            timeTypeData: {
+                                valueEn: "9:00 AM - 10:00 AM",
+                                valueVi: "9:00 - 10:00",
+                            },
+                            maxNumber: 10,
+                            currentNumber: null,
+                            date: "1648292504000",
+                        })
+                    }
+                >
+                    Show modal
+                </button>
+                <BookingModal
+                    isOpenModalBooking={isOpenModalBooking}
+                    handleCloseModal={this.handleCloseModal}
+                    dataTime={dataScheduleTimeModal}
+                />
                 <HomeFooter />
             </div>
         );
