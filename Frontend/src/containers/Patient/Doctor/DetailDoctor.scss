@@ -1,6 +1,5 @@
 .doctor-detail-container {
   height: 500px;
-  margin: 0 100px;
 
   .intro-doctor {
     display: flex;
@@ -34,10 +33,11 @@
   }
 
   .detail-infor-doctor {
-    margin          : 10px 100px;
-    background-color: #ddd;
-    border-top: 1px solid #ddd ;
-    border-bottom: 1px solid #f9f9f9;
+    padding         : 10px 100px;
+    background-color: #f9f9f9;
+    border-top      : 1px solid #ccc;
+    border-bottom   : 1px solid #ccc;
+
 
     h3 {
       font-size: 17px;

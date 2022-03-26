@@ -18,9 +18,9 @@ class ManageDoctor extends Component {
     this.state = {
       contentMarkdown: "",
       contentHTML: "",
-      selectedDoctor: "",
+      selectedOption: "",
       description: "",
-      listDoctor: [],
+      listDoctors: [],
       hasOldData: false,
     };
   }
@@ -50,13 +50,13 @@ class ManageDoctor extends Component {
     if (prevProps.allDoctors !== this.props.allDoctors) {
       let dataSelect = this.buildDataInputSelect(this.props.allDoctors);
       this.setState({
-        listDoctor: dataSelect,
+        listDoctors: dataSelect,
       });
     }
     if (prevProps.language !== this.props.language) {
       let dataSelect = this.buildDataInputSelect(this.props.allDoctors);
       this.setState({
-        listDoctor: dataSelect,
+        listDoctors: dataSelect,
       });
     }
   }
@@ -74,16 +74,15 @@ class ManageDoctor extends Component {
       contentHTML: this.state.contentHTML,
       contentMarkdown: this.state.contentMarkdown,
       description: this.state.description,
-      doctorId: this.state.selectedDoctor.value,
+      doctorId: this.state.selectedOption.value,
       action: hasOldData === true ? CRUD_ACTIONS.EDIT : CRUD_ACTIONS.CREATE,
     });
-    console.log(this.state);
   };
 
-  handleChangeSelect = async (selectedDoctor) => {
-    this.setState({ selectedDoctor });
+  handleChangeSelect = async (selectedOption) => {
+    this.setState({ selectedOption });
 
-    let res = await getDetailInforDoctor(selectedDoctor.value);
+    let res = await getDetailInforDoctor(selectedOption.value);
     if (res && res.errCode === 0 && res.data && res.data.Markdown) {
       let markdown = res.data.Markdown;
       this.setState({
@@ -117,9 +116,9 @@ class ManageDoctor extends Component {
           <div className="content-left form-group">
             <label>Chọn bác sĩ</label>
             <Select
-              value={this.state.selectedDoctor}
+              value={this.state.selectedOption}
               onChange={this.handleChangeSelect}
-              options={this.state.listDoctor}
+              options={this.state.listDoctors}
             />
           </div>
           <div className="content-right">

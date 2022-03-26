@@ -22,19 +22,6 @@
     "child-6": "Dental examination"
   },
   "menu": {
-    "system": {
-      "header": "System",
-      "system-administrator": {
-        "header": "System Administrator",
-        "user-manage": "User manage",
-        "user-redux": "Manage user using redux",
-        "register-package-group-or-account": "Register service package for group/account"
-      },
-      "system-parameter": {
-        "header": "System-parameter"
-      }
-    },
-
     "admin": {
       "manage-user": "User management",
       "manage-doctor": "Doctor management",
@@ -47,6 +34,9 @@
       "manage-specialty": "Specialty Management",
       "handbook": "Handbook",
       "manage-handbook": "Handbook Management"
+    },
+    "doctor": {
+      "manage-schedule": "Manage doctor's schedule"
     }
   },
   "manage-user": {
@@ -64,8 +54,14 @@
     "save": "Save user",
     "edit": "Edit user"
   },
-  "homepage":{
-    "outstanding-doctor":"Last week's featured doctor",
-    "more-infor":"More Infor"
+  "homepage": {
+    "outstanding-doctor": "Last week's featured doctor",
+    "more-infor": "More Infor"
+  },
+  "manage-schedule": {
+    "title": "Manage doctor's examination plan",
+    "choose-doctor": "Choose a doctor",
+    "choose-date": "Choose a date",
+    "save": "Save"
   }
 }
