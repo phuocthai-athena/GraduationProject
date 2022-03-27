@@ -34,7 +34,6 @@
         "header": "Tham số hệ thống"
       }
     },
-
     "admin": {
       "manage-user": "Quản lý người dùng",
       "manage-doctor": "Quản lý bác sĩ",
@@ -67,5 +66,21 @@
   "homepage":{
     "outstanding-doctor":"Bác sĩ nổi bật tuần qua",
     "more-infor":"Xem thêm"
-  }
+  },
+   "patient": {
+      "booking-modal" : {
+        "title": "Thông tin đặt lịch khám bệnh",
+        "fullName": "Họ và tên",
+        "phoneNumber": "Số điện thoại",
+        "email": "Địa chỉ email",
+        "address": "Địa chỉ liên hệ",
+        "reason": "Lý do khám bệnh",
+        "birthday": "Ngày sinh",
+        "genders": "Giới tính",
+        "btnConfirm": "Xác nhận",
+        "btnCancel": "Hủy",
+        "price": "Giá khám",
+        "bookingPrice": "Miễn phí đặt lịch"
+      }
+    }
 }

@@ -44,12 +44,11 @@ class ProfileDoctor extends Component {
         let { language } = this.props;
 
         if (dataTime && !_.isEmpty(dataTime)) {
-            let date;
-            if (language === LANGUAGES.VI) {
-                date = moment.unix(+dataTime.date / 1000).format("dddd - DD/MM/YYYY");
-            } else {
-                date = moment.unix(+dataTime.date / 1000).format("ddd - MM/DD/YYYY");
-            }
+            let date =
+                language === LANGUAGES.VI
+                    ? moment.unix(+dataTime.date / 1000).format("dddd - DD/MM/YYYY")
+                    : moment.unix(+dataTime.date / 1000).format("MM/DD/YYYY");
+
             let time =
                 language === LANGUAGES.VI
                     ? dataTime.timeTypeData.valueVi
@@ -59,7 +58,9 @@ class ProfileDoctor extends Component {
                     <div>
                         {time} - {date}
                     </div>
-                    <div>Miễn phí đặt lịch</div>
+                    <div>
+                        <FormattedMessage id="patient.booking-modal.bookingPrice" />
+                    </div>
                 </>
             );
         }
@@ -121,7 +122,7 @@ class ProfileDoctor extends Component {
                     </div>
                 </div>
                 <div className="price">
-                    Giá khám:
+                    <FormattedMessage id="patient.booking-modal.price" />:
                     {dataProfile && dataProfile.Doctor_Infor && language === LANGUAGES.VI ? (
                         <NumberFormat
                             className="currency"

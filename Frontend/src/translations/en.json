@@ -34,7 +34,6 @@
         "header": "System-parameter"
       }
     },
-
     "admin": {
       "manage-user": "User management",
       "manage-doctor": "Doctor management",
@@ -67,5 +66,21 @@
   "homepage":{
     "outstanding-doctor":"Last week's featured doctor",
     "more-infor":"More Infor"
-  }
+  },
+  "patient": {
+      "booking-modal" : {
+        "title": "Information to book a medical appointment",
+        "fullName": "Full name",
+        "phoneNumber": "Phone number",
+        "email": "Email",
+        "address": "Address",
+        "reason": "Reasons for medical examination",
+        "birthday": "Date of birth",
+        "genders": "Gender",
+        "btnConfirm": "Confirm",
+        "btnCancel": "Cancel",
+        "price": "Price",
+        "bookingPrice": "Free booking"
+      }
+    }
 }

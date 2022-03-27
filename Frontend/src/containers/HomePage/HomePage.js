@@ -62,6 +62,7 @@ class HomePage extends Component {
                             maxNumber: 10,
                             currentNumber: null,
                             date: "1648292504000",
+                            timeType: "T2",
                         })
                     }
                 >
