@@ -63,6 +63,10 @@ class HomePage extends Component {
                             currentNumber: null,
                             date: "1648292504000",
                             timeType: "T2",
+                            doctorData: {
+                                firstName: "Hằng",
+                                lastName: "Nguyễn Kim",
+                            },
                         })
                     }
                 >

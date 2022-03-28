@@ -1,10 +1,11 @@
 import db from "../models/index";
+import emailService from "./emailService";
 require("dotenv").config();
 
 let postBookAppointment = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!data.email || !data.doctorId || !data.timeType || !data.date) {
+            if (!data.email || !data.doctorId || !data.timeType || !data.date || !data.fullName) {
                 resolve({
                     errCode: 1,
                     errMessage: "Missing required parameters",
@@ -29,12 +30,22 @@ let postBookAppointment = (data) => {
                         },
                     });
                 }
+
+                await emailService.sendSimpleEmail({
+                    receiverEmail: data.email,
+                    patientName: data.fullName,
+                    time: data.timeString,
+                    doctorName: data.doctorName,
+                    language: data.language,
+                    redirectLink: "https://www.youtube.com/watch?v=r4Xstoq18gA",
+                });
                 resolve({
                     errCode: 0,
                     errMessage: "Save info patient successfully",
                 });
             }
         } catch (e) {
+            console.log(e);
             reject(e);
         }
     });

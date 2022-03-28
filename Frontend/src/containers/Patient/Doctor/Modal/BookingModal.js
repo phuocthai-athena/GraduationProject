@@ -12,6 +12,8 @@ import Select from "react-select";
 import UserRedux from "../../../../containers/System/Admin/UserRedux";
 import { postPatientBookingAppointment } from "../../../../services/userService";
 import { toast } from "react-toastify";
+import moment from "moment";
+
 class BookingModal extends Component {
     constructor(props) {
         super(props);
@@ -90,6 +92,9 @@ class BookingModal extends Component {
         let language = this.props.language;
 
         let date = new Date(this.state.birthday).getTime();
+        let timeString = this.buildTimeString(this.props.dataTime);
+        let doctorName = this.buildDoctorName(this.props.dataTime.doctorData);
+
         let res = await postPatientBookingAppointment({
             fullName: this.state.fullName,
             phoneNumber: this.state.phoneNumber,
@@ -101,6 +106,9 @@ class BookingModal extends Component {
             doctorId: this.state.doctorId,
             date: date,
             timeType: this.state.timeType,
+            language: this.props.language,
+            timeString: timeString,
+            doctorName: doctorName,
         });
         if (res && res.errCode === 0) {
             let message =
@@ -117,6 +125,37 @@ class BookingModal extends Component {
 
             toast.error(message);
         }
+    };
+
+    buildTimeString = (dataTime) => {
+        let { language } = this.props;
+
+        if (dataTime && !_.isEmpty(dataTime)) {
+            let date =
+                language === LANGUAGES.VI
+                    ? moment.unix(+dataTime.date / 1000).format("dddd - DD/MM/YYYY")
+                    : moment.unix(+dataTime.date / 1000).format("MM/DD/YYYY");
+
+            let time =
+                language === LANGUAGES.VI
+                    ? dataTime.timeTypeData.valueVi
+                    : dataTime.timeTypeData.valueEn;
+            return `${time} - ${date}`;
+        }
+        return "";
+    };
+
+    buildDoctorName = (doctorData) => {
+        let { language } = this.props;
+        if (doctorData && !_.isEmpty(doctorData)) {
+            let name =
+                language === LANGUAGES.VI
+                    ? `${doctorData.lastName} ${doctorData.firstName}`
+                    : `${doctorData.firstName} ${doctorData.lastName}`;
+
+            return name;
+        }
+        return "";
     };
 
     render() {
