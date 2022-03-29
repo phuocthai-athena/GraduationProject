@@ -1,6 +1,7 @@
 .doctor-detail-container {
   height: 500px;
 
+  //layout introdoctor
   .intro-doctor {
     display: flex;
     margin : 0 100px;
@@ -32,6 +33,23 @@
     }
   }
 
+  //layout schedule doctor
+  .schedule-doctor {
+    margin : 0 100px;
+    display: flex;
+    height : 200px;
+    border : 1px solid red;
+
+    .content-left {
+      width: 50%;
+    }
+
+    .content-right {
+      width: 50%;
+    }
+  }
+
+  //layout detail doctor
   .detail-infor-doctor {
     padding         : 10px 100px;
     background-color: #f9f9f9;
@@ -48,6 +66,7 @@
     }
   }
 
+  //layout comment doctor
   .comment-doctor {
     height: 50px;
   }

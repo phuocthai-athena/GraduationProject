@@ -1,15 +1,14 @@
 import _ from "lodash";
-import moment from "moment";
 import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import Select from "react-select";
 import { toast } from "react-toastify";
 import DatePicker from "../../../components/Input/DatePicker";
-import * as actions from "../../../store/actions";
-import { dateFormat, LANGUAGES } from "../../../utils";
-import "./ManageSchedule.scss";
 import { saveBulkScheduleDoctor } from "../../../services/userService";
+import * as actions from "../../../store/actions";
+import { LANGUAGES } from "../../../utils";
+import "./ManageSchedule.scss";
 
 class ManageSchedule extends Component {
   constructor(props) {
