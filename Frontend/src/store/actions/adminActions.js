@@ -14,6 +14,8 @@ import { toast } from "react-toastify";
 export const fetchGenderStart = () => {
   return async (dispatch, getState) => {
     try {
+      dispatch({ type: actionTypes.FETCH_GENDER_START });
+
       let res = await getAllCodeService("GENDER");
       if (res && res.errCode === 0) {
         dispatch(fetchGenderSuccess(res.data));
@@ -253,17 +255,81 @@ export const saveDetailDoctor = (data) => {
           type: actionTypes.SAVE_DETAIL_DOCTOR_SUCCESS,
         });
       } else {
-        toast.success("Save infor detail doctor error!");
+        toast.error("Save infor detail doctor error!");
         dispatch({
           type: actionTypes.SAVE_DETAIL_DOCTOR_FAILED,
         });
       }
     } catch (e) {
       console.log("SAVE_DETAIL_DOCTOR_FAILED", e);
-      toast.success("Save infor detail doctor error!");
+      toast.error("Save infor detail doctor error!");
       dispatch({
         type: actionTypes.SAVE_DETAIL_DOCTOR_FAILED,
       });
     }
   };
 };
+
+export const fetchAllScheduleTime = () => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getAllCodeService("TIME");
+      if (res && res.errCode === 0) {
+        dispatch({
+          type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_SUCCESS,
+          dataTime: res.data,
+        });
+      } else {
+        dispatch({
+          type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_FAILED,
+        });
+      }
+    } catch (e) {
+      console.log("FETCH_ALLCODE_SCHEDULE_TIME_FAILED", e);
+      dispatch({
+        type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_FAILED,
+      });
+    }
+  };
+};
+
+export const getRequiredDoctorInfor = () => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({ type: actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_START });
+
+      let resPrice = await getAllCodeService("PRICE");
+      let resPayment = await getAllCodeService("PAYMENT");
+      let resProvince = await getAllCodeService("PROVINCE");
+      if (
+        resPrice &&
+        resPrice.errCode === 0 &&
+        resPayment &&
+        resPayment.errCode === 0 &&
+        resProvince &&
+        resProvince.errCode === 0
+      ) {
+        let data = {
+          resPrice: resPrice.data,
+          resPayment: resPayment.data,
+          resProvince: resProvince.data,
+        };
+        dispatch(fetchRequiredDoctorInforSuccess(data));
+      } else {
+        dispatch(fetchRequiredDoctorInforFailed());
+      }
+    } catch (error) {
+      dispatch(fetchRequiredDoctorInforFailed());
+      console.log("fetchRequiredDoctorInforFailed error", error);
+    }
+  };
+};
+
+export const fetchRequiredDoctorInforSuccess = (allRequiredData) => ({
+  type: actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_SUCCESS,
+  data: allRequiredData,
+});
+
+export const fetchRequiredDoctorInforFailed = () => ({
+  type: actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_FAILED,
+});
