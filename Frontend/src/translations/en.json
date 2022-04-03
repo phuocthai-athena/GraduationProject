@@ -22,18 +22,6 @@
     "child-6": "Dental examination"
   },
   "menu": {
-    "system": {
-      "header": "System",
-      "system-administrator": {
-        "header": "System Administrator",
-        "user-manage": "User manage",
-        "user-redux": "Manage user using redux",
-        "register-package-group-or-account": "Register service package for group/account"
-      },
-      "system-parameter": {
-        "header": "System-parameter"
-      }
-    },
     "admin": {
       "manage-user": "User management",
       "manage-doctor": "Doctor management",
@@ -46,6 +34,9 @@
       "manage-specialty": "Specialty Management",
       "handbook": "Handbook",
       "manage-handbook": "Handbook Management"
+    },
+    "doctor": {
+      "manage-schedule": "Manage doctor's schedule"
     }
   },
   "manage-user": {
@@ -63,12 +54,31 @@
     "save": "Save user",
     "edit": "Edit user"
   },
-  "homepage":{
-    "outstanding-doctor":"Last week's featured doctor",
-    "more-infor":"More Infor"
+  "homepage": {
+    "outstanding-doctor": "Last week's featured doctor",
+    "more-infor": "More Infor"
+  },
+  "manage-schedule": {
+    "title": "Manage doctor's examination plan",
+    "choose-doctor": "Choose a doctor",
+    "choose-date": "Choose a date",
+    "save": "Save"
   },
   "patient": {
-      "booking-modal" : {
+    "detail-doctor": {
+      "schedule": "Schedule",
+      "no-schedule": "No appointments during this time, please choose another time!",
+      "choose": "Choose ",
+      "book-free": " and book (free)"
+    },
+    "extra-infor-doctor": {
+      "text-address": "Address of examination",
+      "price": "Examination price: ",
+      "detail": "See details",
+      "payment": "The patient can pay the cost in the form of:",
+      "hide-price": "Hide price list"
+    },
+    "booking-modal" : {
         "title": "Information to book a medical appointment",
         "fullName": "Full name",
         "phoneNumber": "Phone number",
@@ -82,5 +92,20 @@
         "price": "Price",
         "bookingPrice": "Free booking"
       }
+  },
+  "admin": {
+    "manage-doctor": {
+      "title": "Create more doctor information",
+      "select-doctor": "Choose a doctor",
+      "intro": "Introduction",
+      "add": "Create infor",
+      "save": "Save infor",
+      "price": "Price",
+      "payment": "Payment",
+      "province": "Province",
+      "nameClinic": "Clinic's name",
+      "addressClinic": "Clinic's address",
+      "note": "Note"
     }
+  }
 }
