@@ -39,7 +39,6 @@ class DoctorExtraInfor extends Component {
   render() {
     let { isShowDetailInfor, extraInfor } = this.state;
     let { language } = this.props;
-
     return (
       <div className="doctor-extra-infor-container">
         <div className="content-up">
@@ -133,12 +132,14 @@ class DoctorExtraInfor extends Component {
                 {extraInfor &&
                 extraInfor.paymentTypeData &&
                 language === LANGUAGES.VI
-                  ? extraInfor.paymentTypeData.valueVi: ""}
+                  ? extraInfor.paymentTypeData.valueVi
+                  : ""}
 
                 {extraInfor &&
                 extraInfor.paymentTypeData &&
                 language === LANGUAGES.EN
-                  ? extraInfor.paymentTypeData.valueEn: ""}
+                  ? extraInfor.paymentTypeData.valueEn
+                  : ""}
               </div>
               <div className="hide-price">
                 <span onClick={() => this.showHideDetailInfor(false)}>

@@ -290,7 +290,7 @@ let getScheduleByDate = (doctorId, date) => {
 let getExtraInforDoctorById = (idInput) => {
   return new Promise(async (resolve, reject) => {
     try {
-      if (!doctorId) {
+      if (!idInput) {
         resolve({
           errCode: -1,
           errMessage: "Missing required parameters",
