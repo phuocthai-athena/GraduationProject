@@ -35,6 +35,10 @@ let postBookAppointment = (data) => {
                     defaults: {
                         email: data.email,
                         roleId: "R3",
+                        address: data.address,
+                        phoneNumber: data.phoneNumber,
+                        gender: data.selectedGender,
+                        firstName: data.fullName,
                     },
                 });
                 if (user && user[0]) {

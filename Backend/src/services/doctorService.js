@@ -157,10 +157,6 @@ let getProfileDoctorById = (doctorId) => {
                     },
                     include: [
                         {
-                            model: db.Markdown,
-                            attributes: ["description", "contentHTML", "contentMarkDown"],
-                        },
-                        {
                             model: db.Allcode,
                             as: "positionData",
                             attributes: ["valueEn", "valueVi"],
@@ -183,7 +179,7 @@ let getProfileDoctorById = (doctorId) => {
                                 },
                                 {
                                     model: db.Allcode,
-                                    as: "paymmentTypeData",
+                                    as: "paymentTypeData",
                                     attributes: ["valueEn", "valueVi"],
                                 },
                             ],
@@ -202,6 +198,7 @@ let getProfileDoctorById = (doctorId) => {
                 });
             }
         } catch (error) {
+            console.log(error);
             reject(error);
         }
     });
@@ -270,6 +267,7 @@ let getDetailDoctorById = (inputId) => {
                 });
             }
         } catch (error) {
+            console.error(error);
             reject(e);
         }
     });
@@ -333,11 +331,15 @@ let getScheduleByDate = (doctorId, date) => {
                             as: "timeTypeData",
                             attributes: ["valueEn", "valueVi"],
                         },
+                        {
+                            model: db.User,
+                            as: "doctorData",
+                            attributes: ["firstName", "lastName"],
+                        },
                     ],
                     raw: false,
                     nest: true,
                 });
-
                 if (!dataSchedule) dataSchedule = [];
 
                 resolve({

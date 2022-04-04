@@ -15,23 +15,8 @@ import BookingModal from "../Patient/Doctor/Modal/BookingModal";
 class HomePage extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            isOpenModalBooking: false,
-            dataScheduleTimeModal: {},
-        };
+        this.state = {};
     }
-    handleClickScheduleTime = (time) => {
-        this.setState({
-            isOpenModalBooking: true,
-            dataScheduleTimeModal: time,
-        });
-    };
-
-    handleCloseModal = () => {
-        this.setState({
-            isOpenModalBooking: false,
-        });
-    };
 
     render() {
         let settings = {
@@ -42,7 +27,6 @@ class HomePage extends Component {
             slidesToScroll: 1,
         };
 
-        let { isOpenModalBooking, dataScheduleTimeModal } = this.state;
         return (
             <div>
                 <HomeHeader />
@@ -52,32 +36,6 @@ class HomePage extends Component {
                 <OutstandingDoctor settings={settings} />
                 <HandBook settings={settings} />
                 <About />
-                <button
-                    onClick={() =>
-                        this.handleClickScheduleTime({
-                            doctorId: "2",
-                            timeTypeData: {
-                                valueEn: "9:00 AM - 10:00 AM",
-                                valueVi: "9:00 - 10:00",
-                            },
-                            maxNumber: 10,
-                            currentNumber: null,
-                            date: "1648292504000",
-                            timeType: "T2",
-                            doctorData: {
-                                firstName: "Hằng",
-                                lastName: "Nguyễn Kim",
-                            },
-                        })
-                    }
-                >
-                    Show modal
-                </button>
-                <BookingModal
-                    isOpenModalBooking={isOpenModalBooking}
-                    handleCloseModal={this.handleCloseModal}
-                    dataTime={dataScheduleTimeModal}
-                />
                 <HomeFooter />
             </div>
         );

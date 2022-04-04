@@ -13,7 +13,6 @@ import UserRedux from "../../../../containers/System/Admin/UserRedux";
 import { postPatientBookingAppointment } from "../../../../services/userService";
 import { toast } from "react-toastify";
 import moment from "moment";
-import PhoneInput from "react-phone-number-input/input";
 
 class BookingModal extends Component {
     constructor(props) {
@@ -63,7 +62,6 @@ class BookingModal extends Component {
         }
         if (this.props.dataTime !== prevProps.dataTime) {
             if (this.props.dataTime && !_.isEmpty(this.props.dataTime)) {
-                console.log(this.props.dataTime);
                 let doctorId = this.props.dataTime.doctorId;
                 let timeType = this.props.dataTime.timeType;
                 this.setState({
@@ -100,7 +98,6 @@ class BookingModal extends Component {
         let date = new Date(this.state.birthday).getTime();
         let timeString = this.buildTimeString(this.props.dataTime);
         let doctorName = this.buildDoctorName(this.props.dataTime.doctorData);
-        console.log(this.state);
         let res = await postPatientBookingAppointment({
             fullName: this.state.fullName,
             phoneNumber: this.state.phoneNumber,
@@ -124,7 +121,6 @@ class BookingModal extends Component {
             toast.success(message);
             this.props.handleCloseModal();
         } else {
-            console.log(res);
             let message =
                 language === LANGUAGES.VI
                     ? "Đặt lịch hẹn thất bại!"
@@ -178,7 +174,7 @@ class BookingModal extends Component {
                 language === LANGUAGES.VI ? "Vui lòng nhập thông tin" : "Cannot be empty";
         } else {
             if (typeof state["fullName"] !== "undefined") {
-                if (!state["fullName"].match(/^[a-zA-Z]+$/)) {
+                if (state["fullName"].match(/^[0-9]+$/)) {
                     formIsValid = false;
                     errors["fullName"] = LANGUAGES.VI
                         ? "Họ tên chỉ bao gồm chữ cái"
@@ -262,7 +258,6 @@ class BookingModal extends Component {
 
     render() {
         let { isOpenModalBooking, handleCloseModal, dataTime } = this.props;
-        let doctorId = dataTime && !_.isEmpty(dataTime.doctorId) ? dataTime.doctorId : "";
         return (
             <div>
                 <Modal
@@ -284,7 +279,7 @@ class BookingModal extends Component {
                         <div className="booking-modal-body">
                             <div className="doctor-info">
                                 <ProfileDoctor
-                                    doctorId={doctorId}
+                                    doctorId={dataTime.doctorId}
                                     dataTime={dataTime}
                                     isShowDescriptionDoctor={false}
                                 />

@@ -7,7 +7,6 @@ let getTopDoctorHome = async (req, res) => {
         let response = await doctorService.getTopDoctorHome(+limit);
         return res.status(200).json(response);
     } catch (e) {
-        console.log(e);
         return res.status(200).json({
             errCode: -1,
             message: "Error from server...",
@@ -56,7 +55,6 @@ let getDetailDoctorById = async (req, res) => {
         let infor = await doctorService.getDetailDoctorById(req.query.id);
         return res.status(200).json(infor);
     } catch (error) {
-        console.log(e);
         return res.status(200).json({
             errCode: -1,
             message: "Error from the server.",

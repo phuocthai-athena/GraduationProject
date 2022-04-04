@@ -72,14 +72,14 @@ class ProfileDoctor extends Component {
         let { language, dataTime, isShowDescriptionDoctor } = this.props;
         let nameVi = "",
             nameEn = "";
-        // if (dataProfile && dataProfile.positionData) {
-        //     nameVi = `${dataProfile.positionData.valueVi}, ${dataProfile.lastname} ${dataProfile.firstName}`;
-        //     nameEn = `${dataProfile.positionData.valueen}, ${dataProfile.firstName} ${dataProfile.lastName}`;
-        // }
-        if (dataProfile) {
-            nameVi = `${dataProfile.lastName} ${dataProfile.firstName}`;
-            nameEn = `${dataProfile.firstName} ${dataProfile.lastName}`;
+
+        if (dataProfile && dataProfile.positionData) {
+            nameVi = `${dataProfile.positionData.valueVi}, ${dataProfile.lastName} ${dataProfile.firstName}`;
+            nameEn = `${
+                dataProfile.positionData.valueEn !== "None" ? dataProfile.positionData.valueEn : ""
+            }, ${dataProfile.firstName} ${dataProfile.lastName}`;
         }
+
         return (
             <div className="profile-doctor-container">
                 <div className="intro-doctor">
@@ -87,9 +87,7 @@ class ProfileDoctor extends Component {
                         className="content-left"
                         style={{
                             backgroundImage: `url(${
-                                dataProfile && dataProfile.image
-                                    ? dataProfile.image
-                                    : "https://cdn.bookingcare.vn/fr/w200/2020/03/17/114430-bshung.jpg"
+                                dataProfile && dataProfile.image ? dataProfile.image : ""
                             })`,
                         }}
                     ></div>
@@ -127,23 +125,23 @@ class ProfileDoctor extends Component {
                         <NumberFormat
                             className="currency"
                             displayType={"text"}
-                            thousandsSeparator={true}
+                            thousandSeparator={true}
                             suffix={"VND"}
-                            value={dataProfile.Doctor_Infor.priceData.valueVi}
+                            value={dataProfile.Doctor_Infor.priceTypeData.valueVi}
                         />
                     ) : (
-                        "500,000VND"
+                        ""
                     )}
                     {dataProfile && dataProfile.Doctor_Infor && language === LANGUAGES.EN ? (
                         <NumberFormat
                             className="currency"
                             displayType={"text"}
-                            thousandsSeparator={true}
+                            thousandSeparator={true}
                             suffix={"$"}
-                            value={dataProfile.Doctor_Infor.priceData.valueEn}
+                            value={dataProfile.Doctor_Infor.priceTypeData.valueEn}
                         />
                     ) : (
-                        "$50"
+                        ""
                     )}
                 </div>
             </div>
