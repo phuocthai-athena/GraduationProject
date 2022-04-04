@@ -31,7 +31,7 @@
   }
 }
 
-.slick-disabled{
+.slick-disabled {
   display: none !important;
 }
 
@@ -122,9 +122,11 @@
 .section-outstanding-doctor {
   .section-customize {
     padding: 5px;
+    cursor: pointer;
 
     .customize-border {
       padding: 20px;
+      border: 1px solid #d7d7d7;
 
       .outer-bg {
         display: flex;

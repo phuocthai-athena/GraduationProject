@@ -14,6 +14,7 @@ let postBookAppointment = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             let token = uuidv4();
+            console.log(data);
             if (!data.email || !data.doctorId || !data.timeType || !data.date || !data.fullName) {
                 resolve({
                     errCode: 1,
@@ -34,6 +35,10 @@ let postBookAppointment = (data) => {
                     defaults: {
                         email: data.email,
                         roleId: "R3",
+                        address: data.address,
+                        phoneNumber: data.phoneNumber,
+                        gender: data.selectedGender,
+                        firstName: data.fullName,
                     },
                 });
                 if (user && user[0]) {

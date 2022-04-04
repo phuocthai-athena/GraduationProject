@@ -76,14 +76,14 @@ class ProfileDoctor extends Component {
             } = this.props;
         let nameVi = "",
             nameEn = "";
-        // if (dataProfile && dataProfile.positionData) {
-        //     nameVi = `${dataProfile.positionData.valueVi}, ${dataProfile.lastname} ${dataProfile.firstName}`;
-        //     nameEn = `${dataProfile.positionData.valueen}, ${dataProfile.firstName} ${dataProfile.lastName}`;
-        // }
-        if (dataProfile) {
-            nameVi = `${dataProfile.lastName} ${dataProfile.firstName}`;
-            nameEn = `${dataProfile.firstName} ${dataProfile.lastName}`;
+
+        if (dataProfile && dataProfile.positionData) {
+            nameVi = `${dataProfile.positionData.valueVi}, ${dataProfile.lastName} ${dataProfile.firstName}`;
+            nameEn = `${
+                dataProfile.positionData.valueEn !== "None" ? dataProfile.positionData.valueEn : ""
+            }, ${dataProfile.firstName} ${dataProfile.lastName}`;
         }
+
         return (
             <div className="profile-doctor-container">
                 <div className="intro-doctor">
@@ -91,9 +91,7 @@ class ProfileDoctor extends Component {
                         className="content-left"
                         style={{
                             backgroundImage: `url(${
-                                dataProfile && dataProfile.image
-                                    ? dataProfile.image
-                                    : "https://cdn.bookingcare.vn/fr/w200/2020/03/17/114430-bshung.jpg"
+                                dataProfile && dataProfile.image ? dataProfile.image : ""
                             })`,
                         }}
                     ></div>
@@ -101,18 +99,6 @@ class ProfileDoctor extends Component {
                     <div className="content-right">
                         <div className="up">{language === LANGUAGES.VI ? nameVi : nameEn}</div>
                         <div className="down">
-                            {/* {isShowDescriptionDoctor === true ? (
-                                <>
-                                    {dataProfile &&
-                                        dataProfile.Markdown &&
-                                        dataProfile.Markdown.description && (
-                                            <span>sdfgsfdgsdfg</span>
-                                        )}
-                                </>
-                            ) : (
-                                <>{this.renderTimeBooking()}</>
-                            )} */}
-
                             {isShowDescriptionDoctor === true ? (
                                 <>
                                     Bác sĩ đầu ngành chuyên khoa Tâm thần, tâm bệnh Nguyên Viện
@@ -125,7 +111,6 @@ class ProfileDoctor extends Component {
                         </div>
                     </div>
                 </div>
-
                 {isShowLinkDetail === true && 
                     <div className="view-detail-doctor"
                     >
@@ -134,33 +119,32 @@ class ProfileDoctor extends Component {
                 }
 
                 {isShowPrice === true &&
-                    <div className="price">
-                        <FormattedMessage id="patient.booking-modal.price" />:
-                        {dataProfile && dataProfile.Doctor_Infor && language === LANGUAGES.VI ? (
-                            <NumberFormat
-                                className="currency"
-                                displayType={"text"}
-                                thousandsSeparator={true}
-                                suffix={"VND"}
-                                value={dataProfile.Doctor_Infor.priceData.valueVi}
-                            />
-                        ) : (
-                            "500,000VND"
-                        )}
-                        {dataProfile && dataProfile.Doctor_Infor && language === LANGUAGES.EN ? (
-                            <NumberFormat
-                                className="currency"
-                                displayType={"text"}
-                                thousandsSeparator={true}
-                                suffix={"$"}
-                                value={dataProfile.Doctor_Infor.priceData.valueEn}
-                            />
-                        ) : (
-                            "$50"
-                        )}
-                    </div>
-                }
-            </div>
+                <div className="price">
+                    <FormattedMessage id="patient.booking-modal.price" />:
+                    {dataProfile && dataProfile.Doctor_Infor && language === LANGUAGES.VI ? (
+                        <NumberFormat
+                            className="currency"
+                            displayType={"text"}
+                            thousandSeparator={true}
+                            suffix={"VND"}
+                            value={dataProfile.Doctor_Infor.priceTypeData.valueVi}
+                        />
+                    ) : (
+                        ""
+                    )}
+                    {dataProfile && dataProfile.Doctor_Infor && language === LANGUAGES.EN ? (
+                        <NumberFormat
+                            className="currency"
+                            displayType={"text"}
+                            thousandSeparator={true}
+                            suffix={"$"}
+                            value={dataProfile.Doctor_Infor.priceTypeData.valueEn}
+                        />
+                    ) : (
+                        ""
+                    )}
+                </div>
+    }</div>
         );
     }
 }

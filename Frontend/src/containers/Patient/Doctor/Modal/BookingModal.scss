@@ -19,6 +19,9 @@
         .booking-modal-body {
             padding: 10px;
             height: 100%;
+            .error {
+                color: red;
+            }
         }
         .booking-modal-footer {
             border-top: 1px solid #ccc;

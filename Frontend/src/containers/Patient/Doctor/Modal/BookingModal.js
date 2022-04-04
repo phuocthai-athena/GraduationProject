@@ -28,6 +28,7 @@ class BookingModal extends Component {
             doctorId: "",
             genders: "",
             timeType: "",
+            errors: {},
         };
     }
 
@@ -61,7 +62,6 @@ class BookingModal extends Component {
         }
         if (this.props.dataTime !== prevProps.dataTime) {
             if (this.props.dataTime && !_.isEmpty(this.props.dataTime)) {
-                console.log(this.props.dataTime);
                 let doctorId = this.props.dataTime.doctorId;
                 let timeType = this.props.dataTime.timeType;
                 this.setState({
@@ -77,6 +77,7 @@ class BookingModal extends Component {
         let stateCopy = { ...this.state };
         stateCopy[id] = valueInput;
         this.setState({ ...stateCopy });
+        this.setState({ errors: {} });
     };
 
     handleOnChangeBirthDay = (date) => {
@@ -89,12 +90,14 @@ class BookingModal extends Component {
 
     handleConfirmBooking = async () => {
         //validate input
+        if (!this.handleValidation()) {
+            return;
+        }
         let language = this.props.language;
 
         let date = new Date(this.state.birthday).getTime();
         let timeString = this.buildTimeString(this.props.dataTime);
         let doctorName = this.buildDoctorName(this.props.dataTime.doctorData);
-
         let res = await postPatientBookingAppointment({
             fullName: this.state.fullName,
             phoneNumber: this.state.phoneNumber,
@@ -158,9 +161,103 @@ class BookingModal extends Component {
         return "";
     };
 
+    handleValidation() {
+        let state = this.state;
+        let errors = {};
+        let formIsValid = true;
+        let language = this.props.language;
+
+        //Name
+        if (state["fullName"] === "") {
+            formIsValid = false;
+            errors["fullName"] =
+                language === LANGUAGES.VI ? "Vui lòng nhập thông tin" : "Cannot be empty";
+        } else {
+            if (typeof state["fullName"] !== "undefined") {
+                if (state["fullName"].match(/^[0-9]+$/)) {
+                    formIsValid = false;
+                    errors["fullName"] = LANGUAGES.VI
+                        ? "Họ tên chỉ bao gồm chữ cái"
+                        : "Only type letters";
+                }
+            }
+        }
+
+        //Email
+        if (state["email"] === "") {
+            formIsValid = false;
+            errors["email"] =
+                language === LANGUAGES.VI ? "Vui lòng nhập thông tin" : "Cannot be empty";
+        } else {
+            if (typeof state["email"] !== "undefined") {
+                let lastAtPos = state["email"].lastIndexOf("@");
+                let lastDotPos = state["email"].lastIndexOf(".");
+
+                if (
+                    !(
+                        lastAtPos < lastDotPos &&
+                        lastAtPos > 0 &&
+                        state["email"].indexOf("@@") == -1 &&
+                        lastDotPos > 2 &&
+                        state["email"].length - lastDotPos > 2
+                    )
+                ) {
+                    formIsValid = false;
+                    errors["email"] = LANGUAGES.VI
+                        ? "Email không đúng định dạng"
+                        : "Email is not valid";
+                }
+            }
+        }
+
+        if (state["phoneNumber"] === "") {
+            formIsValid = false;
+            errors["phoneNumber"] =
+                language === LANGUAGES.VI ? "Vui lòng nhập thông tin" : "Cannot be empty";
+        } else {
+            if (typeof state["fullName"] !== "undefined") {
+                if (
+                    !state["phoneNumber"].match(
+                        /^(0)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/
+                    )
+                ) {
+                    formIsValid = false;
+                    errors["phoneNumber"] = LANGUAGES.VI
+                        ? "Số điện thoại không hợp lệ"
+                        : "Wrong phone number";
+                }
+            }
+        }
+
+        if (state["address"] === "") {
+            formIsValid = false;
+            errors["address"] =
+                language === LANGUAGES.VI ? "Vui lòng nhập thông tin" : "Cannot be empty";
+        }
+
+        if (state["reason"] === "") {
+            formIsValid = false;
+            errors["reason"] =
+                language === LANGUAGES.VI ? "Vui lòng nhập thông tin" : "Cannot be empty";
+        }
+
+        if (state["birthday"] === "") {
+            formIsValid = false;
+            errors["birthday"] =
+                language === LANGUAGES.VI ? "Vui lòng nhập thông tin" : "Cannot be empty";
+        }
+
+        if (state["selectedGender"] === "") {
+            formIsValid = false;
+            errors["selectedGender"] =
+                language === LANGUAGES.VI ? "Vui lòng nhập thông tin" : "Cannot be empty";
+        }
+        this.setState({ errors: errors });
+        return formIsValid;
+    }
+
     render() {
         let { isOpenModalBooking, handleCloseModal, dataTime } = this.props;
-        let doctorId = dataTime && !_.isEmpty(dataTime.doctorId) ? dataTime.doctorId : "";
         return (
             <div>
                 <Modal
@@ -182,7 +279,7 @@ class BookingModal extends Component {
                         <div className="booking-modal-body">
                             <div className="doctor-info">
                                 <ProfileDoctor
-                                    doctorId={doctorId}
+                                    doctorId={dataTime.doctorId}
                                     dataTime={dataTime}
                                     isShowDescriptionDoctor={false}
                                     isShowLinkDetail = {false}
@@ -199,6 +296,7 @@ class BookingModal extends Component {
                                         value={this.state.fullName}
                                         onChange={(e) => this.handleOnChangeInput(e, "fullName")}
                                     />
+                                    <span className="error">{this.state.errors["fullName"]}</span>
                                 </div>
                                 <div className="col-6 form-group">
                                     <label>
@@ -208,7 +306,15 @@ class BookingModal extends Component {
                                         className="form-control"
                                         value={this.state.phoneNumber}
                                         onChange={(e) => this.handleOnChangeInput(e, "phoneNumber")}
+                                        onKeyPress={(event) => {
+                                            if (!/[0-9]/.test(event.key)) {
+                                                event.preventDefault();
+                                            }
+                                        }}
                                     />
+                                    <span className="error">
+                                        {this.state.errors["phoneNumber"]}
+                                    </span>
                                 </div>
                                 <div className="col-6 form-group">
                                     <label>
@@ -219,6 +325,7 @@ class BookingModal extends Component {
                                         value={this.state.email}
                                         onChange={(e) => this.handleOnChangeInput(e, "email")}
                                     />
+                                    <span className="error">{this.state.errors["email"]}</span>
                                 </div>
                                 <div className="col-6 form-group">
                                     <label>
@@ -229,6 +336,7 @@ class BookingModal extends Component {
                                         value={this.state.address}
                                         onChange={(e) => this.handleOnChangeInput(e, "address")}
                                     />
+                                    <span className="error">{this.state.errors["address"]}</span>
                                 </div>
                                 <div className="col-12 form-group">
                                     <label>
@@ -240,6 +348,7 @@ class BookingModal extends Component {
                                         value={this.state.reason}
                                         onChange={(e) => this.handleOnChangeInput(e, "reason")}
                                     />
+                                    <span className="error">{this.state.errors["reason"]}</span>
                                 </div>
                                 <div className="col-6 form-group">
                                     <label>
@@ -250,6 +359,7 @@ class BookingModal extends Component {
                                         onChange={this.handleOnChangeBirthDay}
                                         value={this.state.birthday}
                                     />
+                                    <span className="error">{this.state.errors["birthday"]}</span>
                                 </div>
                                 <div className="col-6 form-group">
                                     <label>
@@ -260,6 +370,9 @@ class BookingModal extends Component {
                                         onChange={this.handleOnChangeGender}
                                         options={this.state.genders}
                                     />
+                                    <span className="error">
+                                        {this.state.errors["selectedGender"]}
+                                    </span>
                                 </div>
                             </div>
                         </div>
