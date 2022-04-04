@@ -15,6 +15,7 @@ import VerifyEmail from "./Patient/VerifyEmail";
 import { CustomToastCloseButton } from "../components/CustomToast";
 import ConfirmModal from "../components/ConfirmModal";
 import CustomScrollbars from "../components/CustomScrollbars";
+import DetailSpecialty from "./Patient/Specialty/DetailSpecialty";
 
 class App extends Component {
     handlePersistorState = () => {
@@ -54,6 +55,7 @@ class App extends Component {
                                         component={userIsAuthenticated(System)}
                                     />
                                     <Route path={path.HOMEPAGE} component={HomePage} />
+                                    <Route path={path.DETAIL_SPECIALTY} component={DetailSpecialty} />
                                     <Route
                                         path={path.VERIFY_EMAIL_BOOKING}
                                         component={VerifyEmail}

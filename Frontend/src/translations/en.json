@@ -65,7 +65,8 @@
   },
   "homepage":{
     "outstanding-doctor":"Last week's featured doctor",
-    "more-infor":"More Infor"
+    "more-infor":"More Infor",
+    "specialty-popular": "Popular Specialties"
   },
   "patient": {
       "booking-modal" : {
