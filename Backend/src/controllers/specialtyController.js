@@ -30,6 +30,7 @@ let getDetailSpecialtyById = async (req, res) => {
         let infor = await specialtyService.getDetailSpecialtyById(req.query.id, req.query.location);
         return res.status(200).json(infor);
     } catch (err) {
+        console.log(err);
         return res.status(200).json({
             errCode: -1,
             errMessage: "Error from the server",

@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import './DetailSpecialty.scss';
 import HomeHeader from "../../HomePage/HomeHeader";
-// import DoctorSchedule from "../Doctor/DoctorSchedule";
-// import DoctorExtraInfor from "../Doctor/DoctorExtraInfor";
+import DoctorSchedule from "../Doctor/DoctorSchedule";
+import DoctorExtraInfor from "../Doctor/DoctorExtraInfor";
 import ProfileDoctor from "../Doctor/ProfileDoctor";
 import {getAllDetailSpecialtyById, getAllCodeService} from "../../../services/userService";
 import _ from "lodash";
@@ -15,7 +15,7 @@ class DetailSpecialty extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            arrDoctorId: [1,2,3],
+            arrDoctorId: [],
             dataDetailSpecialty: {},
             listProvince: []
         };
@@ -44,7 +44,7 @@ class DetailSpecialty extends Component {
                     }
                 }
 
-                let dataProvince = resProvince.data
+                let dataProvince = resProvince.data;
                 if(dataProvince && dataProvince.length > 0) {
                     dataProvince.unshift({
                         createdAt: null,
@@ -147,14 +147,14 @@ class DetailSpecialty extends Component {
                                     </div>
                                     <div className="dt-content-right">
                                         <div className="doctor-schedule">
-                                            {/* <DoctorSchedule 
+                                            <DoctorSchedule 
                                                 doctorIdFromParent = {item}
-                                            /> */}
+                                            />
                                         </div>
                                         <div className="doctor-extra-infor">
-                                            {/* <DoctorExtraInfor
+                                            <DoctorExtraInfor
                                                 doctorIdFromParent = {item}
-                                            /> */}
+                                            />
                                         </div>
                                     </div>
                                 </div>
