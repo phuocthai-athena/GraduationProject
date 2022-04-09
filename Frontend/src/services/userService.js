@@ -79,6 +79,10 @@ const getExtraInforDoctorById = (doctorId) => {
     return axios.get(`/api/get-extra-infor-doctor-by-id?doctorId=${doctorId}`);
 };
 
+const createNewClinic = (data) => {
+    return axios.post('/api/create-new-clinic',data);
+};
+
 export {
     handleLoginApi,
     getAllUsers,
@@ -97,5 +101,6 @@ export {
     postPatientBookingAppointment,
     postVerifyBookingAppointment,
     createNewSpecialty,
-    getAllSpecialty, getAllDetailSpecialtyById
+    getAllSpecialty, getAllDetailSpecialtyById,
+    createNewClinic
 };
