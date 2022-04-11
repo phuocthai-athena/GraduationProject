@@ -59,30 +59,30 @@ let getAllDoctors = () => {
 };
 
 let checkRequiredFields = (inputData) => {
-	let arrFields = ['doctorId', 'contentHTML', 'contentMarkdown', 'action', 'selectedPrice', 
-			'selectedPayment','selectedProvince','nameClinic','addressClinic','note','specialtyId'
-        ]
-        
-	let isValid = true;
-	let element = '';
-	for(let i = 0; i < arrFields.length; i++){
-		if(!inputData[arrFields[i]]){
-			isValid = false;
-			element = arrFields[i];
-			break;
-		}
-	}
-	return {
-		isValid: isValid,
-		element: element
-	}
+    let arrFields = ['doctorId', 'contentHTML', 'contentMarkdown', 'action', 'selectedPrice',
+        'selectedPayment', 'selectedProvince', 'nameClinic', 'addressClinic', 'note', 'specialtyId'
+    ]
+
+    let isValid = true;
+    let element = '';
+    for (let i = 0; i < arrFields.length; i++) {
+        if (!inputData[arrFields[i]]) {
+            isValid = false;
+            element = arrFields[i];
+            break;
+        }
+    }
+    return {
+        isValid: isValid,
+        element: element
+    }
 }
 
 let saveDetailInforDoctor = (inputData) => {
     return new Promise(async (resolve, reject) => {
         try {
             let checkObj = checkRequiredFields(inputData);
-            if(checkObj.isValid === false) {
+            if (checkObj.isValid === false) {
                 resolve({
                     errCode: 1,
                     errMessage: `Missing parameter: ${checkObj.element}`,
@@ -127,7 +127,7 @@ let saveDetailInforDoctor = (inputData) => {
                     doctorInfor.addressClinic = inputData.addressClinic;
                     doctorInfor.note = inputData.note;
                     doctorInfor.specialtyId = inputData.specialtyId;
-					doctorInfor.clinicId = inputData.clinicId;
+                    doctorInfor.clinicId = inputData.clinicId;
 
                     await doctorInfor.save();
                 } else {
@@ -141,7 +141,7 @@ let saveDetailInforDoctor = (inputData) => {
                         addressClinic: inputData.addressClinic,
                         note: inputData.note,
                         specialtyId: inputData.specialtyId,
-						clinicId: inputData.clinicId,
+                        clinicId: inputData.clinicId,
                     });
                 }
 
@@ -417,6 +417,49 @@ let getExtraInforDoctorById = (idInput) => {
     });
 };
 
+let getListPatientForDoctor = (doctorId, date) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!doctorId || !date) {
+                resolve({
+                    errCode: -1,
+                    errMessage: "Missing required parameters",
+                });
+            } else {
+                let data = await db.Booking.findAll({
+                    where: {
+                        statusId: 'S2',
+                        doctorId: doctorId,
+                        date: date
+                    },
+                    include: [
+                        {
+                            model: db.User,
+                            as: "patientData",
+                            attributes: ["email", "firstName", "address", "gender"],
+                            include: [
+                                {
+                                    model: db.Allcode,
+                                    as: "genderData",
+                                    attributes: ["valueEn", "valueVi"],
+                                }],
+                        },
+                    ],
+                    raw: false,
+                    nest: true,
+                });
+                resolve({
+                    errCode: 0,
+                    data: data,
+                });
+            }
+        } catch (e) {
+            reject(e);
+
+        }
+    })
+}
+
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctors: getAllDoctors,
@@ -426,4 +469,5 @@ module.exports = {
     getScheduleByDate: getScheduleByDate,
     getExtraInforDoctorById: getExtraInforDoctorById,
     getProfileDoctorById: getProfileDoctorById,
+    getListPatientForDoctor: getListPatientForDoctor,
 };

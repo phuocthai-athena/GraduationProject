@@ -15,7 +15,8 @@ let postBookAppointment = (data) => {
         try {
             let token = uuidv4();
             console.log(data);
-            if (!data.email || !data.doctorId || !data.timeType || !data.date || !data.fullName) {
+            if (!data.email || !data.doctorId || !data.timeType || !data.date 
+                || !data.fullName || !data.selectedGender || !data.address) {
                 resolve({
                     errCode: 1,
                     errMessage: "Missing required parameters",
