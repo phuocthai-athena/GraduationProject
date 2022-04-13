@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { FormattedMessage } from "react-intl";
+import { FormattedDate, FormattedMessage } from "react-intl";
 import DatePicker from "../../../components/Input/DatePicker";
+import "./ManagePatient.scss";
+import { getAllPatientForDoctor } from "../../../services/userService";
 
-import "./ManagePatient.scss"
 class ManagePatient extends Component {
     constructor(props) {
         super(props);
@@ -12,7 +13,17 @@ class ManagePatient extends Component {
         };
     }
 
-    async componentDidMount() { }
+    async componentDidMount() {
+        let { user } = this.props;
+        let { currentDate } = this.state;
+        let formatedDate = new Date(currentDate).getTime();;
+        console.log("check state: ", this.state);
+        let res = await getAllPatientForDoctor({
+            doctorId: user.id,
+            date: formatedDate,
+        })
+        console.log("check res: ", res);
+    }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.language !== prevProps.language) {
@@ -26,6 +37,7 @@ class ManagePatient extends Component {
     };
 
     render() {
+        console.log(">>>>", this.props);
         return (
             <div className="manage-patient-container">
                 <div className="m-p-title">
@@ -43,16 +55,17 @@ class ManagePatient extends Component {
                     </div>
                     <div className="col-12 table-manage-patient">
                         <table style={{ width: '100%' }}>
-                            <tr>
-                                <td>Name</td>
-                                <td>Tobias</td>
-                                <td>Linus</td>
-                            </tr>
-                            <tr>
-                                <td>16</td>
-                                <td>14</td>
-                                <td>10</td>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <th>Name</th>
+                                    <th colSpan="2">Telephone</th>
+                                </tr>
+                                <tr>
+                                    <td>Bill Gates</td>
+                                    <td>1444444</td>
+                                    <td>1888880</td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -65,6 +78,7 @@ class ManagePatient extends Component {
 const mapStateToProps = (state) => {
     return {
         language: state.app.language,
+        user: state.user.userInfo,
     };
 };
 

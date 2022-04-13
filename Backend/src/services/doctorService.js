@@ -444,6 +444,11 @@ let getListPatientForDoctor = (doctorId, date) => {
                                     attributes: ["valueEn", "valueVi"],
                                 }],
                         },
+                        {
+                            model: db.Allcode,
+                            as: "timeTypeDataPatient",
+                            attributes: ["valueEn", "valueVi"],
+                        }
                     ],
                     raw: false,
                     nest: true,
