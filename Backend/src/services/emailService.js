@@ -26,6 +26,59 @@ let getTitle = (language) => {
         : "Thông tin đặt lịch khám bệnh";
 };
 
+let getBodyHTMLEmailRemedy = (dataSend) => {
+    let result = "";
+    if (dataSend.language === "vi") {
+        result = `
+        <h4>Xin chào ${dataSend.patientName}</h4>
+        <p>Bạn nhận được email này vì đã đặt lịch khám bệnh online trên website Doctor Care thành công </p>
+        <p>Thông tin đơn thuốc / hóa đơn được gửi trong file đính kèm</p>
+        <p>Xin chân thành cảm ơn</p>
+    `;
+    } else if (dataSend.language === "en") {
+        result = `
+        <h4>Hello ${dataSend.patientName}</h4>
+        <p>You received this email because you booked an online medical appointment on the Doctor Care website</p>
+        <p>Thank you and best regard</p>
+    `;
+    }
+}
+
+let sendAttachment = async (dataSend) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let transporter = nodemailer.createTransport({
+                host: "smtp.gmail.com",
+                port: 587,
+                secure: false,
+                auth: {
+                    user: process.env.EMAIL_APP,
+                    pass: process.env.EMAIL_APP_PASSWORD,
+                },
+            });
+
+            let info = await transporter.sendMail({
+                from: '"Dotor Care 👻" <trungtinh3022@gmail.com>',
+                to: dataSend.email,
+                subject: "Kết quả đặt lịch khám bệnh",
+                html: getBodyHTMLEmailRemedy(dataSend),
+                attachments: [
+                    {
+                        filename: `remedy-${dataSend.patientId}-${new Date().getTime()}.png`,
+                        content: dataSend.imgBase64.split("base64,")[1],
+                        encoding: "base64",
+                    }
+
+                ],
+            });
+            console.log("Check info send email: ");
+            resolve(true);
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 let getBodyHTMLEmail = (dataSend) => {
     let result = "";
     if (dataSend.language === "vi") {
@@ -66,4 +119,5 @@ let getBodyHTMLEmail = (dataSend) => {
 
 module.exports = {
     sendSimpleEmail: sendSimpleEmail,
+    sendAttachment: sendAttachment
 };

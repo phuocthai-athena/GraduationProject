@@ -56,11 +56,13 @@ class ManagePatient extends Component {
   };
 
   handleBtnConfirm = (item) => {
+    
     let data = {
       doctorId: item.doctorId,
       patientId: item.patientId,
       email: item.patientData.email,
       timeType: item.timeType,
+      patientName: item.patientData.firstName,
     }
     this.setState({
       isOpenRemedyModal: true,
@@ -81,6 +83,8 @@ class ManagePatient extends Component {
       doctorId: dataModal.doctorId,
       patientId: dataModal.patientId,
       timeType: dataModal.timeType,
+      language: this.props.language,
+      patientName: dataModal.patientName,
     });
     if (res && res.errCode === 0) {
       toast.success("Send Remedy succeeds:");
