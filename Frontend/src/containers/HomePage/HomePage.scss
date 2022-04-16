@@ -53,15 +53,15 @@
   .specialty-body {
     .section-customize {
       .bg-image {
-        width: 420px;
-        height: 200px;
+        width: 278px;
+        height: 150px;
         background-position: center center;
         background-repeat: no-repeat;
-        background-size: 100%;
+        background-size: cover;
         background-color: #eee;
 
         &.section-specialty {
-          background-image: url("../../assets/specialty/co-xuong-khop.jpg");
+          // background-image: url("../../assets/specialty/co-xuong-khop.jpg");
         }
 
         &.section-medical-facility {
