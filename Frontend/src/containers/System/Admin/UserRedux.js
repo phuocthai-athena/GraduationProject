@@ -217,13 +217,10 @@ class UserRedux extends Component {
     } = this.state;
     return (
       <div className="user-redux-container">
-        <div className="title">User redux</div>
+        <div className="title">Quản lý người dùng</div>
         <div className="user-redux-body">
           <div className="container">
             <div className="row">
-              <div className="col-12 mt-3">
-                <FormattedMessage id="manage-user.add" />
-              </div>
               <div className="col-12 mt-3">
                 {isGetGenders === true ? "Loading genders" : ""}
               </div>
