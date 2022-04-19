@@ -15,8 +15,10 @@ import VerifyEmail from "./Patient/VerifyEmail";
 import { CustomToastCloseButton } from "../components/CustomToast";
 import ConfirmModal from "../components/ConfirmModal";
 import CustomScrollbars from "../components/CustomScrollbars";
+import DetailSpecialty from "./Patient/Specialty/DetailSpecialty";
 import DetailDoctor from "./Patient/Doctor/DetailDoctor";
 import Doctor from "../routes/Doctor";
+import DetailClinic from "./Patient/Clinic/DetailClinic";
 
 class App extends Component {
     handlePersistorState = () => {
@@ -60,7 +62,11 @@ class App extends Component {
                                         component={userIsAuthenticated(Doctor)}
                                     />
                                     <Route path={path.HOMEPAGE} component={HomePage} />
+                                    <Route path={path.DETAIL_SPECIALTY} component={DetailSpecialty} />
                                     <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
+                                    <Route path={path.DETAIL_CLINIC} component={DetailClinic} />
+
+
                                     <Route
                                         path={path.VERIFY_EMAIL_BOOKING}
                                         component={VerifyEmail}
@@ -68,19 +74,6 @@ class App extends Component {
                                 </Switch>
                             </CustomScrollbars>
                         </div>
-
-                        {/* <ToastContainer
-              className="toast-container"
-              toastClassName="toast-item"
-              bodyClassName="toast-item-body"
-              autoClose={false}
-              hideProgressBar={true}
-              pauseOnHover={false}
-              pauseOnFocusLoss={true}
-              closeOnClick={false}
-              draggable={false}
-              closeButton={<CustomToastCloseButton />}
-            /> */}
 
                         <ToastContainer
                             position="bottom-right"

@@ -36,7 +36,8 @@
       "manage-handbook": "Handbook Management"
     },
     "doctor": {
-      "manage-schedule": "Manage doctor's schedule"
+      "manage-schedule": "Manage doctor's schedule",
+      "manage-patient": "Manage doctor's patient"
     }
   },
   "manage-user": {
@@ -56,7 +57,9 @@
   },
   "homepage": {
     "outstanding-doctor": "Last week's featured doctor",
-    "more-infor": "More Infor"
+    "more-infor": "More Infor",
+    "specialty-popular": "Popular Specialties",
+    "medical-facility": "Outstanding medical facilities"
   },
   "manage-schedule": {
     "title": "Manage doctor's examination plan",
@@ -78,20 +81,20 @@
       "payment": "The patient can pay the cost in the form of:",
       "hide-price": "Hide price list"
     },
-    "booking-modal" : {
-        "title": "Information to book a medical appointment",
-        "fullName": "Full name",
-        "phoneNumber": "Phone number",
-        "email": "Email",
-        "address": "Address",
-        "reason": "Reasons for medical examination",
-        "birthday": "Date of birth",
-        "genders": "Gender",
-        "btnConfirm": "Confirm",
-        "btnCancel": "Cancel",
-        "price": "Price",
-        "bookingPrice": "Free booking"
-      }
+    "booking-modal": {
+      "title": "Information to book a medical appointment",
+      "fullName": "Full name",
+      "phoneNumber": "Phone number",
+      "email": "Email",
+      "address": "Address",
+      "reason": "Reasons for medical examination",
+      "birthday": "Date of birth",
+      "genders": "Gender",
+      "btnConfirm": "Confirm",
+      "btnCancel": "Cancel",
+      "price": "Price",
+      "bookingPrice": "Free booking"
+    }
   },
   "admin": {
     "manage-doctor": {
@@ -105,7 +108,9 @@
       "province": "Province",
       "nameClinic": "Clinic's name",
       "addressClinic": "Clinic's address",
-      "note": "Note"
+      "note": "Note",
+      "specialty": "Specialty",
+      "select-clinic": "Clinic"
     }
   }
 }
