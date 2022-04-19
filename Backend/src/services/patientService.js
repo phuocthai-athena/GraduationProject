@@ -29,18 +29,36 @@ let postBookAppointment = (data) => {
                     language: data.language,
                     redirectLink: buildUrlEmail(data.doctorId, token),
                 });
+                var lastName = data.fullName.split(" ").slice(0, -1).join(" ");
+                var firstName = data.fullName.split(" ").slice(-1).join(" ");
 
-                let user = await db.User.findOrCreate({
-                    where: { email: data.email },
-                    defaults: {
+                const user = await db.User.findOne({ where: { email: data.email } });
+                if (!user) {
+                    await db.User.create({
                         email: data.email,
                         roleId: "R3",
                         address: data.address,
-                        phoneNumber: data.phoneNumber,
+                        phonenumber: data.phoneNumber,
                         gender: data.selectedGender,
-                        firstName: data.fullName,
-                    },
-                });
+                        firstName: firstName,
+                        lastName: lastName,
+                    });
+                } else {
+                    await db.User.update(
+                        {
+                            address: data.address,
+                            phonenumber: data.phoneNumber,
+                            gender: data.selectedGender,
+                            firstName: firstName,
+                            lastName: lastName,
+                        },
+                        {
+                            where: {
+                                email: data.email,
+                            },
+                        }
+                    );
+                }
                 if (user && user[0]) {
                     await db.Booking.findOrCreate({
                         where: { patientId: user[0].id },
@@ -88,6 +106,16 @@ let postverifyBookAppointment = (data) => {
                 if (appointment) {
                     appointment.statusId = "S2";
                     await appointment.save();
+                    let schedule = await db.Schedule.findOne({
+                        where: {
+                            timeType: appointment.timeType,
+                            doctorId: appointment.doctorId,
+                        },
+                        raw: false,
+                    });
+                    let currentNumber = schedule.currentNumber ? schedule.currentNumber : 0;
+                    schedule.currentNumber = currentNumber + 1;
+                    await schedule.save();
                     resolve({
                         errCode: 0,
                         errMessage: "Update appointment successfully",

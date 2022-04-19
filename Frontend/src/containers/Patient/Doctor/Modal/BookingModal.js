@@ -356,6 +356,7 @@ class BookingModal extends Component {
                                         className="form-control"
                                         onChange={this.handleOnChangeBirthDay}
                                         value={this.state.birthday}
+                                        maxDate={new Date()}
                                     />
                                     <span className="error">{this.state.errors["birthday"]}</span>
                                 </div>
