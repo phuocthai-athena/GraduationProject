@@ -161,12 +161,15 @@ class ManageSchedule extends Component {
               <label>
                 <FormattedMessage id="manage-schedule.choose-date" />
               </label>
-              <DatePicker
-                onChange={this.handleOnChangeDatePicker}
-                className="form-control"
-                value={this.state.currentDate}
-                minDate={yesterday}
-              />
+              <div className="date-picker">
+                <DatePicker
+                  onChange={this.handleOnChangeDatePicker}
+                  className="form-control choose-date"
+                  value={this.state.currentDate}
+                  minDate={yesterday}
+                />
+                <i className="fas fa-calendar-alt calendar"></i>
+              </div>
             </div>
             <div className="col-12 pick-hour-container">
               {rangeTime &&

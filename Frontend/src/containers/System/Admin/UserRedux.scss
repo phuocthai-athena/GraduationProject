@@ -3,6 +3,37 @@
     color: #000;
   }
 
+  .date-picker {
+    position: relative;
+    display: flex;
+
+    .choose-date {
+      z-index: 10;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .calendar {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translate(-50%, -50%);
+      font-size: 20px;
+      z-index: 9;
+    }
+  }
+
+  .custom-input-password {
+    position: relative;
+
+    i {
+      position: absolute;
+      right: 5px;
+      top: 10px;
+      cursor: pointer;
+    }
+  }
+
   .preview-img-container {
     .label-upload {
       padding: 6px;

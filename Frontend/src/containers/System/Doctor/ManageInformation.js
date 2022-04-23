@@ -42,15 +42,12 @@ class ManageSchedule extends Component {
   }
 
   async componentDidMount() {
-    let { userInfo } = this.props;
-    let res = await getAllUsers(userInfo.id);
     this.props.getGenderStart();
     this.props.getPositionStart();
     this.props.getRoleStart();
-    this.handleEditUserFromParent(res.users);
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  async componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.genderRedux !== this.props.genderRedux) {
       let arrGenders = this.props.genderRedux;
       this.setState({
@@ -73,6 +70,9 @@ class ManageSchedule extends Component {
         role: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : "",
       });
     }
+    let { userInfo } = this.props;
+    let res = await getAllUsers(userInfo.id);
+    this.handleEditUserFromParent(res.users);
   }
 
   handleSaveUser = (user) => {
@@ -310,6 +310,9 @@ class ManageSchedule extends Component {
                     className="form-control"
                     onChange={(event) => this.onChangeInput(event, "gender")}
                     value={gender}
+                    disabled={
+                      this.state.action === CRUD_ACTIONS.EDIT ? true : false
+                    }
                   >
                     {genders &&
                       genders.length > 0 &&

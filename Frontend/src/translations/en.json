@@ -43,20 +43,41 @@
     }
   },
   "manage-user": {
+    "title": "User Management",
     "add": "Add a new user",
     "email": "Email",
     "password": "Password",
+    "confirm-password": "Confirm password",
     "change-password": "Change the password",
     "first-name": "First name",
     "last-name": "Last name",
     "phone-number": "Phone number",
     "address": "Address",
+    "birthday": "Date of birth",
     "gender": "Gender",
     "position": "Position",
     "role": "Role",
     "image": "Avatar",
+    "upload-file": "Upload photos",
     "save": "Save user",
     "edit": "Edit user"
+  },
+  "manage-clinic": {
+    "title": "Clinic Management",
+    "name": "Clinic name",
+    "image": "Clinic photo",
+    "upload-file": "Upload photos",
+    "address": "Clinic address",
+    "description": "Description of the clinic",
+    "button": "Save"
+  },
+  "manage-specialty": {
+    "title": "Specialized Management",
+    "name": "Specialized name",
+    "image": "Specialized picture",
+    "upload-file": "Upload photos",
+    "description": "Specialized description",
+    "button": "Save"
   },
   "homepage": {
     "outstanding-doctor": "Last week's featured doctor",

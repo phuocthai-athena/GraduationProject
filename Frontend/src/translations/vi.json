@@ -43,9 +43,11 @@
     }
   },
   "manage-user": {
+    "title": "Quản lý người dùng",
     "add": "Thêm mới",
     "email": "Email",
     "password": "Mật khẩu",
+    "confirm-password": "Xác nhận mật khẩu",
     "change-password": "Thay đổi mật khẩu",
     "first-name": "Tên",
     "last-name": "Họ",
@@ -55,8 +57,27 @@
     "position": "Chức danh",
     "role": "Vai trò",
     "image": "Ảnh đại diện",
+    "upload-file": "Tải ảnh lên",
     "save": "Tạo người dùng",
-    "edit": "Cập nhật người dùng"
+    "edit": "Cập nhật người dùng",
+    "birthday": "Ngày sinh"
+  },
+  "manage-clinic": {
+    "title": "Quản lý phòng khám",
+    "name": "Tên phòng khám",
+    "image": "Ảnh phòng khám",
+    "upload-file": "Tải ảnh lên",
+    "address": "Địa chỉ phòng khám",
+    "description": "Mô tả phòng khám",
+    "button": "Lưu"
+  },
+  "manage-specialty": {
+    "title": "Quản lý chuyên khoa",
+    "name": "Tên chuyên khoa",
+    "image": "Ảnh chuyên khoa",
+    "upload-file": "Tải ảnh lên",
+    "description": "Mô tả chuyên khoa",
+    "button": "Lưu"
   },
   "homepage": {
     "outstanding-doctor": "Bác sĩ nổi bật tuần qua",
@@ -114,7 +135,7 @@
       "note": "Ghi chú",
       "specialty": "Chọn chuyên khoa",
       "select-clinic": "Chọn phòng khám",
-      "description-infor-doctor":"Mô tả chi tiết bác sĩ"
+      "description-infor-doctor": "Mô tả chi tiết bác sĩ"
     }
   }
 }
