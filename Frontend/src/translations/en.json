@@ -9,7 +9,9 @@
     "fee": "Checkup package",
     "check-health": "General health check",
     "support": "Support",
-    "welcome": "Welcome, "
+    "welcome": "Welcome, ",
+    "clinic": "Clinic"
+
   },
   "banner": {
     "title1": "MEDICAL PLATFORM",

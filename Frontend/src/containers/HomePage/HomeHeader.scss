@@ -144,6 +144,7 @@
             padding: 10px;
             border-radius: 25px;
             background: #f7d800;
+            position: relative;
 
             input {
                 height: 30px;
@@ -205,4 +206,11 @@
             }
         }
     }
+}
+
+.search-result-container {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    width: 100%;
 }

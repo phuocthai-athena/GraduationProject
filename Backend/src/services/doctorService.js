@@ -1,7 +1,7 @@
 import db from "../models/index";
 require("dotenv").config();
 import _, { reject } from "lodash";
-import emailService from "../services/emailService"
+import emailService from "../services/emailService";
 
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
 
@@ -46,9 +46,24 @@ let getAllDoctors = () => {
             let doctors = await db.User.findAll({
                 where: { roleId: "R2" },
                 attributes: {
-                    exclude: ["password", "image"],
+                    exclude: ["password"],
                 },
+                include: [
+                    {
+                        model: db.Allcode,
+                        as: "positionData",
+                        attributes: ["valueEn", "valueVi"],
+                    },
+                ],
+                raw: false,
+                nest: true,
             });
+            if (doctors && doctors.length > 0) {
+                doctors.map((item) => {
+                    item.image = new Buffer(item.image, "Base64").toString("binary");
+                    return item;
+                });
+            }
             resolve({
                 errCode: 0,
                 data: doctors,
@@ -60,12 +75,22 @@ let getAllDoctors = () => {
 };
 
 let checkRequiredFields = (inputData) => {
-    let arrFields = ['doctorId', 'contentHTML', 'contentMarkdown', 'action', 'selectedPrice',
-        'selectedPayment', 'selectedProvince', 'nameClinic', 'addressClinic', 'note', 'specialtyId'
-    ]
+    let arrFields = [
+        "doctorId",
+        "contentHTML",
+        "contentMarkdown",
+        "action",
+        "selectedPrice",
+        "selectedPayment",
+        "selectedProvince",
+        "nameClinic",
+        "addressClinic",
+        "note",
+        "specialtyId",
+    ];
 
     let isValid = true;
-    let element = '';
+    let element = "";
     for (let i = 0; i < arrFields.length; i++) {
         if (!inputData[arrFields[i]]) {
             isValid = false;
@@ -75,9 +100,9 @@ let checkRequiredFields = (inputData) => {
     }
     return {
         isValid: isValid,
-        element: element
-    }
-}
+        element: element,
+    };
+};
 
 let saveDetailInforDoctor = (inputData) => {
     return new Promise(async (resolve, reject) => {
@@ -429,9 +454,9 @@ let getListPatientForDoctor = (doctorId, date) => {
             } else {
                 let data = await db.Booking.findAll({
                     where: {
-                        statusId: 'S2',
+                        statusId: "S2",
                         doctorId: doctorId,
-                        date: date
+                        date: date,
                     },
                     include: [
                         {
@@ -443,13 +468,14 @@ let getListPatientForDoctor = (doctorId, date) => {
                                     model: db.Allcode,
                                     as: "genderData",
                                     attributes: ["valueEn", "valueVi"],
-                                }],
+                                },
+                            ],
                         },
                         {
                             model: db.Allcode,
                             as: "timeTypeDataPatient",
                             attributes: ["valueEn", "valueVi"],
-                        }
+                        },
                     ],
                     raw: false,
                     nest: true,
@@ -461,11 +487,9 @@ let getListPatientForDoctor = (doctorId, date) => {
             }
         } catch (e) {
             reject(e);
-
         }
-    })
-}
-
+    });
+};
 
 let sendRemedy = (data) => {
     return new Promise(async (resolve, reject) => {
@@ -478,16 +502,16 @@ let sendRemedy = (data) => {
             } else {
                 //update patient status
                 let appointment = await db.Booking.findOne({
-                    where:{
+                    where: {
                         doctorId: data.doctorId,
                         patientId: data.patientId,
                         timeType: data.timeType,
                         statusId: "S2",
                     },
                     raw: false,
-                })
+                });
                 if (appointment) {
-                    appointment.statusId = 'S3';
+                    appointment.statusId = "S3";
                     await appointment.save();
                 }
                 //send email remedy
@@ -499,10 +523,9 @@ let sendRemedy = (data) => {
             }
         } catch (e) {
             reject(e);
-
         }
-    })
-}
+    });
+};
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctors: getAllDoctors,

@@ -10,7 +10,6 @@ import HomeFooter from "./HomeFooter";
 import "./HomePage.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import BookingModal from "../Patient/Doctor/Modal/BookingModal";
 
 class HomePage extends Component {
     constructor(props) {
