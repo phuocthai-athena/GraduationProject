@@ -1,12 +1,15 @@
+import moment from "moment";
 import React, { Component } from "react";
-import { FormattedMessage } from "react-intl";
-import { connect } from "react-redux";
-import * as actions from "../../../store/actions";
-import { LANGUAGES, CRUD_ACTIONS, CommonUtils } from "../../../utils";
-import "./UserRedux.scss";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
+import { FormattedMessage } from "react-intl";
+import { connect } from "react-redux";
+import { toast } from "react-toastify";
+import DatePicker from "../../../components/Input/DatePicker";
+import * as actions from "../../../store/actions";
+import { CommonUtils, CRUD_ACTIONS, LANGUAGES } from "../../../utils";
 import TableManageUser from "./TableManageUser";
+import "./UserRedux.scss";
 
 class UserRedux extends Component {
   constructor(props) {
@@ -20,9 +23,11 @@ class UserRedux extends Component {
 
       email: "",
       password: "",
+      confirmPassword: "",
       firstName: "",
       lastName: "",
       phoneNumber: "",
+      birthday: "",
       address: "",
       gender: "",
       position: "",
@@ -31,6 +36,9 @@ class UserRedux extends Component {
 
       userEditId: "",
       action: "",
+
+      isShowPassword: false,
+      isShowConfirmPassword: false,
     };
   }
 
@@ -71,10 +79,12 @@ class UserRedux extends Component {
       this.setState({
         email: "",
         password: "",
+        confirmPassword: "",
         firstName: "",
         lastName: "",
         phoneNumber: "",
         address: "",
+        birthday: "",
         gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].keyMap : "",
         position:
           arrPositions && arrPositions.length > 0 ? arrPositions[0].keyMap : "",
@@ -110,7 +120,20 @@ class UserRedux extends Component {
     let isValid = this.checkValidateInput();
     if (isValid === false) return;
 
-    let { action } = this.state;
+    let { action, birthday } = this.state;
+
+    let formatedDate = moment(birthday).unix();
+
+    if (
+      !this.isPasswordConfirmed(this.state.password, this.state.confirmPassword)
+    ) {
+      if (this.props.language === LANGUAGES.VI) {
+        toast.error("Mật khẩu không khớp");
+      } else {
+        toast.error("Password incorrect");
+      }
+      return;
+    }
 
     if (action === CRUD_ACTIONS.CREATE) {
       //fire redux action
@@ -121,6 +144,7 @@ class UserRedux extends Component {
         lastName: this.state.lastName,
         address: this.state.address,
         phonenumber: this.state.phoneNumber,
+        birthday: formatedDate,
         gender: this.state.gender,
         roleId: this.state.role,
         positionId: this.state.position,
@@ -136,6 +160,7 @@ class UserRedux extends Component {
         firstName: this.state.firstName,
         lastName: this.state.lastName,
         address: this.state.address,
+        birthday: formatedDate,
         phonenumber: this.state.phoneNumber,
         gender: this.state.gender,
         roleId: this.state.role,
@@ -147,6 +172,7 @@ class UserRedux extends Component {
 
   checkValidateInput = () => {
     let isValid = true;
+    let { language } = this.props;
     let arrCheck = [
       "email",
       "password",
@@ -158,7 +184,11 @@ class UserRedux extends Component {
     for (let i = 0; i < arrCheck.length; i++) {
       if (!this.state[arrCheck[i]]) {
         isValid = false;
-        alert("This input is required: " + arrCheck[i]);
+        if (language === LANGUAGES.VI) {
+          toast.error("bạn chưa nhập trường " + arrCheck[i]);
+        } else {
+          toast.error("Not yet entered " + arrCheck[i]);
+        }
         break;
       }
     }
@@ -174,11 +204,18 @@ class UserRedux extends Component {
     });
   };
 
+  handleOnChangeDatePicker = (date) => {
+    this.setState({
+      birthday: date[0],
+    });
+  };
+
   handleEditUserFromParent = (user) => {
     let imageBase64 = "";
     if (user.image) {
       imageBase64 = new Buffer(user.image, "base64").toString("binary");
     }
+    let parseDate = moment.unix(user.birthday).toDate();
     this.setState({
       email: user.email,
       password: "hardcode",
@@ -186,6 +223,7 @@ class UserRedux extends Component {
       lastName: user.lastName,
       phoneNumber: user.phonenumber,
       address: user.address,
+      birthday: parseDate,
       gender: user.gender,
       position: user.positionId,
       role: user.roleId,
@@ -194,6 +232,32 @@ class UserRedux extends Component {
       action: CRUD_ACTIONS.EDIT,
       userEditId: user.id,
     });
+  };
+
+  handleShowHidePassword = () => {
+    if (this.state.action === CRUD_ACTIONS.EDIT) {
+      this.setState({ isShowPassword: false });
+    } else {
+      this.setState({
+        isShowPassword: !this.state.isShowPassword,
+      });
+    }
+  };
+
+  handleShowHideConfirmPassword = () => {
+    if (this.state.action === CRUD_ACTIONS.EDIT) {
+      this.setState({ isShowConfirmPassword: false });
+    } else {
+      this.setState({
+        isShowConfirmPassword: !this.state.isShowConfirmPassword,
+      });
+    }
+  };
+
+  isPasswordConfirmed = (password, confirmPassword) => {
+    if (password && confirmPassword && password === confirmPassword)
+      return true;
+    return false;
   };
 
   render() {
@@ -206,24 +270,26 @@ class UserRedux extends Component {
     let {
       email,
       password,
+      confirmPassword,
       firstName,
       lastName,
       phoneNumber,
       address,
+      birthday,
       gender,
       position,
       role,
       avatar,
     } = this.state;
+    console.log(this.state.previewImgURL);
     return (
       <div className="user-redux-container">
-        <div className="title">User redux</div>
+        <div className="title">
+          <FormattedMessage id="manage-user.title" />
+        </div>
         <div className="user-redux-body">
           <div className="container">
             <div className="row">
-              <div className="col-12 mt-3">
-                <FormattedMessage id="manage-user.add" />
-              </div>
               <div className="col-12 mt-3">
                 {isGetGenders === true ? "Loading genders" : ""}
               </div>
@@ -241,19 +307,63 @@ class UserRedux extends Component {
                   }
                 />
               </div>
-              <div className="col-6 mt-3">
+              <div className="col-3 mt-3">
                 <label>
                   <FormattedMessage id="manage-user.password" />
                 </label>
-                <input
-                  className="form-control"
-                  type="password"
-                  value={password}
-                  onChange={(event) => this.onChangeInput(event, "password")}
-                  disabled={
-                    this.state.action === CRUD_ACTIONS.EDIT ? true : false
-                  }
-                />
+                <div className="custom-input-password">
+                  <input
+                    className="form-control"
+                    type={this.state.isShowPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(event) => this.onChangeInput(event, "password")}
+                    disabled={
+                      this.state.action === CRUD_ACTIONS.EDIT ? true : false
+                    }
+                  />
+                  <span onClick={() => this.handleShowHidePassword()}>
+                    <i
+                      className={
+                        this.state.isShowPassword
+                          ? "far fa-eye"
+                          : "far fa-eye-slash"
+                      }
+                    ></i>
+                  </span>
+                </div>
+              </div>
+              <div className="col-3 mt-3">
+                <label>
+                  <FormattedMessage id="manage-user.confirm-password" />
+                </label>
+                <div className="custom-input-password">
+                  <input
+                    className="form-control"
+                    type={
+                      this.state.isShowConfirmPassword ? "text" : "password"
+                    }
+                    value={
+                      this.state.action === CRUD_ACTIONS.EDIT
+                        ? password
+                        : confirmPassword
+                    }
+                    onChange={(event) =>
+                      this.onChangeInput(event, "confirmPassword")
+                    }
+                    disabled={
+                      this.state.action === CRUD_ACTIONS.EDIT ? true : false
+                    }
+                  />
+                  <span onClick={() => this.handleShowHideConfirmPassword()}>
+                    <i
+                      className={
+                        this.state.isShowConfirmPassword
+                          ? "far fa-eye"
+                          : "far fa-eye-slash"
+                      }
+                    ></i>
+                  </span>
+                </div>
               </div>
               <div className="col-6 mt-3">
                 <label>
@@ -277,7 +387,7 @@ class UserRedux extends Component {
                   onChange={(event) => this.onChangeInput(event, "lastName")}
                 />
               </div>
-              <div className="col-12 mt-3">
+              <div className="col-6 mt-3">
                 <label>
                   <FormattedMessage id="manage-user.phone-number" />
                 </label>
@@ -287,6 +397,20 @@ class UserRedux extends Component {
                   value={phoneNumber}
                   onChange={(event) => this.onChangeInput(event, "phoneNumber")}
                 />
+              </div>
+              <div className="col-3 mt-3">
+                <label>
+                  <FormattedMessage id="manage-user.birthday" />
+                </label>
+                <div className="date-picker">
+                  <DatePicker
+                    onChange={this.handleOnChangeDatePicker}
+                    className="form-control choose-date"
+                    value={birthday}
+                    maxDate={new Date()}
+                  />
+                  <i className="fas fa-calendar-alt calendar"></i>
+                </div>
               </div>
               <div className="col-12 mt-3">
                 <label>
@@ -377,7 +501,8 @@ class UserRedux extends Component {
                     onChange={(event) => this.handleOnChangeImage(event)}
                   />
                   <label className="label-upload" htmlFor="previewImg">
-                    Tải ảnh<i className="fas fa-upload"></i>
+                    <FormattedMessage id="manage-user.upload-file" />
+                    <i className="fas fa-upload"></i>
                   </label>
                   <div
                     className="preview-image"
