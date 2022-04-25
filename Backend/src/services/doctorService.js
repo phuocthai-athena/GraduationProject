@@ -46,24 +46,9 @@ let getAllDoctors = () => {
             let doctors = await db.User.findAll({
                 where: { roleId: "R2" },
                 attributes: {
-                    exclude: ["password"],
+                    exclude: ["password", "image"],
                 },
-                include: [
-                    {
-                        model: db.Allcode,
-                        as: "positionData",
-                        attributes: ["valueEn", "valueVi"],
-                    },
-                ],
-                raw: false,
-                nest: true,
             });
-            if (doctors && doctors.length > 0) {
-                doctors.map((item) => {
-                    item.image = new Buffer(item.image, "Base64").toString("binary");
-                    return item;
-                });
-            }
             resolve({
                 errCode: 0,
                 data: doctors,
@@ -182,6 +167,7 @@ let saveDetailInforDoctor = (inputData) => {
         }
     });
 };
+
 let getProfileDoctorById = (doctorId) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -244,6 +230,7 @@ let getProfileDoctorById = (doctorId) => {
         }
     });
 };
+
 let getDetailDoctorById = (inputId) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -526,6 +513,47 @@ let sendRemedy = (data) => {
         }
     });
 };
+
+let getPassword = (idInput) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!idInput) {
+                resolve({
+                    errCode: -1,
+                    errMessage: "Missing required parameters",
+                });
+            } else {
+                let res = {};
+                let password = await db.User.findOne({
+                    where: {
+                        id: idInput,
+                    },
+                    attributes: {
+                        exclude: [
+                            "email",
+                            "firstName",
+                            "lastName",
+                            "address",
+                            "birthday",
+                            "phonenumber",
+                            "gender",
+                            "roleId",
+                            "positionId",
+                            "image",
+                        ],
+                    },
+                    raw: false,
+                });
+                res.errCode = 0;
+                res.data = password;
+                resolve(res);
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctors: getAllDoctors,
@@ -537,4 +565,5 @@ module.exports = {
     getProfileDoctorById: getProfileDoctorById,
     getListPatientForDoctor: getListPatientForDoctor,
     sendRemedy: sendRemedy,
+    getPassword: getPassword,
 };

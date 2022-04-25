@@ -84,16 +84,17 @@ class ManageSchedule extends Component {
 
   handleSaveSchedule = async () => {
     let { rangeTime, selectedDoctor, currentDate } = this.state;
+    let { userInfo } = this.props;
     let result = [];
 
     if (!currentDate) {
       toast.error("Invalid date! ");
       return;
     }
-    if (selectedDoctor && _.isEmpty(selectedDoctor)) {
-      toast.error("Invalid selected doctor! ");
-      return;
-    }
+    // if (selectedDoctor && _.isEmpty(selectedDoctor)) {
+    //   toast.error("Invalid selected doctor! ");
+    //   return;
+    // }
 
     let formatedDate = new Date(currentDate).getTime();
 
@@ -102,7 +103,7 @@ class ManageSchedule extends Component {
       if (selectedTime && selectedTime.length > 0) {
         selectedTime.map((schedule, index) => {
           let object = {};
-          object.doctorId = selectedDoctor.value;
+          object.doctorId = userInfo.id;
           object.date = formatedDate;
           object.timeType = schedule.keyMap;
           result.push(object);
@@ -115,7 +116,7 @@ class ManageSchedule extends Component {
 
     let res = await saveBulkScheduleDoctor({
       arrSchedule: result,
-      doctorId: selectedDoctor.value,
+      doctorId: userInfo.id,
       formatedDate: formatedDate,
     });
 
@@ -129,7 +130,9 @@ class ManageSchedule extends Component {
 
   render() {
     let { rangeTime } = this.state;
-    let { language } = this.props;
+    let { language, userInfo } = this.props;
+    let nameVi = ` ${userInfo.lastName} ${userInfo.firstName}`;
+    let nameEn = ` ${userInfo.firstName} ${userInfo.lastName}`;
     let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
     return (
       <div className="manage-schedule-container">
@@ -142,22 +145,31 @@ class ManageSchedule extends Component {
               <label>
                 <FormattedMessage id="manage-schedule.choose-doctor" />
               </label>
-              <Select
+              {/* <Select
                 value={this.state.selectedDoctor}
                 onChange={this.handleChangeSelect}
                 options={this.state.listDoctors}
+                defaultValue={language === LANGUAGES.VI ? nameVi : nameEn}
+              /> */}
+              <input
+                className="form-control"
+                value={language === LANGUAGES.VI ? nameVi : nameEn}
+                disabled
               />
             </div>
             <div className="col-6 form-group">
               <label>
                 <FormattedMessage id="manage-schedule.choose-date" />
               </label>
-              <DatePicker
-                onChange={this.handleOnChangeDatePicker}
-                className="form-control"
-                value={this.state.currentDate}
-                minDate={yesterday}
-              />
+              <div className="date-picker">
+                <DatePicker
+                  onChange={this.handleOnChangeDatePicker}
+                  className="form-control choose-date"
+                  value={this.state.currentDate}
+                  minDate={yesterday}
+                />
+                <i className="fas fa-calendar-alt calendar"></i>
+              </div>
             </div>
             <div className="col-12 pick-hour-container">
               {rangeTime &&
@@ -199,6 +211,7 @@ const mapStateToProps = (state) => {
     allDoctors: state.admin.allDoctors,
     language: state.app.language,
     allScheduleTime: state.admin.allScheduleTime,
+    userInfo: state.user.userInfo,
   };
 };
 
