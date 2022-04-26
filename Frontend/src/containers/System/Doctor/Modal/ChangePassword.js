@@ -5,8 +5,8 @@ import { Modal } from "reactstrap";
 import "./ChangePassword.scss";
 import { LANGUAGES } from "../../../../utils";
 import { toast } from "react-toastify";
-import { getPassword } from "../../../../services/userService";
-import bcrypt from "bcrypt";
+import { changePassword, getPassword } from "../../../../services/userService";
+import bcrypt from "bcryptjs";
 
 class ChangePassword extends Component {
   constructor(props) {
@@ -28,6 +28,13 @@ class ChangePassword extends Component {
 
   async componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.language !== prevProps.language) {
+    }
+    if (this.props.isOpenModal !== prevProps.isOpenModal) {
+      this.setState({
+        oldPassword: "",
+        newPassword: "",
+        newConfirmPassword: "",
+      });
     }
   }
 
@@ -53,28 +60,31 @@ class ChangePassword extends Component {
     });
   };
 
+  onChangeInput = (event, id) => {
+    let copyState = { ...this.state };
+    copyState[id] = event.target.value;
+    this.setState({
+      ...copyState,
+    });
+  };
+
   checkValidateInput = () => {
     let isValid = true;
     let { language } = this.props;
-    let arrCheck = ["oldPassword", "newPassword", "newConfirmPassword"];
-    for (let i = 0; i < arrCheck.length; i++) {
-      if (!this.state[arrCheck[i]]) {
+    let arrCheckEn = ["oldPassword", "newPassword", "newConfirmPassword"];
+    let arrCheckVi = ["mật khẩu cũ", "mật khẩu mới", "xác nhận mật khẩu mới"];
+    for (let i = 0; i < arrCheckEn.length; i++) {
+      if (!this.state[arrCheckEn[i]]) {
         isValid = false;
         if (language === LANGUAGES.VI) {
-          toast.error("bạn chưa nhập trường " + arrCheck[i]);
+          toast.error("bạn chưa nhập trường " + arrCheckVi[i]);
         } else {
-          toast.error("Not yet entered " + arrCheck[i]);
+          toast.error("Not yet entered " + arrCheckEn[i]);
         }
         break;
       }
     }
     return isValid;
-  };
-
-  isCheckOldPassword = (currentPassword, oldPassword) => {
-    if (currentPassword && oldPassword && currentPassword === oldPassword)
-      return true;
-    return false;
   };
 
   isCheckPasswordConfirmed = (newPassword, newConfirmPassword) => {
@@ -88,11 +98,56 @@ class ChangePassword extends Component {
     this.setState({
       currentPassword: res.data.password,
     });
-    console.log(this.state.currentPassword);
+  };
+
+  handleSaveNewPassword = async () => {
+    let isValid = this.checkValidateInput();
+    if (isValid === false) return;
+
+    // check mật khẩu cũ
+    if (
+      !bcrypt.compareSync(this.state.oldPassword, this.state.currentPassword)
+    ) {
+      if (this.props.language === LANGUAGES.VI) {
+        toast.error("Mật khẩu cũ không đúng");
+      } else {
+        toast.error("Old password is incorrect");
+      }
+      return;
+    }
+
+    //check confirm lại mật khẩu
+    if (
+      !this.isCheckPasswordConfirmed(
+        this.state.newPassword,
+        this.state.newConfirmPassword
+      )
+    ) {
+      if (this.props.language === LANGUAGES.VI) {
+        toast.error("Mật khẩu không khớp");
+      } else {
+        toast.error("Password incorrect");
+      }
+      return;
+    }
+
+    //truyền data
+    await changePassword({
+      id: this.props.userInfo.id,
+      password: this.state.newPassword,
+    });
+
+    this.toggle();
+
+    if (this.props.language === LANGUAGES.VI) {
+      toast.success("Thay đổi mật khẩu thành công");
+    } else {
+      toast.success("Change password successfully");
+    }
   };
 
   render() {
-    let { isOpenModal, closeModal } = this.props;
+    let { isOpenModal } = this.props;
     let { oldPassword, newPassword, newConfirmPassword } = this.state;
     return (
       <Modal
@@ -189,7 +244,12 @@ class ChangePassword extends Component {
             </form>
           </div>
           <div className="change-password-footer">
-            <button className="btn btn-primary">Xác nhận</button>
+            <button
+              className="btn btn-primary"
+              onClick={() => this.handleSaveNewPassword()}
+            >
+              Xác nhận
+            </button>
             <button
               className="btn btn-secondary"
               onClick={() => {

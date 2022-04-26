@@ -110,6 +110,10 @@ const getPassword = (userId) => {
   return axios.get(`/api/get-password?id=${userId}`);
 };
 
+const changePassword = (data) => {
+  return axios.post("/api/change-password", data);
+};
+
 export {
   handleLoginApi,
   getAllUsers,
@@ -136,4 +140,5 @@ export {
   getAllPatientForDoctor,
   postSendRemedy,
   getPassword,
+  changePassword,
 };

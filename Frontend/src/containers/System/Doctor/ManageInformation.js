@@ -45,6 +45,9 @@ class ManageSchedule extends Component {
     this.props.getGenderStart();
     this.props.getPositionStart();
     this.props.getRoleStart();
+    let { userInfo } = this.props;
+    let res = await getAllUsers(userInfo.id);
+    this.handleEditUserFromParent(res.users);
   }
 
   async componentDidUpdate(prevProps, prevState, snapshot) {
@@ -69,10 +72,7 @@ class ManageSchedule extends Component {
         roleArr: arrRoles,
         role: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : "",
       });
-    }
-    let { userInfo } = this.props;
-    let res = await getAllUsers(userInfo.id);
-    this.handleEditUserFromParent(res.users);
+    } 
   }
 
   handleSaveUser = (user) => {
@@ -169,7 +169,6 @@ class ManageSchedule extends Component {
     }
     this.setState({
       email: user.email,
-      password: "hardcode",
       firstName: user.firstName,
       lastName: user.lastName,
       phoneNumber: user.phonenumber,
