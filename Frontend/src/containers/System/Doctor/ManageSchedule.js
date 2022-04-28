@@ -91,10 +91,6 @@ class ManageSchedule extends Component {
       toast.error("Invalid date! ");
       return;
     }
-    // if (selectedDoctor && _.isEmpty(selectedDoctor)) {
-    //   toast.error("Invalid selected doctor! ");
-    //   return;
-    // }
 
     let formatedDate = new Date(currentDate).getTime();
 
@@ -124,7 +120,6 @@ class ManageSchedule extends Component {
       toast.success("Save Infor Succeed!");
     } else {
       toast.error("Error saveBulkScheduleDoctor");
-      console.log("saveBulkScheduleDoctor >>> error: ", res);
     }
   };
 
@@ -145,12 +140,6 @@ class ManageSchedule extends Component {
               <label>
                 <FormattedMessage id="manage-schedule.choose-doctor" />
               </label>
-              {/* <Select
-                value={this.state.selectedDoctor}
-                onChange={this.handleChangeSelect}
-                options={this.state.listDoctors}
-                defaultValue={language === LANGUAGES.VI ? nameVi : nameEn}
-              /> */}
               <input
                 className="form-control"
                 value={language === LANGUAGES.VI ? nameVi : nameEn}

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Slider from "react-slick";
 import * as actions from "../../../store/actions";
 import { LANGUAGES } from "../../../utils";
-import {withRouter} from 'react-router';
+import { withRouter } from "react-router";
 
 class OutstandingDoctor extends Component {
   constructor(props) {
@@ -31,11 +31,8 @@ class OutstandingDoctor extends Component {
   };
 
   render() {
-    // console.log('CHECK', this.props.topDoctorsRedux);
     let arrDoctors = this.state.arrDoctors;
     let { language } = this.props;
-    //slider ít hơn 4 thì toang giao diện, hàm dưới để fix data
-    // arrDoctors = arrDoctors.concat(arrDoctors);
     return (
       <div className="section-share section-outstanding-doctor">
         <div className="specialty-container">
