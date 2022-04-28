@@ -1,18 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { FormattedMessage } from "react-intl";
+import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
+import { CommonUtils } from "../../../utils";
 import "./RemedyModal.scss";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { toast } from "react-toastify";
-import moment from "moment";
-import { CommonUtils } from "../../../utils"
 
 class RemedyModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      imgBase64: '',
+      email: "",
+      imgBase64: "",
     };
   }
 
@@ -20,7 +17,7 @@ class RemedyModal extends Component {
     if (this.props.dataModal) {
       this.setState({
         email: this.props.dataModal.email,
-      })
+      });
     }
   }
 
@@ -28,15 +25,15 @@ class RemedyModal extends Component {
     if (prevProps.dataModal !== this.props.dataModal) {
       this.setState({
         email: this.props.dataModal.email,
-      })
+      });
     }
   }
 
   handleOnchangEmail = (event) => {
     this.setState({
       email: event.target.value,
-    })
-  }
+    });
+  };
 
   handleOnChangeImage = async (event) => {
     let data = event.target.files;
@@ -51,10 +48,10 @@ class RemedyModal extends Component {
 
   handleSendRemedy = () => {
     this.props.sendRemedy(this.state);
-  }
+  };
 
   render() {
-    let { isOpenModal, closeRemedyModal, dataModal, sendRemedy } = this.props;
+    let { isOpenModal, closeRemedyModal } = this.props;
     return (
       <Modal
         isOpen={isOpenModal}
@@ -65,29 +62,40 @@ class RemedyModal extends Component {
         <div className="modal-header">
           <h5 className="modal-tiltle">Gửi hóa đơn khám bệnh thành công</h5>
           <button type="button" className="close" aria-label="close">
-            <span aria-hidden="true" onClick={closeRemedyModal}>x</span>
+            <span aria-hidden="true" onClick={closeRemedyModal}>
+              x
+            </span>
           </button>
         </div>
         <ModalBody>
           <div className="row">
             <div className="col-6 form-group">
               <label>Email bệnh nhân</label>
-              <input className="form-control" type="email" value={this.state.email}
+              <input
+                className="form-control"
+                type="email"
+                value={this.state.email}
                 onChange={(event) => this.handleOnchangEmail(event)}
               />
             </div>
 
             <div className="col-6 form-group">
               <label>Chọn file đơn thuốc</label>
-              <input className="form-control-file" type="file"
+              <input
+                className="form-control-file"
+                type="file"
                 onChange={(event) => this.handleOnChangeImage(event)}
               />
             </div>
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={() => this.handleSendRemedy()}>Send</Button>{' '}
-          <Button color="secondary" onClick={closeRemedyModal}>Cancel</Button>
+          <Button color="primary" onClick={() => this.handleSendRemedy()}>
+            Send
+          </Button>{" "}
+          <Button color="secondary" onClick={closeRemedyModal}>
+            Cancel
+          </Button>
         </ModalFooter>
       </Modal>
     );
@@ -102,9 +110,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-
-  };
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RemedyModal);

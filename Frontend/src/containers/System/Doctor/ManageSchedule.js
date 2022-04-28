@@ -1,14 +1,13 @@
-import _ from "lodash";
 import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
-import Select from "react-select";
 import { toast } from "react-toastify";
 import DatePicker from "../../../components/Input/DatePicker";
 import { saveBulkScheduleDoctor } from "../../../services/userService";
 import * as actions from "../../../store/actions";
 import { LANGUAGES } from "../../../utils";
 import "./ManageSchedule.scss";
+
 class ManageSchedule extends Component {
   constructor(props) {
     super(props);
@@ -83,7 +82,7 @@ class ManageSchedule extends Component {
   };
 
   handleSaveSchedule = async () => {
-    let { rangeTime, selectedDoctor, currentDate } = this.state;
+    let { rangeTime, currentDate } = this.state;
     let { userInfo } = this.props;
     let result = [];
 

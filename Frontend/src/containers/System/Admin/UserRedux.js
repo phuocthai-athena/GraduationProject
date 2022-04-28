@@ -99,9 +99,11 @@ class UserRedux extends Component {
   handleOnChangeImage = async (event) => {
     let data = event.target.files;
     let file = data[0];
+    console.log("test1", file);
     if (file) {
       let base64 = await CommonUtils.getBase64(file);
       let objectUrl = URL.createObjectURL(file);
+      console.log("test2", objectUrl);
       this.setState({
         previewImgURL: objectUrl,
         avatar: base64,
@@ -220,6 +222,7 @@ class UserRedux extends Component {
     if (user.image) {
       imageBase64 = new Buffer(user.image, "base64").toString("binary");
     }
+    console.log("test3", imageBase64);
     let parseDate = moment.unix(user.birthday).toDate();
     this.setState({
       email: user.email,
@@ -284,9 +287,7 @@ class UserRedux extends Component {
       gender,
       position,
       role,
-      avatar,
     } = this.state;
-    console.log(this.state.previewImgURL);
     return (
       <div className="user-redux-container">
         <div className="title">

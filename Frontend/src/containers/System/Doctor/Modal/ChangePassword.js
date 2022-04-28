@@ -1,12 +1,11 @@
+import bcrypt from "bcryptjs";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { FormattedMessage } from "react-intl";
-import { Modal } from "reactstrap";
-import "./ChangePassword.scss";
-import { LANGUAGES } from "../../../../utils";
 import { toast } from "react-toastify";
+import { Modal } from "reactstrap";
 import { changePassword, getPassword } from "../../../../services/userService";
-import bcrypt from "bcryptjs";
+import { LANGUAGES } from "../../../../utils";
+import "./ChangePassword.scss";
 
 class ChangePassword extends Component {
   constructor(props) {

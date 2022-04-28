@@ -1,16 +1,15 @@
+import moment from "moment";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { FormattedDate, FormattedMessage } from "react-intl";
+import { toast } from "react-toastify";
 import DatePicker from "../../../components/Input/DatePicker";
-import "./ManagePatient.scss";
 import {
   getAllPatientForDoctor,
-  postSendRemedy,
+  postSendRemedy
 } from "../../../services/userService";
-import moment from "moment";
 import { LANGUAGES } from "../../../utils";
+import "./ManagePatient.scss";
 import RemedyModal from "./RemedyModal";
-import { toast } from "react-toastify";
 
 class ManagePatient extends Component {
   constructor(props) {

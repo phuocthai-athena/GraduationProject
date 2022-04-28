@@ -1,11 +1,9 @@
+import { push } from "connected-react-router";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { push } from "connected-react-router";
+import { handleLoginApi } from "../../services/userService";
 import * as actions from "../../store/actions";
 import "./Login.scss";
-import { handleLoginApi } from "../../services/userService";
-
-import { FormattedMessage } from "react-intl";
 
 class Login extends Component {
   constructor(props) {
@@ -114,7 +112,7 @@ class Login extends Component {
                 Login
               </button>
             </div>
-            <div className="col-12">
+            {/* <div className="col-12">
               <span className="forgot-password">Forgot your password?</span>
             </div>
             <div className="col-12 text-center mt-3">
@@ -123,7 +121,7 @@ class Login extends Component {
             <div className="col-12 login-social">
               <i className="fab fa-google-plus-g google"></i>
               <i className="fab fa-facebook-f facebook"></i>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

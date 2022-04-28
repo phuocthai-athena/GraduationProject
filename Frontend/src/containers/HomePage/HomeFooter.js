@@ -7,7 +7,9 @@ class HomeFooter extends Component {
       <div className="home-footer">
         <p>
           &copy; 2022 Dental Clinic.{" "}
-          <a href="#">More Information, please visit my Facebook</a>
+          <a href="https://www.facebook.com/BPT99/">
+            More Information, please visit my Facebook
+          </a>
         </p>
       </div>
     );

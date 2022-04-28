@@ -1,14 +1,10 @@
 .login-background {
   height: 100vh;
-  background: linear-gradient(
-    135deg,
-    rgba(34, 193, 195, 1) 0%,
-    rgba(253, 187, 45, 1) 100%
-  );
+  background: url("../../../src/assets/images/login-background.png") center no-repeat;
 
   .login-container {
     width: 400px;
-    height: 450px;
+    height: 280px;
     margin: 0 auto;
     border-radius: 10px;
     background: #fff;
@@ -51,11 +47,9 @@
         border-radius: 15px;
         outline: none;
         border: none;
-        background: linear-gradient(
-          135deg,
-          rgba(34, 193, 195, 1) 0%,
-          rgba(253, 187, 45, 1) 100%
-        );
+        background: linear-gradient(135deg,
+            rgba(34, 193, 195, 1) 0%,
+            rgba(253, 187, 45, 1) 100%);
         color: #fff;
         font-size: 16px;
       }

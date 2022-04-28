@@ -1,4 +1,3 @@
-import MarkdownIt from "markdown-it";
 import React, { Component } from "react";
 import "react-markdown-editor-lite/lib/index.css";
 import { connect } from "react-redux";

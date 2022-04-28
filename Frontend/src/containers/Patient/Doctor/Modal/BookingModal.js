@@ -1,18 +1,17 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { FormattedMessage } from "react-intl";
-import { Modal } from "reactstrap";
-import "./BookingModal.scss";
-import ProfileDoctor from "../ProfileDoctor";
-import DatePicker from "../../../../components/Input/DatePicker";
 import _ from "lodash";
+import moment from "moment";
+import React, { Component } from "react";
+import { FormattedMessage } from "react-intl";
+import { connect } from "react-redux";
+import Select from "react-select";
+import { toast } from "react-toastify";
+import { Modal } from "reactstrap";
+import DatePicker from "../../../../components/Input/DatePicker";
+import { postPatientBookingAppointment } from "../../../../services/userService";
 import * as actions from "../../../../store/actions";
 import { LANGUAGES } from "../../../../utils";
-import Select from "react-select";
-import UserRedux from "../../../../containers/System/Admin/UserRedux";
-import { postPatientBookingAppointment } from "../../../../services/userService";
-import { toast } from "react-toastify";
-import moment from "moment";
+import ProfileDoctor from "../ProfileDoctor";
+import "./BookingModal.scss";
 
 class BookingModal extends Component {
     constructor(props) {
@@ -50,7 +49,7 @@ class BookingModal extends Component {
         return result;
     };
     async componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.language != prevProps.language) {
+        if (this.props.language !== prevProps.language) {
             this.setState({
                 genders: this.buildDataGender(this.props.genders),
             });
@@ -198,7 +197,7 @@ class BookingModal extends Component {
                     !(
                         lastAtPos < lastDotPos &&
                         lastAtPos > 0 &&
-                        state["email"].indexOf("@@") == -1 &&
+                        state["email"].indexOf("@@") === -1 &&
                         lastDotPos > 2 &&
                         state["email"].length - lastDotPos > 2
                     )
