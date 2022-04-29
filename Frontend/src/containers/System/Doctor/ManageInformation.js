@@ -205,7 +205,6 @@ class ManageSchedule extends Component {
       birthday,
       isOpenModalChangePassword,
     } = this.state;
-    console.log(this.state.previewImgURL);
     return (
       <>
         <div className="user-redux-container">

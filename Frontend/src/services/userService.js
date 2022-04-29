@@ -88,6 +88,16 @@ const getScheduleDoctorByDate = (doctorId, date) => {
   );
 };
 
+const deleteScheduleSelected = (userId, currentDate, timeType) => {
+  return axios.delete(`/api/delete-schedule-selected`, {
+    data: {
+      doctorId: userId,
+      date: currentDate,
+      timeType: timeType,
+    },
+  });
+};
+
 const getExtraInforDoctorById = (doctorId) => {
   return axios.get(`/api/get-extra-infor-doctor-by-id?doctorId=${doctorId}`);
 };
@@ -141,4 +151,5 @@ export {
   postSendRemedy,
   getPassword,
   changePassword,
+  deleteScheduleSelected,
 };

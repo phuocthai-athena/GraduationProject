@@ -39,6 +39,7 @@ class TableManageUser extends Component {
         <table id="tableManagerUser">
           <tbody>
             <tr>
+              <th>Stt</th>
               <th>Email</th>
               <th>First name</th>
               <th>Last name</th>
@@ -50,6 +51,7 @@ class TableManageUser extends Component {
               arrUsers.map((item, index) => {
                 return (
                   <tr key={index}>
+                    <td>{index + 1}</td>
                     <td>{item.email}</td>
                     <td>{item.firstName}</td>
                     <td>{item.lastName}</td>
