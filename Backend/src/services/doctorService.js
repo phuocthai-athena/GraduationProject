@@ -603,6 +603,43 @@ let changePassword = (data) => {
   });
 };
 
+let handleDeleteSchedule = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!data.doctorId || !data.date || !data.timeType) {
+        resolve({
+          errCode: -1,
+          errMessage: "Missing required parameters",
+        });
+      } else {
+        let scheduleSelected = await db.Schedule.findOne({
+          where: {
+            doctorId: data.doctorId,
+            date: data.date,
+            timeType: data.timeType,
+          },
+        });
+        if (!scheduleSelected) {
+          resolve({
+            errCode: 2,
+            errMessage: `The schedule isn't exist!`,
+          });
+        }
+        await db.Schedule.destroy({
+          where: { timeType: data.timeType },
+        });
+
+        resolve({
+          errCode: 0,
+          message: `The schedule is deleted`,
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   getTopDoctorHome: getTopDoctorHome,
   getAllDoctors: getAllDoctors,
@@ -616,4 +653,5 @@ module.exports = {
   sendRemedy: sendRemedy,
   getPassword: getPassword,
   changePassword: changePassword,
+  handleDeleteSchedule: handleDeleteSchedule,
 };

@@ -161,6 +161,19 @@ let changePassword = async (req, res) => {
   }
 };
 
+let handleDeleteSchedule = async (req, res) => {
+  try {
+    let data = await doctorService.handleDeleteSchedule(req.body);
+    return res.status(200).json(data);
+  } catch (error) {
+    console.log(error);
+    return res.status(200).json({
+      errCode: -1,
+      message: "Error from the server.",
+    });
+  }
+};
+
 module.exports = {
   getTopDoctorHome: getTopDoctorHome,
   getAllDoctors: getAllDoctors,
@@ -174,4 +187,5 @@ module.exports = {
   sendRemedy: sendRemedy,
   getPassword: getPassword,
   changePassword: changePassword,
+  handleDeleteSchedule: handleDeleteSchedule,
 };
