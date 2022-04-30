@@ -15,6 +15,11 @@ export const adminMenu = [
         name: "menu.admin.manage-doctor",
         link: "/system/manager-doctor",
       },
+      {
+        // Quản lý lịch sử bệnh nhân khám bệnh
+        name: "menu.admin.history-patient",
+        link: "/system/history-patient",
+      },
 
       // {
       //   // Quản lý kế hoạch khám bệnh của bác sĩ
@@ -69,11 +74,13 @@ export const doctorMenu = [
         name: "menu.doctor.manage-patient",
         link: "/doctor/manage-patient",
       },
+      
       {
         // Quản lý thông tin cá nhân bác sĩ
         name: "menu.doctor.manage-infor",
         link: "/doctor/manage-information",
       },
+      
     ],
   },
 ];

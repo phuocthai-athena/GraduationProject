@@ -36,7 +36,8 @@
       "specialty": "Specialty",
       "manage-specialty": "Specialty Management",
       "handbook": "Handbook",
-      "manage-handbook": "Handbook Management"
+      "manage-handbook": "Handbook Management",
+      "history-patient": "Manage history patient"
     },
     "doctor": {
       "manage-schedule": "Manage doctor's schedule",
@@ -95,6 +96,11 @@
     "button": "Save",
     "list-specialties": "Specialties"
   },
+  "history-patient": {
+    "title": "Manage history patient",
+    "choose-date": "Choose a date"
+
+  },
   "homepage": {
     "outstanding-doctor": "Top doctors of the week",
     "more-infor": "More Infor",
@@ -110,7 +116,7 @@
     "choose-date": "Choose a date",
     "save": "Save"
   },
-  "manage-patient":{
+  "manage-patient": {
     "title": "Manage doctor's examination plan",
     "choose-date": "Choose a date of examination"
   },

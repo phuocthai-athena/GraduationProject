@@ -120,6 +120,10 @@ const getAllPatientForDoctor = (data) => {
     );
 };
 
+const getAllPatientForHistory = (data) => {
+    return axios.get(`/api/get-list-history-patient?date=${data.date}`);
+}
+
 const postSendRemedy = (data) => {
     return axios.post("/api/send-remedy", data);
 };
@@ -207,4 +211,5 @@ export {
     getAllDetailSpecialtyById,
     changePassword,
     deleteScheduleSelected,
+    getAllPatientForHistory,
 };

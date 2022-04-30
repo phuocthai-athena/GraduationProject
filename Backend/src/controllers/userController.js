@@ -72,6 +72,18 @@ let getAllCode = async (req, res) => {
         });
     }
 };
+let getListHistoryPatient = async (req, res) => {
+    try {
+        let response = await userService.getListHistoryPatient( req.query.date);
+        return res.status(200).json(response);
+    } catch (error) {
+        console.log(error);
+        return res.status(200).json({
+            errCode: -1,
+            message: "Error from the server.",
+        });
+    }
+}
 
 module.exports = {
     handleLogin: handleLogin,
@@ -80,4 +92,5 @@ module.exports = {
     handleEditUser: handleEditUser,
     handleDeleteUser: handleDeleteUser,
     getAllCode: getAllCode,
+    getListHistoryPatient: getListHistoryPatient,
 };

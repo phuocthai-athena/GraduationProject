@@ -684,6 +684,7 @@ let handleDeleteSchedule = (data) => {
     });
 };
 
+
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctors: getAllDoctors,

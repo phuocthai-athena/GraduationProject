@@ -35,7 +35,8 @@
       "specialty": "Chuyên khoa",
       "manage-specialty": "Quản lý chuyên khoa",
       "handbook": "Cẩm nang",
-      "manage-handbook": "Quản lý cẩm nang"
+      "manage-handbook": "Quản lý cẩm nang",
+      "history-patient": "Quản lý lịch sử bệnh nhân khám bệnh"
     },
     "doctor": {
       "manage-schedule": "Quản lý kế hoạch khám bệnh",
@@ -93,6 +94,10 @@
     "description": "Mô tả chuyên khoa",
     "button": "Lưu",
     "list-specialties": "Danh sách chuyên khoa"
+  },
+  "history-patient": {
+    "title": "Quản lý lịch sử bệnh nhân khám bệnh",
+    "choose-date": "chọn ngày khám"
   },
   "homepage": {
     "outstanding-doctor": "Bác sĩ nổi bật",

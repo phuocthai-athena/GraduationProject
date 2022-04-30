@@ -5,6 +5,7 @@ import UserManage from "../containers/System/UserManage";
 import UserRedux from "../containers/System/Admin/UserRedux";
 import Header from "../containers/Header/Header";
 import ManageDoctor from "../containers/System/Admin/ManageDoctor";
+import ManageHistoryPatient from "../containers/System/Admin/ManageHistoryPatient";
 import ManageSpecialty from "../containers/System/Specialty/ManageSpecialty";
 import AddSpecialty from "../containers/System/Specialty/AddSpecialty";
 import UpdateSpecialty from "../containers/System/Specialty/UpdateSpecialty";
@@ -27,6 +28,8 @@ class System extends Component {
                             <Route path="/system/user-manage" component={UserManage} />
                             <Route path="/system/user-redux" component={UserRedux} />
                             <Route path="/system/manager-doctor" component={ManageDoctor} />
+                            <Route path="/system/history-patient" component={ManageHistoryPatient} />
+
 
                             <Route
                                 path="/system/manage-specialty"
