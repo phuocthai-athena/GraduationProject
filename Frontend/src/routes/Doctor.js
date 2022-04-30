@@ -5,7 +5,7 @@ import Header from "../containers/Header/Header";
 import ManageSchedule from "../containers/System/Doctor/ManageSchedule";
 import ManagePatient from "../containers/System/Doctor/ManagePatient";
 import ManageInformation from "../containers/System/Doctor/ManageInformation";
-
+import ManageHistoryPatient from "../containers/System/Doctor/ManageHistoryPatient";
 class Doctor extends Component {
   render() {
     const { isLoggedIn } = this.props;
@@ -22,6 +22,10 @@ class Doctor extends Component {
               <Route
                 path="/doctor/manage-patient"
                 component={ManagePatient}
+              />
+              <Route
+                path="/doctor/history-patient"
+                component={ManageHistoryPatient}
               />
               <Route
                 path="/doctor/manage-information"

@@ -70,10 +70,16 @@ export const doctorMenu = [
         link: "/doctor/manage-patient",
       },
       {
+        // Quản lý lịch sử bệnh nhân khám bệnh
+        name: "menu.doctor.history-patient",
+        link: "/doctor/history-patient",
+      },
+      {
         // Quản lý thông tin cá nhân bác sĩ
         name: "menu.doctor.manage-infor",
         link: "/doctor/manage-information",
       },
+      
     ],
   },
 ];

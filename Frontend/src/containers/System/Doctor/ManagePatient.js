@@ -69,6 +69,7 @@ class ManagePatient extends Component {
       dataModal: data,
     })
   };
+  
   closeRemedyModal = () => {
     this.setState({
       isOpenRemedyModal: false,

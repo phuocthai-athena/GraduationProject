@@ -37,9 +37,10 @@ let postBookAppointment = (data) => {
                         email: data.email,
                         roleId: "R3",
                         address: data.address,
-                        phoneNumber: data.phoneNumber,
+                        phonenumber: data.phoneNumber,
                         gender: data.selectedGender,
                         firstName: data.fullName,
+                        // birthday: data.birthday
                     },
                 });
                 if (user && user[0]) {

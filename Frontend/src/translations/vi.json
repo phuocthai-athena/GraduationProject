@@ -39,7 +39,9 @@
     "doctor": {
       "manage-schedule": "Quản lý kế hoạch khám bệnh",
       "manage-patient": "Quản lý bệnh nhân khám bệnh",
-      "manage-infor": "Quản lý thông tin bác sĩ"
+      "manage-infor": "Quản lý thông tin bác sĩ",
+      "history-patient": "Quản lý lịch sử bệnh nhân khám bệnh"
+
     }
   },
   "manage-user": {

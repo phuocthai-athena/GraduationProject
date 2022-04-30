@@ -1,0 +1,27 @@
+.manage-history-patient {
+  .m-p-title {
+    font-size: 16px;
+    margin: 10px 0;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .manage-history-patient-body {
+    padding: 0 20px;
+  }
+
+  .table-manage-history-patient {
+    table,
+    th,
+    td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 5px;
+      text-align: left;
+    }
+  }
+}
