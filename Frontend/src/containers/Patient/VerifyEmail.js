@@ -23,7 +23,6 @@ class VerifyEmail extends Component {
                 token: token,
                 doctorId: doctorId,
             });
-            console.log(res);
             if (res) {
                 this.setState({
                     statusVerified: true,

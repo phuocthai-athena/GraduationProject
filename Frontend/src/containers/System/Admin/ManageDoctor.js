@@ -173,7 +173,6 @@ class ManageDoctor extends Component {
 
   handleSaveContentMarkdown = () => {
     let { hasOldData } = this.state;
-    console.log(this.state);
     this.props.saveDetailDoctor({
       contentHTML: this.state.contentHTML,
       contentMarkdown: this.state.contentMarkdown,

@@ -2,11 +2,9 @@ import moment from "moment";
 import React, { Component } from "react";
 import "react-markdown-editor-lite/lib/index.css";
 import { connect } from "react-redux";
-import {
-  deleteScheduleSelected,
-  getScheduleDoctorByDate,
-} from "../../../services/userService";
+import { getScheduleDoctorByDate } from "../../../services/userService";
 import { LANGUAGES } from "../../../utils";
+import ConfirmDeleteSchedule from "./Modal/ConfirmDeleteSchedule";
 import "./TableManageSchedule.scss";
 
 class TableManageSchedule extends Component {
@@ -14,6 +12,8 @@ class TableManageSchedule extends Component {
     super(props);
     this.state = {
       timeSelected: [],
+      isOpenConfirmDelete: false,
+      listScheduleState: {},
     };
   }
 
@@ -31,23 +31,32 @@ class TableManageSchedule extends Component {
         });
       }
     }
+    if (this.state.isOpenConfirmDelete !== prevState.isOpenConfirmDelete) {
+      let doctorId = this.props.doctorId;
+      let date = this.props.currentDate;
+      let formatedDate = moment(date).unix();
+      let res = await getScheduleDoctorByDate(doctorId, formatedDate);
+      if (res && res.errCode === 0) {
+        this.setState({
+          timeSelected: res.data ? res.data : [],
+        });
+      }
+    }
   }
 
   handleDeleteHour = async (listSchedule) => {
-    await deleteScheduleSelected(
-      listSchedule.doctorId,
-      listSchedule.date,
-      listSchedule.timeType
-    );
-    let doctorId = this.props.doctorId;
-    let date = this.props.currentDate;
-    let formatedDate = moment(date).unix();
-    let res = await getScheduleDoctorByDate(doctorId, formatedDate);
-    if (res && res.errCode === 0) {
-      this.setState({
-        timeSelected: res.data ? res.data : [],
-      });
-    }
+    this.setState({ listScheduleState: listSchedule });
+    this.handleOpenModal();
+  };
+
+  handleOpenModal = () => {
+    this.setState({ isOpenConfirmDelete: true });
+  };
+
+  toggleConfirmDelete = () => {
+    this.setState({
+      isOpenConfirmDelete: !this.state.isOpenConfirmDelete,
+    });
   };
 
   render() {
@@ -59,8 +68,12 @@ class TableManageSchedule extends Component {
           <tbody>
             <tr>
               <th>Stt</th>
-              <th>Lịch đã chọn</th>
-              <th>Tác vụ</th>
+              <th>
+                {language === LANGUAGES.VI
+                  ? "Lịch đã chọn"
+                  : "Selected calendar"}
+              </th>
+              <th>{language === LANGUAGES.VI ? "Tác vụ" : "Action"}</th>
             </tr>
             {timeSelected && timeSelected.length > 0 ? (
               timeSelected.map((item, index) => {
@@ -92,6 +105,11 @@ class TableManageSchedule extends Component {
             )}
           </tbody>
         </table>
+        <ConfirmDeleteSchedule
+          isOpenModal={this.state.isOpenConfirmDelete}
+          toggleFromParent={this.toggleConfirmDelete}
+          listSchedule={this.state.listScheduleState}
+        />
       </React.Fragment>
     );
   }

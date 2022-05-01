@@ -626,7 +626,7 @@ let handleDeleteSchedule = (data) => {
           });
         }
         await db.Schedule.destroy({
-          where: { timeType: data.timeType },
+          where: { timeType: data.timeType, date: data.date },
         });
 
         resolve({

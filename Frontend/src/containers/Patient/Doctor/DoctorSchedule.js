@@ -67,7 +67,7 @@ class DoctorSchedule extends Component {
             .format("ddd - DD/MM");
         }
       }
-      object.value = moment(new Date()).add(i, "days").startOf("day").valueOf();
+      object.value = moment(new Date()).add(i, "days").startOf("day").unix();
       allDays.push(object);
     }
 
@@ -127,7 +127,6 @@ class DoctorSchedule extends Component {
       dataScheduleTimeModal,
     } = this.state;
     let { language } = this.props;
-    console.log("test1", this.state.allAvailableTime);
     return (
       <>
         <div className="doctor-schedule-container">

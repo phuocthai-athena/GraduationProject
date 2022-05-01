@@ -4,9 +4,7 @@ import Lightbox from "react-image-lightbox";
 import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import DatePicker from "../../../components/Input/DatePicker";
-import {
-  getAllUsers
-} from "../../../services/userService";
+import { getAllUsers } from "../../../services/userService";
 import * as actions from "../../../store/actions";
 import { CommonUtils, CRUD_ACTIONS, LANGUAGES } from "../../../utils";
 import "./ManageInformation.scss";
@@ -103,13 +101,7 @@ class ManageSchedule extends Component {
 
   checkValidateInput = () => {
     let isValid = true;
-    let arrCheck = [
-      "email",
-      "firstName",
-      "lastName",
-      "phoneNumber",
-      "address",
-    ];
+    let arrCheck = ["email", "firstName", "lastName", "phoneNumber", "address"];
     for (let i = 0; i < arrCheck.length; i++) {
       if (!this.state[arrCheck[i]]) {
         isValid = false;
