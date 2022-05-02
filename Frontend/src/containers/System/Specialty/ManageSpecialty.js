@@ -1,126 +1,100 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { FormattedMessage } from "react-intl";
-import './ManageSpecialty.scss';
-import MarkdownIt from "markdown-it";
-import MdEditor from "react-markdown-editor-lite";
-import {CommonUtils} from '../../../utils';
-import {createNewSpecialty} from '../../../services/userService';
-import { toast } from 'react-toastify';         
+import { useEffect, useState } from "react";
+import {
+  getAllSpecialty,
+  deleteSpecialtyById,
+} from "../../../services/userService";
+import "./ManageSpecialty.scss";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { path } from "../../../utils";
 
-const mdParser = new MarkdownIt( /*MarkDown-it options*/ );
-
-class ManageSpecialty extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: '',
-            imageBase64: '',
-            descriptionHTML: '',
-            descriptionMarkdown: '',
-        };
-    }
-
-    async componentDidMount() {}
-
-    async componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.language !== prevProps.language) {
+function DashBoardSpecialty() {
+  const [specialties, setSpecialties] = useState([]);
+  useEffect(() => {
+    const fetchSpecialties = async () => {
+      try {
+        const res = await getAllSpecialty();
+        if (res && res.errCode === 0) {
+          setSpecialties(res.data);
         }
-    }
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
+    fetchSpecialties();
+  }, []);
 
-    handleOnChangeInput = (event, id) => {
-        let stateCopy = {...this.state}
-        stateCopy[id] = event.target.value;
-        this.setState({
-            ...stateCopy
-        })
-    }
-
-    handleEditorChange = ({ html, text }) => {
-        this.setState({
-            descriptionHTML: html,
-            descriptionMarkdown: text,
-        })
-    }
-
-    handleOnChangeImage = async (event) => {
-        let data = event.target.files;
-        let file = data[0];
-        if (file) {
-            let base64 = await CommonUtils.getBase64(file);
-            this.setState({
-                imageBase64: base64
-            })
-        }
-    }
-
-    handleSaveNewSpecialty = async() => {                 
-        let res = await createNewSpecialty(this.state)
-        if(res && res.errCode === 0) {
-            toast.success('Add new specialty succeeds!')
-            this.setState({
-                name: '',
-                imageBase64: '',
-                descriptionHTML: '',
-                descriptionMarkdown: '',
-            })
-        } else {
-            toast.error('Something wrongs...')
-            console.log('Sai, check lai res', res)
-        }
-    }
-
-    render() {
-        return (
-            <div className="manage-specialty-container">
-                <div className="ms-title">Quản lý chuyên khoa</div>
-
-                <div className="add-new-specialty row">
-                    <div className="col-6 form-group">
-                        <label>Tên chuyên khoa</label>
-                        <input className="form-control" type="text" value={this.state.name}
-                            onChange = {(event) => this.handleOnChangeInput(event, 'name')}
-                        ></input>
-                    </div>
-
-                    <div className="col-6 form-group">
-                        <label>Ảnh chuyên khoa</label>
-                        <input className="form-control-file" type="file"
-                            onChange={(event) => this.handleOnChangeImage(event)}
-                        ></input>
-                    </div> 
-
-                    <div className="col-12">
-                        <MdEditor
-                            style={{ height: "300px" }}
-                            renderHTML={(text) => mdParser.render(text)}
-                            onChange={ this.handleEditorChange}
-                            value={this.state.descriptionMarkdown }
-                        />
-                    </div>
-
-                    <div className="col-12">
-                        <button className="btn-save-specialty" onClick={() => this.handleSaveNewSpecialty()}>
-                            Save
-                        </button>
-                    </div>
-                </div>
-
-                
-            </div>
+  const handleDeleteSpecialty = (specialtyId) => async () => {
+    try {
+      const res = await deleteSpecialtyById(specialtyId);
+      if (res && res.errCode === 0) {
+        const newSpecialties = specialties.filter(
+          (specialty) => specialty.id !== specialtyId
         );
+        setSpecialties(newSpecialties);
+        toast.success(res.message);
+      } else {
+        toast.error(res.message);
+      }
+    } catch (error) {
+      console.log(error);
     }
+  };
+
+  return (
+    <div className="dashboard">
+      <div className="title">MANAGE SPECIALTIES</div>
+      <div className="add-handbook-container">
+        <Link to="/system/manage-specialty/add" className="btn btn-primary">
+          Add new specialty
+        </Link>
+      </div>
+      <div className="table">
+        <div className="handbook-table mt-3 mx-1">
+          <table id="handbooks">
+            <tbody>
+              <tr>
+                <th className="text-center">ID</th>
+                <th className="text-center">Image</th>
+                <th className="text-center">Name</th>
+                <th className="text-center">Actions</th>
+              </tr>
+              {specialties.map((item) => {
+                return (
+                  <tr key={item.id}>
+                    <td className="text-center">{item.id}</td>
+                    <td className="text-center">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="handbook-image"
+                      />
+                    </td>
+                    <td>{item.name}</td>
+                    <td className="text-center">
+                      <Link
+                        to={`/system/manage-specialty/update/${item.id}`}
+                        className="btn-edit"
+                      >
+                        <i className="fas fa-pencil-alt"></i>
+                      </Link>
+                      <button
+                        className="btn-delete"
+                        onClick={handleDeleteSpecialty(item.id)}
+                      >
+                        <i className="fas fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-const mapStateToProps = (state) => {
-    return {
-        language: state.app.language,
-    };
-};
-
-const mapDispatchToProps = (dispatch) => { 
-    return {};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ManageSpecialty);
+export default DashBoardSpecialty;
