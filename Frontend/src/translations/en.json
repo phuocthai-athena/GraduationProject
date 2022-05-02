@@ -71,7 +71,17 @@
     "upload-file": "Upload photos",
     "address": "Clinic address",
     "description": "Description of the clinic",
-    "button": "Save"
+    "button": "Save",
+    "list-clinics": "Clinics, medical facillity"
+  },
+  "manage-patient": {
+    "title": "Patient Booking Management",
+    "number": "No",
+    "time": "Time",
+    "fullname": "Full name",
+    "address": "Address",
+    "gender": "Gender",
+    "booking": "Choose booking date"
   },
   "manage-specialty": {
     "title": "Specialized Management",
@@ -79,13 +89,14 @@
     "image": "Specialized picture",
     "upload-file": "Upload photos",
     "description": "Specialized description",
-    "button": "Save"
+    "button": "Save",
+    "list-specialties": "Specialties"
   },
   "homepage": {
-    "outstanding-doctor": "Last week's featured doctor",
+    "outstanding-doctor": "Top doctors of the week",
     "more-infor": "More Infor",
     "specialty-popular": "Popular Specialties",
-    "medical-facility": "Outstanding medical facilities"
+    "medical-facility": "Medical facilities"
   },
   "manage-schedule": {
     "title": "Manage doctor's examination plan",
@@ -137,7 +148,8 @@
       "note": "Note",
       "specialty": "Specialty",
       "select-clinic": "Clinic",
-      "description-infor-doctor": "Detail Information Doctor"
+      "description-infor-doctor": "Detail Information Doctor",
+      "list-doctors": "Doctors"
     }
   }
 }

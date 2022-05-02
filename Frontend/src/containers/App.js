@@ -17,8 +17,11 @@ import ConfirmModal from "../components/ConfirmModal";
 import CustomScrollbars from "../components/CustomScrollbars";
 import DetailSpecialty from "./Patient/Specialty/DetailSpecialty";
 import DetailDoctor from "./Patient/Doctor/DetailDoctor";
+import AllDoctors from "./Patient/Doctor/AllDoctors";
+import AllClinics from "./Patient/Clinic/AllClinics";
 import Doctor from "../routes/Doctor";
 import DetailClinic from "./Patient/Clinic/DetailClinic";
+import AllSpecialties from "./Patient/Specialty/AllSpecialties";
 
 class App extends Component {
     handlePersistorState = () => {
@@ -62,10 +65,18 @@ class App extends Component {
                                         component={userIsAuthenticated(Doctor)}
                                     />
                                     <Route path={path.HOMEPAGE} component={HomePage} />
-                                    <Route path={path.DETAIL_SPECIALTY} component={DetailSpecialty} />
+                                    <Route
+                                        path={path.DETAIL_SPECIALTY}
+                                        component={DetailSpecialty}
+                                    />
                                     <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
                                     <Route path={path.DETAIL_CLINIC} component={DetailClinic} />
-
+                                    <Route
+                                        path={path.GET_ALL_SPECIALTIES}
+                                        component={AllSpecialties}
+                                    />
+                                    <Route path={path.GET_ALL_DOCTORS} component={AllDoctors} />
+                                    <Route path={path.GET_ALL_CLINICS} component={AllClinics} />
 
                                     <Route
                                         path={path.VERIFY_EMAIL_BOOKING}

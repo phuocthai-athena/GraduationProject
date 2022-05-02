@@ -15,8 +15,16 @@ let postBookAppointment = (data) => {
         try {
             let token = uuidv4();
             console.log(data);
-            if (!data.email || !data.doctorId || !data.timeType || !data.date 
-                || !data.fullName || !data.selectedGender || !data.address) {
+            if (
+                !data.email ||
+                !data.doctorId ||
+                !data.timeType ||
+                !data.date ||
+                !data.fullName ||
+                !data.selectedGender ||
+                !data.address ||
+                !data.birthday
+            ) {
                 resolve({
                     errCode: 1,
                     errMessage: "Missing required parameters",
@@ -43,6 +51,7 @@ let postBookAppointment = (data) => {
                         gender: data.selectedGender,
                         firstName: firstName,
                         lastName: lastName,
+                        birthday: data.birthday,
                     });
                 } else {
                     await db.User.update(
@@ -52,6 +61,7 @@ let postBookAppointment = (data) => {
                             gender: data.selectedGender,
                             firstName: firstName,
                             lastName: lastName,
+                            birthday: data.birthday,
                         },
                         {
                             where: {
@@ -60,13 +70,18 @@ let postBookAppointment = (data) => {
                         }
                     );
                 }
-                if (user && user[0]) {
+                if (user) {
                     await db.Booking.findOrCreate({
-                        where: { patientId: user[0].id },
+                        where: {
+                            patientId: user.id,
+                            doctorId: data.doctorId,
+                            timeType: data.timeType,
+                            date: data.date,
+                        },
                         defaults: {
                             statusId: "S1",
                             doctorId: data.doctorId,
-                            patientId: user[0].id,
+                            patientId: user.id,
                             date: data.date,
                             timeType: data.timeType,
                             token: token,

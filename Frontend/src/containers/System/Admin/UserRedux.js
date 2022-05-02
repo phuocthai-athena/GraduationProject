@@ -167,19 +167,109 @@ class UserRedux extends Component {
     };
 
     checkValidateInput = () => {
+        let state = this.state;
         let isValid = true;
         let { language } = this.props;
-        let arrCheck = ["email", "password", "firstName", "lastName", "phoneNumber", "address"];
-        for (let i = 0; i < arrCheck.length; i++) {
-            if (!this.state[arrCheck[i]]) {
-                isValid = false;
-                if (language === LANGUAGES.VI) {
-                    toast.error("bạn chưa nhập trường " + arrCheck[i]);
-                } else {
-                    toast.error("Not yet entered " + arrCheck[i]);
-                }
-                break;
+
+        //Email
+        if (state["email"] === "") {
+            isValid = false;
+            if (language === LANGUAGES.VI) {
+                toast.error("Bạn chưa nhập email");
+            } else {
+                toast.error("Not yet entered emaiil");
             }
+            return isValid;
+        } else {
+            if (typeof state["email"] !== "undefined") {
+                let lastAtPos = state["email"].lastIndexOf("@");
+                let lastDotPos = state["email"].lastIndexOf(".");
+
+                if (
+                    !(
+                        lastAtPos < lastDotPos &&
+                        lastAtPos > 0 &&
+                        state["email"].indexOf("@@") == -1 &&
+                        lastDotPos > 2 &&
+                        state["email"].length - lastDotPos > 2
+                    )
+                ) {
+                    isValid = false;
+                    if (language === LANGUAGES.VI) {
+                        toast.error("Email không đúng định dạng");
+                    } else {
+                        toast.error("Email is not valid");
+                    }
+                    return isValid;
+                }
+            }
+        }
+
+        if (state["phoneNumber"] === "") {
+            isValid = false;
+            if (language === LANGUAGES.VI) {
+                toast.error("Bạn chưa nhập số điện thoại");
+            } else {
+                toast.error("Not yet entered phone number");
+            }
+            return isValid;
+        } else {
+            if (typeof state["phoneNumber"] !== "undefined") {
+                if (
+                    !state["phoneNumber"].match(
+                        /^(0)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/
+                    )
+                ) {
+                    isValid = false;
+
+                    if (language === LANGUAGES.VI) {
+                        toast.error("Số điện thoại không hợp lệ");
+                    } else {
+                        toast.error("Wrong phone number");
+                    }
+                    return isValid;
+                }
+            }
+        }
+
+        if (state["firstName"] === "") {
+            isValid = false;
+            if (language === LANGUAGES.VI) {
+                toast.error("Vui lòng nhập tên");
+            } else {
+                toast.error("Not yet entered first name");
+            }
+            return isValid;
+        }
+
+        if (state["lastName"] === "") {
+            isValid = false;
+            if (language === LANGUAGES.VI) {
+                toast.error("Vui lòng nhập họ");
+            } else {
+                toast.error("Not yet entered last name");
+            }
+            return isValid;
+        }
+
+        if (state["address"] === "") {
+            isValid = false;
+            if (language === LANGUAGES.VI) {
+                toast.error("Vui lòng nhập địa chỉ");
+            } else {
+                toast.error("Not yet entered address");
+            }
+            return isValid;
+        }
+
+        if (state["birthDay"] === "") {
+            isValid = false;
+            if (language === LANGUAGES.VI) {
+                toast.error("Vui lòng nhập ngày sinh");
+            } else {
+                toast.error("Not yet entered birthday");
+            }
+            return isValid;
         }
 
         return isValid;
@@ -269,7 +359,6 @@ class UserRedux extends Component {
             role,
             avatar,
         } = this.state;
-        console.log(this.state.previewImgURL);
         return (
             <div className="user-redux-container">
                 <div className="title">
@@ -384,6 +473,11 @@ class UserRedux extends Component {
                                     type="text"
                                     value={phoneNumber}
                                     onChange={(event) => this.onChangeInput(event, "phoneNumber")}
+                                    onKeyPress={(event) => {
+                                        if (!/[0-9]/.test(event.key)) {
+                                            event.preventDefault();
+                                        }
+                                    }}
                                 />
                             </div>
                             <div className="col-3 mt-3">

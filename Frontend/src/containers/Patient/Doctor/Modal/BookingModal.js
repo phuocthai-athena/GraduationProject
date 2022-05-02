@@ -29,6 +29,7 @@ class BookingModal extends Component {
             genders: "",
             timeType: "",
             errors: {},
+            loading: false,
         };
     }
 
@@ -93,12 +94,13 @@ class BookingModal extends Component {
         if (!this.handleValidation()) {
             return;
         }
+        this.setState({ ...this.state, loading: true });
         let language = this.props.language;
 
         let date = new Date(this.state.birthday).getTime();
         let timeString = this.buildTimeString(this.props.dataTime);
         let doctorName = this.buildDoctorName(this.props.dataTime.doctorData);
-        
+
         let res = await postPatientBookingAppointment({
             fullName: this.state.fullName,
             phoneNumber: this.state.phoneNumber,
@@ -114,18 +116,19 @@ class BookingModal extends Component {
             timeString: timeString,
             doctorName: doctorName,
         });
+        this.setState({ ...this.state, loading: false });
         if (res && res.errCode === 0) {
             let message =
                 language === LANGUAGES.VI
-                    ? "Đặt lịch hẹn thành công!"
-                    : "Booking a new appointment succeed!";
+                    ? "Đặt lịch hẹn thành công! Vui lòng kiểm tra email để xác nhận lịch hẹn của bạn"
+                    : "Booking a new appointment succeed! Please check your email to confirm your appointment";
             toast.success(message);
             this.props.handleCloseModal();
         } else {
             let message =
                 language === LANGUAGES.VI
-                    ? "Đặt lịch hẹn thất bại!"
-                    : "Booking a new appointment error!";
+                    ? "Đặt lịch hẹn thất bại! Vui lòng thử lại"
+                    : "Booking a new appointment error! Please try again";
 
             toast.error(message);
         }
@@ -216,7 +219,7 @@ class BookingModal extends Component {
             errors["phoneNumber"] =
                 language === LANGUAGES.VI ? "Vui lòng nhập thông tin" : "Cannot be empty";
         } else {
-            if (typeof state["fullName"] !== "undefined") {
+            if (typeof state["phoneNumber"] !== "undefined") {
                 if (
                     !state["phoneNumber"].match(
                         /^(0)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/
@@ -268,7 +271,18 @@ class BookingModal extends Component {
                     size="lg"
                     className="booking-modal-container"
                 >
-                    <div className="booking-modal-content">
+                    <div
+                        className="booking-modal-content"
+                        style={
+                            this.state.loading
+                                ? {
+                                      opacity: 0.3,
+                                      pointerEvents: "none",
+                                      cursor: "not-allowed",
+                                  }
+                                : {}
+                        }
+                    >
                         <div className="booking-modal-header">
                             <span className="left">
                                 <FormattedMessage id="patient.booking-modal.title" />
@@ -283,8 +297,8 @@ class BookingModal extends Component {
                                     doctorId={dataTime.doctorId}
                                     dataTime={dataTime}
                                     isShowDescriptionDoctor={false}
-                                    isShowLinkDetail = {false}
-                                    isShowPrice = {true}
+                                    isShowLinkDetail={false}
+                                    isShowPrice={true}
                                 />
                             </div>
                             <div className="row">
@@ -382,6 +396,7 @@ class BookingModal extends Component {
                             <button
                                 className="btn-booking-confirm"
                                 onClick={() => this.handleConfirmBooking()}
+                                disabled={this.state.loading}
                             >
                                 <FormattedMessage id="patient.booking-modal.btnConfirm" />
                             </button>

@@ -4,7 +4,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { LANGUAGES } from "../../utils";
 import { FormattedMessage } from "react-intl";
-import { getDetailInforDoctor } from "../../services/userService";
 
 function SearchResult({ data: { clinics, doctors, specialties, language } }) {
     function handleImageError(e) {

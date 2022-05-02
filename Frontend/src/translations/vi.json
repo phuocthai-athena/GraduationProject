@@ -70,7 +70,18 @@
     "upload-file": "Tải ảnh lên",
     "address": "Địa chỉ phòng khám",
     "description": "Mô tả phòng khám",
-    "button": "Lưu"
+    "button": "Lưu",
+    "list-clinics": "Bệnh viện, phòng khám"
+
+  },
+  "manage-patient": {
+    "title": "Quản lý bệnh nhân khám bệnh",
+    "number": "STT",
+    "time": "Thời gian",
+    "fullname": "Họ và tên",
+    "address": "Địa chỉ",
+    "gender": "Giới tính",
+    "booking": "Chọn ngày khám"
   },
   "manage-specialty": {
     "title": "Quản lý chuyên khoa",
@@ -78,7 +89,8 @@
     "image": "Ảnh chuyên khoa",
     "upload-file": "Tải ảnh lên",
     "description": "Mô tả chuyên khoa",
-    "button": "Lưu"
+    "button": "Lưu",
+    "list-specialties": "Danh sách chuyên khoa"
   },
   "homepage": {
     "outstanding-doctor": "Bác sĩ nổi bật tuần qua",
@@ -136,7 +148,9 @@
       "note": "Ghi chú",
       "specialty": "Chọn chuyên khoa",
       "select-clinic": "Chọn phòng khám",
-      "description-infor-doctor": "Mô tả chi tiết bác sĩ"
+      "description-infor-doctor": "Mô tả chi tiết bác sĩ",
+      "list-doctors": "Danh sách bác sĩ"
+
     }
   }
 }

@@ -26,6 +26,19 @@ let getTopDoctorHome = (limitInput) => {
                         as: "genderData",
                         attributes: ["valueEn", "valueVi"],
                     },
+                    {
+                        model: db.Doctor_Infor,
+                        attributes: {
+                            exclude: ["id", "doctorId"],
+                        },
+                        include: [
+                            {
+                                model: db.Specialty,
+                                as: "specialtyData",
+                                attributes: ["name"],
+                            },
+                        ],
+                    },
                 ],
                 raw: true,
                 nest: true,
@@ -46,14 +59,43 @@ let getAllDoctors = () => {
             let doctors = await db.User.findAll({
                 where: { roleId: "R2" },
                 attributes: {
-                    exclude: ["password", "image"],
+                    exclude: ["password"],
                 },
+                include: [
+                    {
+                        model: db.Allcode,
+                        as: "positionData",
+                        attributes: ["valueEn", "valueVi"],
+                    },
+                    {
+                        model: db.Doctor_Infor,
+                        attributes: {
+                            exclude: ["id", "doctorId"],
+                        },
+                        include: [
+                            {
+                                model: db.Specialty,
+                                as: "specialtyData",
+                                attributes: ["name"],
+                            },
+                        ],
+                    },
+                ],
+                raw: false,
+                nest: true,
             });
+            if (doctors && doctors.length > 0) {
+                doctors.map((item) => {
+                    item.image = new Buffer(item.image, "Base64").toString("binary");
+                    return item;
+                });
+            }
             resolve({
                 errCode: 0,
                 data: doctors,
             });
         } catch (error) {
+            console.error(error);
             reject(error);
         }
     });
@@ -68,8 +110,6 @@ let checkRequiredFields = (inputData) => {
         "selectedPrice",
         "selectedPayment",
         "selectedProvince",
-        "nameClinic",
-        "addressClinic",
         "note",
         "specialtyId",
     ];
@@ -134,8 +174,6 @@ let saveDetailInforDoctor = (inputData) => {
                     doctorInfor.priceId = inputData.selectedPrice;
                     doctorInfor.paymentId = inputData.selectedPayment;
                     doctorInfor.provinceId = inputData.selectedProvince;
-                    doctorInfor.nameClinic = inputData.nameClinic;
-                    doctorInfor.addressClinic = inputData.addressClinic;
                     doctorInfor.note = inputData.note;
                     doctorInfor.specialtyId = inputData.specialtyId;
                     doctorInfor.clinicId = inputData.clinicId;
@@ -148,8 +186,6 @@ let saveDetailInforDoctor = (inputData) => {
                         priceId: inputData.selectedPrice,
                         paymentId: inputData.selectedPayment,
                         provinceId: inputData.selectedProvince,
-                        nameClinic: inputData.nameClinic,
-                        addressClinic: inputData.addressClinic,
                         note: inputData.note,
                         specialtyId: inputData.specialtyId,
                         clinicId: inputData.clinicId,
@@ -412,6 +448,11 @@ let getExtraInforDoctorById = (idInput) => {
                             model: db.Allcode,
                             as: "paymentTypeData",
                             attributes: ["valueEn", "valueVi"],
+                        },
+                        {
+                            model: db.Clinic,
+                            as: "clinicData",
+                            attributes: ["name", "address"],
                         },
                     ],
                     raw: false,
