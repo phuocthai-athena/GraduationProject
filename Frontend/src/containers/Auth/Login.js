@@ -1,11 +1,9 @@
+import { push } from "connected-react-router";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { push } from "connected-react-router";
+import { handleLoginApi } from "../../services/userService";
 import * as actions from "../../store/actions";
 import "./Login.scss";
-import { handleLoginApi } from "../../services/userService";
-
-import { FormattedMessage } from "react-intl";
 
 class Login extends Component {
   constructor(props) {
@@ -43,7 +41,6 @@ class Login extends Component {
       }
       if (data && data.errCode === 0) {
         this.props.userLoginSuccess(data.user);
-        console.log("Login success");
       }
     } catch (error) {
       if (error.response) {
@@ -73,24 +70,24 @@ class Login extends Component {
       <div className="login-background">
         <div className="login-container">
           <div className="login-content row">
-            <div className="col-12 login-text">Login</div>
+            <div className="col-12 login-text">Đăng nhập</div>
             <div className="col-12 form-group login-input">
-              <label>Username:</label>
+              <label>Email</label>
               <input
                 type="text"
                 className="form-control"
-                placeholder="Enter your username"
+                placeholder="nhập email..."
                 value={this.state.username}
                 onChange={(event) => this.handleOnChangeUsername(event)}
               />
             </div>
             <div className="col-12 form-group login-input">
-              <label>Password:</label>
+              <label>Mật khẩu</label>
               <div className="custom-input-password">
                 <input
                   type={this.state.isShowPassword ? "text" : "password"}
                   className="form-control"
-                  placeholder="Enter your password"
+                  placeholder="nhập mật khẩu..."
                   value={this.state.password}
                   onChange={(event) => this.hanleOnChangePassword(event)}
                   onKeyDown={(event) => this.handleKeyDown(event)}
@@ -111,10 +108,10 @@ class Login extends Component {
             </div>
             <div className="col-12">
               <button className="login-btn" onClick={() => this.handleLogin()}>
-                Login
+                Đăng nhập
               </button>
             </div>
-            <div className="col-12">
+            {/* <div className="col-12">
               <span className="forgot-password">Forgot your password?</span>
             </div>
             <div className="col-12 text-center mt-3">
@@ -123,7 +120,7 @@ class Login extends Component {
             <div className="col-12 login-social">
               <i className="fab fa-google-plus-g google"></i>
               <i className="fab fa-facebook-f facebook"></i>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

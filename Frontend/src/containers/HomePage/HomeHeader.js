@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import "./HomeHeader.scss";
-import logo from "../../assets/images/logo.svg";
 import { FormattedMessage } from "react-intl";
-import { LANGUAGES } from "../../utils";
-import { changeLanguageApp } from "../../store/actions";
+import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import logo from "../../assets/images/logo.svg";
+import { changeLanguageApp } from "../../store/actions";
+import { LANGUAGES } from "../../utils";
+import "./HomeHeader.scss";
 
 class HomeHeader extends Component {
   changeLanguage = (language) => {

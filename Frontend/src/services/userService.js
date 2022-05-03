@@ -1,128 +1,155 @@
 import axios from "../axios";
 
 const handleLoginApi = (userEmail, userPassword) => {
-    return axios.post(`/api/login`, { email: userEmail, password: userPassword });
+  return axios.post(`/api/login`, { email: userEmail, password: userPassword });
 };
 
 const getAllUsers = (inputId) => {
-    return axios.get(`/api/get-all-users?id=${inputId}`);
+  return axios.get(`/api/get-all-users?id=${inputId}`);
 };
 
 const createNewUserService = (data) => {
-    return axios.post(`/api/create-new-user`, data);
+  return axios.post(`/api/create-new-user`, data);
 };
 
 const deleteUserService = (userId) => {
-    return axios.delete(`/api/delete-user`, {
-        data: {
-            id: userId,
-        },
-    });
+  return axios.delete(`/api/delete-user`, {
+    data: {
+      id: userId,
+    },
+  });
 };
 
 const editUserService = (inputData) => {
-    return axios.put(`/api/edit-user`, inputData);
+  return axios.put(`/api/edit-user`, inputData);
 };
 
 const getAllCodeService = (inputType) => {
-    return axios.get(`/api/allcode?type=${inputType}`);
+  return axios.get(`/api/allcode?type=${inputType}`);
 };
 
 const getTopDoctorHomeService = (limit) => {
-    return axios.get(`/api/top-doctor-home?limit=${limit}`);
+  return axios.get(`/api/top-doctor-home?limit=${limit}`);
 };
 
 const getAllDoctors = () => {
-    return axios.get(`/api/get-all-doctors`);
+  return axios.get(`/api/get-all-doctors`);
 };
 
 const saveDetailDoctorService = (data) => {
-    return axios.post("/api/save-infor-doctors", data);
+  return axios.post("/api/save-infor-doctors", data);
 };
 
 const getProfileDoctorById = (doctorId) => {
-    return axios.get(`/api/get-profile-doctor-by-id?doctorId=${doctorId}`);
+  return axios.get(`/api/get-profile-doctor-by-id?doctorId=${doctorId}`);
 };
 
 const postPatientBookingAppointment = (data) => {
-    return axios.post(`/api/patient-book-appointment`, data);
+  return axios.post(`/api/patient-book-appointment`, data);
 };
 
 const postVerifyBookingAppointment = (data) => {
-    return axios.post(`/api/verify-booking-appointment`, data);
+  return axios.post(`/api/verify-booking-appointment`, data);
 };
 
 const createNewSpecialty = (data) => {
-    return axios.post(`/api/create-new-specialty`, data);
+  return axios.post(`/api/create-new-specialty`, data);
 };
 
 const getAllSpecialty = () => {
-    return axios.get(`/api/get-specialty`);
+  return axios.get(`/api/get-specialty`);
 };
 
 const getAllClinic = () => {
-    return axios.get(`/api/get-clinic`);
+  return axios.get(`/api/get-clinic`);
 };
 
 const getAllDetailSpecialtyById = (data) => {
-    return axios.get(`/api/get-detail-specialty-by-id?id=${data.id}&location=${data.location}`);
-}
+  return axios.get(
+    `/api/get-detail-specialty-by-id?id=${data.id}&location=${data.location}`
+  );
+};
 
 const getAllDetailClinicById = (data) => {
-    return axios.get(`/api/get-detail-clinic-by-id?id=${data.id}`);
-}
+  return axios.get(`/api/get-detail-clinic-by-id?id=${data.id}`);
+};
 
 const getDetailInforDoctor = (inputId) => {
-    return axios.get(`/api/get-detail-doctor-by-id?id=${inputId}`);
+  return axios.get(`/api/get-detail-doctor-by-id?id=${inputId}`);
 };
 
 const saveBulkScheduleDoctor = (data) => {
-    return axios.post("/api/bulk-create-schedule", data);
+  return axios.post("/api/bulk-create-schedule", data);
 };
 
 const getScheduleDoctorByDate = (doctorId, date) => {
-    return axios.get(`/api/get-schedule-doctor-by-date?doctorId=${doctorId}&date=${date}`);
+  return axios.get(
+    `/api/get-schedule-doctor-by-date?doctorId=${doctorId}&date=${date}`
+  );
+};
+
+const deleteScheduleSelected = (userId, currentDate, timeType) => {
+  return axios.delete(`/api/delete-schedule-selected`, {
+    data: {
+      doctorId: userId,
+      date: currentDate,
+      timeType: timeType,
+    },
+  });
 };
 
 const getExtraInforDoctorById = (doctorId) => {
-    return axios.get(`/api/get-extra-infor-doctor-by-id?doctorId=${doctorId}`);
+  return axios.get(`/api/get-extra-infor-doctor-by-id?doctorId=${doctorId}`);
 };
 
 const createNewClinic = (data) => {
-    return axios.post('/api/create-new-clinic',data);
+  return axios.post("/api/create-new-clinic", data);
 };
 
 const getAllPatientForDoctor = (data) => {
-    return axios.get(`/api/get-list-patient-for-doctor?doctorId=${data.doctorId}&date=${data.date}`);
-}
-
-const postSendRemedy = (data) => {
-    return axios.post("/api/send-remedy", data);
+  return axios.get(
+    `/api/get-list-patient-for-doctor?doctorId=${data.doctorId}&date=${data.date}`
+  );
 };
 
+const postSendRemedy = (data) => {
+  return axios.post("/api/send-remedy", data);
+};
 
+const getPassword = (userId) => {
+  return axios.get(`/api/get-password?id=${userId}`);
+};
+
+const changePassword = (data) => {
+  return axios.post("/api/change-password", data);
+};
 
 export {
-    handleLoginApi,
-    getAllUsers,
-    createNewUserService,
-    deleteUserService,
-    editUserService,
-    getAllCodeService,
-    getTopDoctorHomeService,
-    getAllDoctors,
-    saveDetailDoctorService,
-    getDetailInforDoctor,
-    saveBulkScheduleDoctor,
-    getScheduleDoctorByDate,
-    getExtraInforDoctorById,
-    getProfileDoctorById,
-    postPatientBookingAppointment,
-    postVerifyBookingAppointment,
-    createNewSpecialty,
-    getAllSpecialty, getAllDetailSpecialtyById,
-    createNewClinic,
-    getAllClinic, getAllDetailClinicById,
-    getAllPatientForDoctor,
-    postSendRemedy,
+  handleLoginApi,
+  getAllUsers,
+  createNewUserService,
+  deleteUserService,
+  editUserService,
+  getAllCodeService,
+  getTopDoctorHomeService,
+  getAllDoctors,
+  saveDetailDoctorService,
+  getDetailInforDoctor,
+  saveBulkScheduleDoctor,
+  getScheduleDoctorByDate,
+  getExtraInforDoctorById,
+  getProfileDoctorById,
+  postPatientBookingAppointment,
+  postVerifyBookingAppointment,
+  createNewSpecialty,
+  getAllSpecialty,
+  getAllDetailSpecialtyById,
+  createNewClinic,
+  getAllClinic,
+  getAllDetailClinicById,
+  getAllPatientForDoctor,
+  postSendRemedy,
+  getPassword,
+  changePassword,
+  deleteScheduleSelected,
 };

@@ -124,15 +124,20 @@ class UserRedux extends Component {
 
     let formatedDate = moment(birthday).unix();
 
-    if (
-      !this.isPasswordConfirmed(this.state.password, this.state.confirmPassword)
-    ) {
-      if (this.props.language === LANGUAGES.VI) {
-        toast.error("Mật khẩu không khớp");
-      } else {
-        toast.error("Password incorrect");
+    if (action === CRUD_ACTIONS.CREATE) {
+      if (
+        !this.isPasswordConfirmed(
+          this.state.password,
+          this.state.confirmPassword
+        )
+      ) {
+        if (this.props.language === LANGUAGES.VI) {
+          toast.error("Mật khẩu không khớp");
+        } else {
+          toast.error("Password incorrect");
+        }
+        return;
       }
-      return;
     }
 
     if (action === CRUD_ACTIONS.CREATE) {
@@ -279,9 +284,7 @@ class UserRedux extends Component {
       gender,
       position,
       role,
-      avatar,
     } = this.state;
-    console.log(this.state.previewImgURL);
     return (
       <div className="user-redux-container">
         <div className="title">

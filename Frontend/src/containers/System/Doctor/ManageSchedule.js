@@ -1,20 +1,22 @@
-import _ from "lodash";
+import moment from "moment";
 import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
-import Select from "react-select";
 import { toast } from "react-toastify";
 import DatePicker from "../../../components/Input/DatePicker";
-import { saveBulkScheduleDoctor } from "../../../services/userService";
+import {
+  getScheduleDoctorByDate,
+  saveBulkScheduleDoctor,
+} from "../../../services/userService";
 import * as actions from "../../../store/actions";
 import { LANGUAGES } from "../../../utils";
 import "./ManageSchedule.scss";
+import TableManageSchedule from "./TableManageSchedule";
+
 class ManageSchedule extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listDoctors: [],
-      selectedDoctor: {},
       currentDate: "",
       rangeTime: [],
     };
@@ -25,13 +27,7 @@ class ManageSchedule extends Component {
     this.props.fetchAllScheduleTime();
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.allDoctors !== this.props.allDoctors) {
-      let dataSelect = this.buildDataInputSelect(this.props.allDoctors);
-      this.setState({
-        listDoctors: dataSelect,
-      });
-    }
+  async componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.allScheduleTime !== this.props.allScheduleTime) {
       let data = this.props.allScheduleTime;
       if (data && data.length > 0) {
@@ -42,26 +38,6 @@ class ManageSchedule extends Component {
       });
     }
   }
-
-  buildDataInputSelect = (inputData) => {
-    let result = [];
-    let { language } = this.props;
-    if (inputData && inputData.length > 0) {
-      inputData.map((item, index) => {
-        let object = {};
-        let labelVi = `${item.lastName} ${item.firstName}`;
-        let labelEn = `${item.firstName} ${item.lastName}`;
-        object.label = language === LANGUAGES.VI ? labelVi : labelEn;
-        object.value = item.id;
-        result.push(object);
-      });
-    }
-    return result;
-  };
-
-  handleChangeSelect = (selectedOption) => {
-    this.setState({ selectedDoctor: selectedOption });
-  };
 
   handleOnChangeDatePicker = (date) => {
     this.setState({
@@ -83,7 +59,7 @@ class ManageSchedule extends Component {
   };
 
   handleSaveSchedule = async () => {
-    let { rangeTime, selectedDoctor, currentDate } = this.state;
+    let { rangeTime, currentDate } = this.state;
     let { userInfo } = this.props;
     let result = [];
 
@@ -91,12 +67,8 @@ class ManageSchedule extends Component {
       toast.error("Invalid date! ");
       return;
     }
-    // if (selectedDoctor && _.isEmpty(selectedDoctor)) {
-    //   toast.error("Invalid selected doctor! ");
-    //   return;
-    // }
 
-    let formatedDate = new Date(currentDate).getTime();
+    let formatedDate = moment(currentDate).unix();
 
     if (rangeTime && rangeTime.length > 0) {
       let selectedTime = rangeTime.filter((item) => item.isSelected === true);
@@ -122,10 +94,21 @@ class ManageSchedule extends Component {
 
     if (res && res.errCode === 0) {
       toast.success("Save Infor Succeed!");
+      this.setBtnSelectedDefault();
     } else {
       toast.error("Error saveBulkScheduleDoctor");
-      console.log("saveBulkScheduleDoctor >>> error: ", res);
     }
+  };
+
+  setBtnSelectedDefault = () => {
+    let data = this.props.allScheduleTime;
+    if (data && data.length > 0) {
+      data = data.map((item) => ({ ...item, isSelected: false }));
+    }
+    this.setState({
+      rangeTime: data,
+      currentDate: "",
+    });
   };
 
   render() {
@@ -145,12 +128,6 @@ class ManageSchedule extends Component {
               <label>
                 <FormattedMessage id="manage-schedule.choose-doctor" />
               </label>
-              {/* <Select
-                value={this.state.selectedDoctor}
-                onChange={this.handleChangeSelect}
-                options={this.state.listDoctors}
-                defaultValue={language === LANGUAGES.VI ? nameVi : nameEn}
-              /> */}
               <input
                 className="form-control"
                 value={language === LANGUAGES.VI ? nameVi : nameEn}
@@ -190,13 +167,19 @@ class ManageSchedule extends Component {
                   );
                 })}
             </div>
-            <div className="col-12">
+            <div className="col-12 form-group">
               <button
                 className="btn btn-primary btn-save-schedule"
                 onClick={() => this.handleSaveSchedule()}
               >
                 <FormattedMessage id="manage-schedule.save" />
               </button>
+            </div>
+            <div className="col-12 form-group">
+              <TableManageSchedule
+                doctorId={userInfo.id}
+                currentDate={this.state.currentDate}
+              />
             </div>
           </div>
         </div>

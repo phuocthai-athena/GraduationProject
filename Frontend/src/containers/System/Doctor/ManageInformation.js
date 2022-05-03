@@ -1,19 +1,15 @@
-import _ from "lodash";
+import moment from "moment";
 import React, { Component } from "react";
 import Lightbox from "react-image-lightbox";
 import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
-import Select from "react-select";
-import { toast } from "react-toastify";
 import DatePicker from "../../../components/Input/DatePicker";
-import {
-  getAllUsers,
-  saveBulkScheduleDoctor,
-} from "../../../services/userService";
+import { getAllUsers } from "../../../services/userService";
 import * as actions from "../../../store/actions";
 import { CommonUtils, CRUD_ACTIONS, LANGUAGES } from "../../../utils";
 import "./ManageInformation.scss";
 import ChangePassword from "./Modal/ChangePassword";
+
 class ManageSchedule extends Component {
   constructor(props) {
     super(props);
@@ -29,6 +25,7 @@ class ManageSchedule extends Component {
       firstName: "",
       lastName: "",
       phoneNumber: "",
+      birthday: "",
       address: "",
       gender: "",
       position: "",
@@ -45,6 +42,9 @@ class ManageSchedule extends Component {
     this.props.getGenderStart();
     this.props.getPositionStart();
     this.props.getRoleStart();
+    let { userInfo } = this.props;
+    let res = await getAllUsers(userInfo.id);
+    this.handleEditUserFromParent(res.users);
   }
 
   async componentDidUpdate(prevProps, prevState, snapshot) {
@@ -70,32 +70,16 @@ class ManageSchedule extends Component {
         role: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : "",
       });
     }
-    let { userInfo } = this.props;
-    let res = await getAllUsers(userInfo.id);
-    this.handleEditUserFromParent(res.users);
   }
 
   handleSaveUser = (user) => {
     let isValid = this.checkValidateInput();
     if (isValid === false) return;
 
-    let { action } = this.state;
+    let { action, birthday } = this.state;
 
-    if (action === CRUD_ACTIONS.CREATE) {
-      //fire redux action
-      this.props.createNewUser({
-        email: this.state.email,
-        password: this.state.password,
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        address: this.state.address,
-        phonenumber: this.state.phoneNumber,
-        gender: this.state.gender,
-        roleId: this.state.role,
-        positionId: this.state.position,
-        avatar: this.state.avatar,
-      });
-    }
+    let formatedDate = moment(birthday).unix();
+
     if (action === CRUD_ACTIONS.EDIT) {
       //fire redux edit user
       this.props.editAUserRedux({
@@ -105,6 +89,7 @@ class ManageSchedule extends Component {
         firstName: this.state.firstName,
         lastName: this.state.lastName,
         address: this.state.address,
+        birthday: formatedDate,
         phonenumber: this.state.phoneNumber,
         gender: this.state.gender,
         roleId: this.state.role,
@@ -116,14 +101,7 @@ class ManageSchedule extends Component {
 
   checkValidateInput = () => {
     let isValid = true;
-    let arrCheck = [
-      "email",
-      "password",
-      "firstName",
-      "lastName",
-      "phoneNumber",
-      "address",
-    ];
+    let arrCheck = ["email", "firstName", "lastName", "phoneNumber", "address"];
     for (let i = 0; i < arrCheck.length; i++) {
       if (!this.state[arrCheck[i]]) {
         isValid = false;
@@ -162,18 +140,25 @@ class ManageSchedule extends Component {
     });
   };
 
+  handleOnChangeDatePicker = (date) => {
+    this.setState({
+      birthday: date[0],
+    });
+  };
+
   handleEditUserFromParent = (user) => {
     let imageBase64 = "";
     if (user.image) {
       imageBase64 = new Buffer(user.image, "base64").toString("binary");
     }
+    let parseDate = moment.unix(user.birthday).toDate();
     this.setState({
       email: user.email,
-      password: "hardcode",
       firstName: user.firstName,
       lastName: user.lastName,
       phoneNumber: user.phonenumber,
       address: user.address,
+      birthday: parseDate,
       gender: user.gender,
       position: user.positionId,
       role: user.roleId,
@@ -209,7 +194,7 @@ class ManageSchedule extends Component {
       gender,
       position,
       role,
-      avatar,
+      birthday,
       isOpenModalChangePassword,
     } = this.state;
     return (
@@ -278,7 +263,7 @@ class ManageSchedule extends Component {
                     onChange={(event) => this.onChangeInput(event, "lastName")}
                   />
                 </div>
-                <div className="col-12 mt-3">
+                <div className="col-6 mt-3">
                   <label>
                     <FormattedMessage id="manage-user.phone-number" />
                   </label>
@@ -290,6 +275,20 @@ class ManageSchedule extends Component {
                       this.onChangeInput(event, "phoneNumber")
                     }
                   />
+                </div>
+                <div className="col-3 mt-3">
+                  <label>
+                    <FormattedMessage id="manage-user.birthday" />
+                  </label>
+                  <div className="date-picker">
+                    <DatePicker
+                      onChange={this.handleOnChangeDatePicker}
+                      className="form-control choose-date"
+                      value={birthday}
+                      maxDate={new Date()}
+                    />
+                    <i className="fas fa-calendar-alt calendar"></i>
+                  </div>
                 </div>
                 <div className="col-12 mt-3">
                   <label>
