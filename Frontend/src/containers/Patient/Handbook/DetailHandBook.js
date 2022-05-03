@@ -8,40 +8,46 @@ import { useParams } from "react-router-dom";
 import { getHandBookById } from "../../../services/userService";
 
 function DetailHandBook() {
-  const { id } = useParams();
-  const [htmlDescription, setHtmlDescription] = useState("");
+    const { id } = useParams();
+    const [name, setName] = useState("");
+    const [htmlDescription, setHtmlDescription] = useState("");
 
-  useEffect(() => {
-    const fetchHandBookById = async () => {
-      try {
-        const res = await getHandBookById(id);
-        if (res && res.errCode === 0) {
-          setHtmlDescription(res.data.descriptionHTML);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    useEffect(() => {
+        const fetchHandBookById = async () => {
+            try {
+                const res = await getHandBookById(id);
+                if (res && res.errCode === 0) {
+                    setName(res.data.name);
+                    setHtmlDescription(res.data.descriptionHTML);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
 
-    fetchHandBookById();
-  }, []);
+        fetchHandBookById();
+    }, []);
 
-  return (
-    <>
-      <HomeHeader />
-      <div className="container">{parse(htmlDescription)}</div>;
-    </>
-  );
+    return (
+        <>
+            <HomeHeader />
+            <div className="container">
+                <div className="post-name">{name}</div>
+                <div className="post-body">{parse(htmlDescription)}</div>
+            </div>
+            ;
+        </>
+    );
 }
 
 const mapStateToProps = (state) => {
-  return {
-    language: state.app.language,
-  };
+    return {
+        language: state.app.language,
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+    return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DetailHandBook);

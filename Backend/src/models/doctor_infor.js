@@ -48,7 +48,6 @@ module.exports = (sequelize, DataTypes) => {
             provinceId: DataTypes.STRING,
             paymentId: DataTypes.STRING,
             note: DataTypes.STRING,
-            count: DataTypes.INTEGER,
         },
         {
             sequelize,

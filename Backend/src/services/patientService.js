@@ -77,6 +77,7 @@ let postBookAppointment = (data) => {
                             doctorId: data.doctorId,
                             timeType: data.timeType,
                             date: data.date,
+                            reason: data.reason,
                         },
                         defaults: {
                             statusId: "S1",

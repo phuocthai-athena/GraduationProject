@@ -57,9 +57,12 @@ let initWebRoutes = (app) => {
     );
     router.put("/api/update-specialty-by-id", specialtyController.updateSpecialtyById);
 
+    // Api clinic
     router.post("/api/create-new-clinic", clinicController.createClinic);
     router.get("/api/get-clinic", clinicController.getAllClinic);
     router.get("/api/get-detail-clinic-by-id", clinicController.getDetailClinicById);
+    router.delete("/api/delete-clinic-by-id/:clinicId", clinicController.deleteClinicById);
+    router.put("/api/update-clinic-by-id", clinicController.updateClinicById);
 
     // Api Handbook
     router.post("/api/create-new-handbook", handbookController.createHandBook);

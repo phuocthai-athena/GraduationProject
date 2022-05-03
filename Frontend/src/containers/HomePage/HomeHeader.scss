@@ -37,6 +37,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            text-decoration: none;
 
             .child-content {
                 text-align: center;
@@ -102,6 +103,15 @@
             }
         }
     }
+}
+
+.item {
+    text-decoration: none;
+    color: #000;
+    &:hover {
+        color: #000;
+    }
+    gap: 8px;
 }
 
 .home-header-banner {

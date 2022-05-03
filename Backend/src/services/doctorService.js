@@ -105,7 +105,6 @@ let checkRequiredFields = (inputData) => {
     let arrFields = [
         "doctorId",
         "contentHTML",
-        "contentMarkdown",
         "action",
         "selectedPrice",
         "selectedPayment",
@@ -225,6 +224,10 @@ let getProfileDoctorById = (doctorId) => {
                             attributes: ["valueEn", "valueVi"],
                         },
                         {
+                            model: db.Markdown,
+                            attributes: ["description"],
+                        },
+                        {
                             model: db.Doctor_Infor,
                             attributes: {
                                 exclude: ["id", "doctorId"],
@@ -284,7 +287,7 @@ let getDetailDoctorById = (inputId) => {
                     include: [
                         {
                             model: db.Markdown,
-                            attributes: ["description", "contentHTML", "contentMarkdown"],
+                            attributes: ["description", "contentHTML"],
                         },
                         {
                             model: db.Allcode,
@@ -373,7 +376,7 @@ let bulkCreateSchedule = (data) => {
                 });
             }
         } catch (error) {
-            reject(error);
+            reject(123, error);
         }
     });
 };

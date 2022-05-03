@@ -8,6 +8,7 @@ import { changeLanguageApp } from "../../store/actions";
 import { withRouter } from "react-router";
 import { getAllClinic, getAllDoctors, getAllSpecialty } from "../../services/userService";
 import SearchResult from "./SearchResults";
+import { Link } from "react-router-dom";
 
 class HomeHeader extends Component {
     constructor(props) {
@@ -126,44 +127,52 @@ class HomeHeader extends Component {
                         </div>
                         <div className="center-content">
                             <div className="child-content">
-                                <div>
-                                    <b>
-                                        <FormattedMessage id="homeheader.speciality" />
-                                    </b>
-                                </div>
-                                <div className="subs-title">
-                                    <FormattedMessage id="homeheader.searchdoctor" />
-                                </div>
+                                <Link to={`/get-all-specialties/`} className="item">
+                                    <div>
+                                        <b>
+                                            <FormattedMessage id="homeheader.speciality" />
+                                        </b>
+                                    </div>
+                                    <div className="subs-title">
+                                        <FormattedMessage id="homeheader.searchdoctor" />
+                                    </div>
+                                </Link>
                             </div>
                             <div className="child-content">
-                                <div>
-                                    <b>
-                                        <FormattedMessage id="homeheader.health-facility" />
-                                    </b>
-                                </div>
-                                <div className="subs-title">
-                                    <FormattedMessage id="homeheader.select-room" />
-                                </div>
+                                <Link to={`/get-all-clinics/`} className="item">
+                                    <div>
+                                        <b>
+                                            <FormattedMessage id="homeheader.health-facility" />
+                                        </b>
+                                    </div>
+                                    <div className="subs-title">
+                                        <FormattedMessage id="homeheader.select-room" />
+                                    </div>
+                                </Link>
                             </div>
                             <div className="child-content">
-                                <div>
-                                    <b>
-                                        <FormattedMessage id="homeheader.doctor" />
-                                    </b>
-                                </div>
-                                <div className="subs-title">
-                                    <FormattedMessage id="homeheader.select-doctor" />
-                                </div>
+                                <Link to={`/get-all-doctors/`} className="item">
+                                    <div>
+                                        <b>
+                                            <FormattedMessage id="homeheader.doctor" />
+                                        </b>
+                                    </div>
+                                    <div className="subs-title">
+                                        <FormattedMessage id="homeheader.select-doctor" />
+                                    </div>
+                                </Link>
                             </div>
                             <div className="child-content">
-                                <div>
-                                    <b>
-                                        <FormattedMessage id="homeheader.fee" />
-                                    </b>
-                                </div>
-                                <div className="subs-title">
-                                    <FormattedMessage id="homeheader.check-health" />
-                                </div>
+                                <Link to={`/get-all-handbooks/`} className="item">
+                                    <div>
+                                        <b>
+                                            <FormattedMessage id="homeheader.handbook" />
+                                        </b>
+                                    </div>
+                                    <div className="subs-title">
+                                        <FormattedMessage id="homeheader.check-health" />
+                                    </div>
+                                </Link>
                             </div>
                         </div>
                         <div className="right-content">

@@ -99,6 +99,7 @@ class ManagePatient extends Component {
         console.log(">>>>", this.state);
         let { dataPatient, isOpenRemedyModal, dataModal } = this.state;
         let { language } = this.props;
+        console.log(dataPatient);
         return (
             <>
                 <div className="manage-patient-container">

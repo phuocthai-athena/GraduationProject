@@ -60,6 +60,8 @@ const getAllSpecialty = () => {
     return axios.get(`/api/get-specialty`);
 };
 
+// Clinic api
+
 const getAllClinic = () => {
     return axios.get(`/api/get-clinic`);
 };
@@ -70,6 +72,16 @@ const getDetailSpecialtyById = (data) => {
 
 const getAllDetailClinicById = (data) => {
     return axios.get(`/api/get-detail-clinic-by-id?id=${data.id}`);
+};
+
+const deleteClinicById = (clinicId) => {
+    const url = `/api/delete-clinic-by-id/${clinicId}`;
+    return axios.delete(url);
+};
+
+const updateClinicById = (data) => {
+    const url = `/api/update-clinic-by-id`;
+    return axios.put(url, data);
 };
 
 const getDetailInforDoctor = (inputId) => {
@@ -172,4 +184,6 @@ export {
     updateHandBookById,
     deleteSpecialtyById,
     updateSpecialtyById,
+    deleteClinicById,
+    updateClinicById,
 };

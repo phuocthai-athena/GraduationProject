@@ -2,6 +2,7 @@ import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import React, { Component } from "react";
 import "react-markdown-editor-lite/lib/index.css";
+import { CKEditorComponent } from "../../../components/CkEditor";
 
 import { connect } from "react-redux";
 import Select from "react-select";
@@ -143,11 +144,11 @@ class ManageDoctor extends Component {
         }
     }
 
-    handleEditorChange = ({ html, text }) => {
+    handleEditorChange = (content) => {
         this.setState({
-            contentMarkdown: text,
-            contentHTML: html,
+            contentHTML: content,
         });
+        console.log(this.state);
     };
 
     handleSaveContentMarkdown = () => {
@@ -155,7 +156,6 @@ class ManageDoctor extends Component {
         console.log(this.state);
         this.props.saveDetailDoctor({
             contentHTML: this.state.contentHTML,
-            contentMarkdown: this.state.contentMarkdown,
             description: this.state.description,
             doctorId: this.state.selectedOption.value,
             action: hasOldData === true ? CRUD_ACTIONS.EDIT : CRUD_ACTIONS.CREATE,
@@ -222,7 +222,6 @@ class ManageDoctor extends Component {
 
             this.setState({
                 contentHTML: markdown.contentHTML,
-                contentMarkdown: markdown.contentMarkdown,
                 description: markdown.description,
                 hasOldData: true,
                 note: note,
@@ -235,7 +234,6 @@ class ManageDoctor extends Component {
         } else {
             this.setState({
                 contentHTML: "",
-                contentMarkdown: "",
                 description: "",
                 hasOldData: false,
                 note: "",
@@ -380,11 +378,10 @@ class ManageDoctor extends Component {
                     <label>
                         <FormattedMessage id="admin.manage-doctor.description-infor-doctor" />
                     </label>
-                    <MdEditor
-                        style={{ height: "300px" }}
-                        renderHTML={(text) => mdParser.render(text)}
-                        onChange={this.handleEditorChange}
-                        value={this.state.contentMarkdown}
+
+                    <CKEditorComponent
+                        data={this.state.contentHTML}
+                        onChangeData={this.handleEditorChange}
                     />
                 </div>
 

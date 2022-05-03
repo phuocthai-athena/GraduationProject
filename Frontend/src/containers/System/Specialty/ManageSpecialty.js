@@ -4,6 +4,7 @@ import "./ManageSpecialty.scss";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { path } from "../../../utils";
+import { FormattedMessage } from "react-intl";
 
 function DashBoardSpecialty() {
     const [specialties, setSpecialties] = useState([]);
@@ -41,10 +42,12 @@ function DashBoardSpecialty() {
 
     return (
         <div className="dashboard">
-            <div className="title">MANAGE SPECIALTIES</div>
+            <div className="title">
+                <FormattedMessage id="admin.manage-specialty.title" />
+            </div>
             <div className="add-handbook-container">
                 <Link to="/system/manage-specialty/add" className="btn btn-primary">
-                    Add new specialty
+                    <FormattedMessage id="admin.manage-specialty.new-specialty" />
                 </Link>
             </div>
             <div className="table">
@@ -53,8 +56,12 @@ function DashBoardSpecialty() {
                         <tbody>
                             <tr>
                                 <th className="text-center">ID</th>
-                                <th className="text-center">Image</th>
-                                <th className="text-center">Name</th>
+                                <th className="text-center">
+                                    <FormattedMessage id="admin.manage-specialty.image" />
+                                </th>
+                                <th className="text-center">
+                                    <FormattedMessage id="admin.manage-specialty.name" />
+                                </th>
                                 <th className="text-center">Actions</th>
                             </tr>
                             {specialties.map((item) => {

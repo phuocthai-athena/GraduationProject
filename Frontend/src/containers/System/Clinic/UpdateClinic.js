@@ -1,35 +1,38 @@
 import React, { Component, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import "./AddHandBook.scss";
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import { CommonUtils } from "../../../utils";
 import { toast } from "react-toastify";
-import { updateHandBookById, getHandBookById } from "../../../services/userService";
+import { updateClinicById, getAllDetailClinicById } from "../../../services/userService";
 import { CKEditorComponent } from "../../../components/CkEditor";
 import { FormattedMessage } from "react-intl";
 
 const mdParser = new MarkdownIt(/*MarkDown-it options*/);
 
-function UpdateHandBook() {
+function UpdateClinic() {
     const [name, setName] = useState("");
     const [imageBase64, setImageBase64] = useState("");
     const [descriptionHTML, setDescriptionHTML] = useState("");
-    const { handBookId } = useParams();
+    const [address, setAddress] = useState("");
+    const { clinicId } = useParams();
     const [isEditorReady, setIsEditorReady] = useState(false);
-    const [handBook, setHandBook] = useState({});
+    const [clinic, setClinic] = useState({});
     const history = useHistory();
 
     useEffect(() => {
-        const fetchHandBook = async () => {
+        const fetchClinic = async () => {
             try {
-                const { data, errCode } = await getHandBookById(handBookId);
+                const { data, errCode } = await getAllDetailClinicById({
+                    id: clinicId,
+                });
 
                 if (errCode === 0) {
-                    setHandBook(data);
+                    setClinic(data);
                     setName(data.name);
                     setImageBase64(data.image);
+                    setAddress(data.address);
                     setDescriptionHTML(data.descriptionHTML);
                     setIsEditorReady(true);
                 }
@@ -38,8 +41,8 @@ function UpdateHandBook() {
             }
         };
 
-        fetchHandBook();
-    }, [handBookId]);
+        fetchClinic();
+    }, [clinicId]);
 
     const handleNameChanged = (event) => {
         setName(event.target.value);
@@ -58,17 +61,18 @@ function UpdateHandBook() {
         }
     };
 
-    const handleUpdateHandBook = async () => {
-        let res = await updateHandBookById({
-            ...handBook,
+    const handleUpdateClinic = async () => {
+        let res = await updateClinicById({
+            ...clinic,
             name,
             image: imageBase64,
+            address,
             descriptionHTML,
         });
 
         if (res) {
-            toast.success("Cập nhật cẩm nang thành công!");
-            history.push("/system/manage-handbook");
+            toast.success("Cập nhật phòng khám thành công!");
+            history.push("/system/manage-clinic");
         } else {
             toast.error("Bạn chưa nhập đủ thông tin, mời bạn nhập lại!");
             console.log("Sai, check lai res", res);
@@ -78,7 +82,7 @@ function UpdateHandBook() {
     return (
         <div className="manage-handbook-container">
             <div className="hb-title">
-                <FormattedMessage id="admin.manage-handbook.edit-title" />
+                <FormattedMessage id="admin.manage-clinic.edit-title" />
             </div>
             <div className="add-new-handbook row">
                 <div className="col-6 form-group">
@@ -103,6 +107,18 @@ function UpdateHandBook() {
                     ></input>
                 </div>
 
+                <div className="col-12 form-group">
+                    <label>
+                        <FormattedMessage id="admin.manage-clinic.address" />
+                    </label>
+                    <input
+                        className="form-control"
+                        type="text"
+                        value={address}
+                        onChange={(event) => setAddress(event.target.value)}
+                    />
+                </div>
+
                 <div className="col-12">
                     {isEditorReady && (
                         <CKEditorComponent
@@ -113,7 +129,7 @@ function UpdateHandBook() {
                 </div>
 
                 <div className="col-12">
-                    <button className="btn-save-handbook" onClick={handleUpdateHandBook}>
+                    <button className="btn-save-handbook" onClick={handleUpdateClinic}>
                         <FormattedMessage id="admin.manage-handbook.update" />
                     </button>
                 </div>
@@ -122,4 +138,4 @@ function UpdateHandBook() {
     );
 }
 
-export default UpdateHandBook;
+export default UpdateClinic;

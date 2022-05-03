@@ -6,7 +6,7 @@
     "select-room": "Chọn bệnh viện phòng khám",
     "doctor": "Bác sĩ",
     "select-doctor": "Chọn bác sĩ giỏi",
-    "fee": "Gói khám",
+    "handbook": "Cẩm nang",
     "check-health": "Khám sức khỏe tổng quát",
     "support": "Hỗ trợ",
     "welcome": "Xin chào, ",
@@ -71,8 +71,10 @@
     "address": "Địa chỉ phòng khám",
     "description": "Mô tả phòng khám",
     "button": "Lưu",
-    "list-clinics": "Bệnh viện, phòng khám"
-
+    "list-clinics": "Bệnh viện, phòng khám",
+    "new-clinic": "Thêm mới phòng khám",
+    "add": "Thêm mới",
+    "update": "Cập nhật"
   },
   "manage-patient": {
     "title": "Quản lý bệnh nhân khám bệnh",
@@ -96,7 +98,9 @@
     "outstanding-doctor": "Bác sĩ nổi bật tuần qua",
     "more-infor": "Xem thêm",
     "specialty-popular": "Chuyên khoa phổ biến",
-    "handbook": "Cẩm nang"
+    "handbook": "Cẩm nang",
+    "medical-facility": "Cơ sở y tế nổi bật",
+    "list-handbook": "Danh sách cẩm nang"
   },
   "manage-schedule": {
     "title": "Quản lý kế hoạch khám bệnh của bác sĩ",
@@ -150,7 +154,24 @@
       "select-clinic": "Chọn phòng khám",
       "description-infor-doctor": "Mô tả chi tiết bác sĩ",
       "list-doctors": "Danh sách bác sĩ"
-
+    },
+    "manage-specialty": {
+      "title": "Quản lý chuyên khoa",
+      "edit-title": "Cập nhật chuyên khoa",
+      "new-specialty": "Thêm mới chuyên khoa",
+      "image": "Hình ảnh chuyên khoa",
+      "name": "Tên chuyên khoa",
+      "add": "Thêm mới",
+      "update": "Cập nhật"
+    },
+    "manage-handbook": {
+      "title": "Quản lý cẩm nang",
+      "edit-title": "Cập nhật cẩm nang",
+      "new-handbook": "Thêm mới cẩm nang",
+      "image": "Hình ảnh cẩm nang",
+      "name": "Tên cẩm nang",
+      "add": "Thêm mới",
+      "update": "Cập nhật"
     }
   }
 }
