@@ -4,7 +4,11 @@ import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import DatePicker from "../../../components/Input/DatePicker";
 import { FormattedMessage } from "react-intl";
-import { getAllPatientForDoctor, postSendRemedy } from "../../../services/userService";
+import {
+  getAllPatientForDoctor,
+  postSendRemedy,
+  postCancelMedicalAppointment
+} from "../../../services/userService";
 import { LANGUAGES } from "../../../utils";
 import "./ManagePatient.scss";
 import RemedyModal from "./RemedyModal";
@@ -54,6 +58,22 @@ class ManagePatient extends Component {
       }
     );
   };
+
+  handleBtnCancel = async (item) => {
+    let res = await postCancelMedicalAppointment({
+      doctorId: item.doctorId,
+      patientId: item.patientId,
+      timeType: item.timeType
+    });
+    if (res && res.errCode === 0) {
+      toast.success("Cancel succeeds:");
+      await this.getDataPatient();
+    } else {
+      toast.error("Something wrong ...");
+      console.log("Erorr Cancel: ", res);
+    }
+  }
+
   handleBtnConfirm = (item) => {
     let data = {
       doctorId: item.doctorId,
@@ -106,77 +126,82 @@ class ManagePatient extends Component {
           </div>
 
           <div className="manage-patient-body row">
-            <div className="col-4 form-group">
-              <label>
-                <FormattedMessage id="manage-patient.choose-date" />
-              </label>
-              <div className="date-picker">
-                <DatePicker
-                  onChange={this.handleOnChangeDatePicker}
-                  className="form-control choose-date"
-                  value={this.state.currentDate}
-                />
-                <i className="fas fa-calendar-alt calendar"></i>
+            <div className="container">
+              <div className="col-4 form-group">
+                <label>
+                  <FormattedMessage id="manage-patient.choose-date" />
+                </label>
+                <div className="date-picker">
+                  <DatePicker
+                    onChange={this.handleOnChangeDatePicker}
+                    className="form-control choose-date"
+                    value={this.state.currentDate}
+                  />
+                  <i className="fas fa-calendar-alt calendar"></i>
+                </div>
               </div>
-            </div>
-            <div className="col-12 table-manage-patient">
-              <table id="TableManagerPatient" style={{ width: "100%" }}>
-                <tbody>
-                  <tr>
-                    <th>STT</th>
-                    <th>{language === LANGUAGES.VI
-                      ? "Lịch đã chọn"
-                      : "Selected calendar"}</th>
-                    <th>{language === LANGUAGES.VI
-                      ? "Họ tên"
-                      : "Full name"}</th>
-                    <th>{language === LANGUAGES.VI
-                      ? "Địa chỉ"
-                      : "Address"}</th>
-                    <th>{language === LANGUAGES.VI
-                      ? "Giới tính"
-                      : "Gender"}</th>
-                    <th>{language === LANGUAGES.VI
-                      ? "Tác vụ"
-                      : "Actions"}</th>
-                  </tr>
-                  {dataPatient && dataPatient.length > 0 ? (
-                    dataPatient.map((item, index) => {
-                      let time =
-                        language === LANGUAGES.VI
-                          ? item.timeTypeDataPatient.valueVi
-                          : item.timeTypeDataPatient.valueEn;
-                      let gender =
-                        language === LANGUAGES.VI
-                          ? item.patientData.genderData.valueVi
-                          : item.patientData.genderData.valueEn;
-                      return (
-                        <tr key={index}>
-                          <td>{index + 1}</td>
-                          <td>{time}</td>
-                          <td>{item.patientData.firstName}</td>
-                          <td>{item.patientData.address}</td>
-                          <td>{gender}</td>
-                          <td>
-                            <button
-                              className="mb-btn-confirm"
-                              onClick={() => this.handleBtnConfirm(item)}
-                            >
-                              Xác nhận
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })
-                  ) : (
+              <div className="col-12 table-manage-patient">
+                <table id="TableManagerPatient" style={{ width: "100%" }}>
+                  <tbody>
                     <tr>
-                      <td colSpan={"6"} style={{ textAlign: "center" }}>
-                        No data
-                      </td>
+                      <th>STT</th>
+                      <th>{language === LANGUAGES.VI
+                        ? "Lịch đã chọn"
+                        : "Selected calendar"}</th>
+                      <th>{language === LANGUAGES.VI
+                        ? "Họ tên"
+                        : "Full name"}</th>
+                      <th>{language === LANGUAGES.VI
+                        ? "Địa chỉ"
+                        : "Address"}</th>
+                      <th>{language === LANGUAGES.VI
+                        ? "Giới tính"
+                        : "Gender"}</th>
+                      <th>{language === LANGUAGES.VI
+                        ? "Tác vụ"
+                        : "Actions"}</th>
                     </tr>
-                  )}
-                </tbody>
-              </table>
+                    {dataPatient && dataPatient.length > 0 ? (
+                      dataPatient.map((item, index) => {
+                        let time =
+                          language === LANGUAGES.VI
+                            ? item.timeTypeDataPatient.valueVi
+                            : item.timeTypeDataPatient.valueEn;
+                        let gender =
+                          language === LANGUAGES.VI
+                            ? item.patientData.genderData.valueVi
+                            : item.patientData.genderData.valueEn;
+                        return (
+                          <tr key={index}>
+                            <td>{index + 1}</td>
+                            <td>{time}</td>
+                            <td>{item.patientData.firstName}</td>
+                            <td>{item.patientData.address}</td>
+                            <td>{gender}</td>
+                            <td>
+                              <button
+                                className="mb-btn-confirm"
+                                onClick={() => this.handleBtnConfirm(item)}
+                              >
+                                Xác nhận
+                              </button>
+                              <button className="mb-btn-cancel"
+                                onClick={() => this.handleBtnCancel(item)}
+                              >Hủy bỏ</button>
+                            </td>
+                          </tr>
+                        );
+                      })
+                    ) : (
+                      <tr>
+                        <td colSpan={"6"} style={{ textAlign: "center" }}>
+                          No data
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>

@@ -684,19 +684,50 @@ let handleDeleteSchedule = (data) => {
     });
 };
 
+let cancelMedicalAppointment = (data) => {
+  return new Promise(async (resolve, reject) => {
+      try {
+          if ( !data.doctorId || !data.patientId || !data.timeType) {
+              resolve({
+                  errCode: -1,
+                  errMessage: "Missing required parameters",
+              });
+          } else {
+              //update patient status
+              let appointment = await db.Booking.findOne({
+                  where:{
+                      doctorId: data.doctorId,
+                      patientId: data.patientId,
+                      timeType: data.timeType,
+                      statusId: "S2",
+                  },
+                  raw: false,
+              })
+              if (appointment) {
+                  appointment.statusId = 'S4';
+                  await appointment.save();
+              }
+          }
+      } catch (e) {
+          reject(e);
+
+      }
+  })
+}
 
 module.exports = {
-    getTopDoctorHome: getTopDoctorHome,
-    getAllDoctors: getAllDoctors,
-    saveDetailInforDoctor: saveDetailInforDoctor,
-    getDetailDoctorById: getDetailDoctorById,
-    bulkCreateSchedule: bulkCreateSchedule,
-    getScheduleByDate: getScheduleByDate,
-    getExtraInforDoctorById: getExtraInforDoctorById,
-    getProfileDoctorById: getProfileDoctorById,
-    getListPatientForDoctor: getListPatientForDoctor,
-    sendRemedy: sendRemedy,
-    getPassword: getPassword,
-    changePassword: changePassword,
-    handleDeleteSchedule: handleDeleteSchedule,
+  getTopDoctorHome: getTopDoctorHome,
+  getAllDoctors: getAllDoctors,
+  saveDetailInforDoctor: saveDetailInforDoctor,
+  getDetailDoctorById: getDetailDoctorById,
+  bulkCreateSchedule: bulkCreateSchedule,
+  getScheduleByDate: getScheduleByDate,
+  getExtraInforDoctorById: getExtraInforDoctorById,
+  getProfileDoctorById: getProfileDoctorById,
+  getListPatientForDoctor: getListPatientForDoctor,
+  sendRemedy: sendRemedy,
+  getPassword: getPassword,
+  changePassword: changePassword,
+  handleDeleteSchedule: handleDeleteSchedule,
+  cancelMedicalAppointment: cancelMedicalAppointment,
 };

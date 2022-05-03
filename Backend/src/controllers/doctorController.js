@@ -174,8 +174,18 @@ let handleDeleteSchedule = async (req, res) => {
   }
 };
 
-
-
+let cancelMedicalAppointment = async (req, res) => {
+    try {
+        let info = await doctorService.cancelMedicalAppointment(req.body);
+        return res.status(200).json(info);
+    } catch (error) {
+        console.log(error);
+        return res.status(200).json({
+            errCode: -1,
+            message: "Error from the server.",
+        });
+    }
+}
 module.exports = {
   getTopDoctorHome: getTopDoctorHome,
   getAllDoctors: getAllDoctors,
@@ -190,4 +200,5 @@ module.exports = {
   getPassword: getPassword,
   changePassword: changePassword,
   handleDeleteSchedule: handleDeleteSchedule,
+  cancelMedicalAppointment: cancelMedicalAppointment,
 };

@@ -172,6 +172,9 @@ const getAllDetailSpecialtyById = (data) => {
     return axios.get(`
     /api/get-detail-specialty-by-id?id=${data.id}&location=${data.location}`);
 };
+const postCancelMedicalAppointment = (data) => {
+  return axios.post("/api/cancel-medical-appointment", data);
+};
 
 export {
     handleLoginApi,
@@ -212,4 +215,5 @@ export {
     changePassword,
     deleteScheduleSelected,
     getAllPatientForHistory,
+    postCancelMedicalAppointment,
 };
