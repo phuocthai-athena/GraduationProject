@@ -76,7 +76,7 @@
         }
 
         &.section-handbook {
-          background-image: url("../../assets/handbook/kinh-nghiem-mua-may-do-huyet-ap-dien-tu.jpg");
+          // background-image: url("../../assets/handbook/kinh-nghiem-mua-may-do-huyet-ap-dien-tu.jpg");
         }
       }
     }
@@ -86,10 +86,12 @@
 .section-share {
   height: 330px;
 
-  .specialty-container {
+  .specialty-container,
+  .handbook-container {
     margin: 0 100px;
 
-    .specialty-header {
+    .specialty-header,
+    .handbook-header {
       height: 60px;
       margin-bottom: 20px;
       padding-top: 20px;

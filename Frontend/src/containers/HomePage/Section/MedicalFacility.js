@@ -4,7 +4,6 @@ import { withRouter } from "react-router";
 import Slider from "react-slick";
 import "./MedicalFacility.scss";
 import { getAllClinic } from "../../../services/userService";
-import { FormattedMessage } from "react-intl";
 
 class MedicalFacility extends Component {
     constructor(props) {

@@ -22,6 +22,7 @@ import AllClinics from "./Patient/Clinic/AllClinics";
 import Doctor from "../routes/Doctor";
 import DetailClinic from "./Patient/Clinic/DetailClinic";
 import AllSpecialties from "./Patient/Specialty/AllSpecialties";
+import DetailHandBook from "./Patient/Handbook/DetailHandBook";
 
 class App extends Component {
     handlePersistorState = () => {
@@ -75,6 +76,8 @@ class App extends Component {
                                         path={path.GET_ALL_SPECIALTIES}
                                         component={AllSpecialties}
                                     />
+                                    <Route path={path.DETAIL_HANDBOOK} component={DetailHandBook} />
+
                                     <Route path={path.GET_ALL_DOCTORS} component={AllDoctors} />
                                     <Route path={path.GET_ALL_CLINICS} component={AllClinics} />
 

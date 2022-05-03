@@ -4,8 +4,8 @@ import homeController from "../controllers/homeController";
 import userController from "../controllers/userController";
 import patientController from "../controllers/patientController";
 import specialtyController from "../controllers/specialtyController";
-import clinicController from "../controllers/clinicController"
-
+import clinicController from "../controllers/clinicController";
+import handbookController from "../controllers/handbookController";
 
 let router = express.Router();
 
@@ -40,23 +40,33 @@ let initWebRoutes = (app) => {
 
     router.get("/api/get-profile-doctor-by-id", doctorController.getProfileDoctorById);
 
-    router.get("/api/get-list-patient-for-doctor",doctorController.getListPatientForDoctor);
+    router.get("/api/get-list-patient-for-doctor", doctorController.getListPatientForDoctor);
     router.post("/api/send-remedy", doctorController.sendRemedy);
 
-    router.get("/api/get-password", doctorController.getPassword)
+    router.get("/api/get-password", doctorController.getPassword);
 
     router.post("/api/patient-book-appointment", patientController.postBookAppointment);
     router.post("/api/verify-booking-appointment", patientController.postverifyBookAppointment);
 
-
-
     router.post("/api/create-new-specialty", specialtyController.createSpecialty);
     router.get("/api/get-specialty", specialtyController.getAllSpecialty);
     router.get("/api/get-detail-specialty-by-id", specialtyController.getDetailSpecialtyById);
+    router.delete(
+        "/api/delete-specialty-by-id/:specialtyId",
+        specialtyController.deleteSpecialtyById
+    );
+    router.put("/api/update-specialty-by-id", specialtyController.updateSpecialtyById);
 
-    router.post('/api/create-new-clinic', clinicController.createClinic);
-    router.get('/api/get-clinic', clinicController.getAllClinic);
-    router.get('/api/get-detail-clinic-by-id', clinicController.getDetailClinicById);
+    router.post("/api/create-new-clinic", clinicController.createClinic);
+    router.get("/api/get-clinic", clinicController.getAllClinic);
+    router.get("/api/get-detail-clinic-by-id", clinicController.getDetailClinicById);
+
+    // Api Handbook
+    router.post("/api/create-new-handbook", handbookController.createHandBook);
+    router.get("/api/get-handbook", handbookController.getAllHandBook);
+    router.get("/api/get-detail-handbook-by-id", handbookController.getDetailHandBookById);
+    router.delete("/api/delete-handbook-by-id/:handBookId", handbookController.deleteHandBookById);
+    router.put("/api/update-handbook-by-id", handbookController.updateHandBookById);
 
     return app.use("/", router);
 };
