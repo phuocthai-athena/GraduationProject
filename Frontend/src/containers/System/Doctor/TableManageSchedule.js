@@ -27,8 +27,11 @@ class TableManageSchedule extends Component {
       let res = await getScheduleDoctorByDate(doctorId, formatedDate);
       if (res && res.errCode === 0) {
         this.setState({
-          timeSelected: res.data ? res.data : [],
+          timeSelected: res.data
+            ? res.data.map((item) => ({ ...item, isSelected: false }))
+            : [],
         });
+        this.props.getScheduleFromChild(this.state.timeSelected);
       }
     }
     if (this.state.isOpenConfirmDelete !== prevState.isOpenConfirmDelete) {
@@ -38,8 +41,11 @@ class TableManageSchedule extends Component {
       let res = await getScheduleDoctorByDate(doctorId, formatedDate);
       if (res && res.errCode === 0) {
         this.setState({
-          timeSelected: res.data ? res.data : [],
+          timeSelected: res.data
+            ? res.data.map((item) => ({ ...item, isSelected: false }))
+            : [],
         });
+        this.props.getScheduleFromChild(this.state.timeSelected);
       }
     }
   }
@@ -54,6 +60,7 @@ class TableManageSchedule extends Component {
   };
 
   toggleConfirmDelete = () => {
+    this.props.toggleFromParent();
     this.setState({
       isOpenConfirmDelete: !this.state.isOpenConfirmDelete,
     });
@@ -99,7 +106,9 @@ class TableManageSchedule extends Component {
             ) : (
               <tr>
                 <td colSpan={"6"} style={{ textAlign: "center" }}>
-                  Chưa có lịch hẹn khám
+                  {language === LANGUAGES.VI
+                    ? "Chưa có lịch hẹn khám"
+                    : "No appointment scheduled yet"}
                 </td>
               </tr>
             )}

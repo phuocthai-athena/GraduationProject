@@ -4,10 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import DatePicker from "../../../components/Input/DatePicker";
-import {
-  getScheduleDoctorByDate,
-  saveBulkScheduleDoctor,
-} from "../../../services/userService";
+import { saveBulkScheduleDoctor } from "../../../services/userService";
 import * as actions from "../../../store/actions";
 import { LANGUAGES } from "../../../utils";
 import "./ManageSchedule.scss";
@@ -19,6 +16,9 @@ class ManageSchedule extends Component {
     this.state = {
       currentDate: "",
       rangeTime: [],
+      scheduleSelected: [],
+      isAvailableSchedule: [],
+      isHandleDelete: false,
     };
   }
 
@@ -37,11 +37,29 @@ class ManageSchedule extends Component {
         rangeTime: data,
       });
     }
+    if (this.state.scheduleSelected !== prevState.scheduleSelected) {
+      this.compareSchedule();
+    }
+    if (this.state.isHandleDelete !== prevState.isHandleDelete) {
+      let data = this.props.allScheduleTime;
+      if (data && data.length > 0) {
+        data = data.map((item) => ({ ...item, isSelected: false }));
+      }
+      this.setState({
+        currentDate: this.state.currentDate,
+        rangeTime: data,
+      });
+    }
   }
 
   handleOnChangeDatePicker = (date) => {
+    let data = this.props.allScheduleTime;
+    if (data && data.length > 0) {
+      data = data.map((item) => ({ ...item, isSelected: false }));
+    }
     this.setState({
       currentDate: date[0],
+      rangeTime: data,
     });
   };
 
@@ -64,7 +82,11 @@ class ManageSchedule extends Component {
     let result = [];
 
     if (!currentDate) {
-      toast.error("Invalid date! ");
+      if (this.props.language === LANGUAGES.VI) {
+        toast.error("Ngày không hợp lệ");
+      } else {
+        toast.error("Invalid date");
+      }
       return;
     }
 
@@ -81,7 +103,11 @@ class ManageSchedule extends Component {
           result.push(object);
         });
       } else {
-        toast.error("Invalid selected time! ");
+        if (this.props.language === LANGUAGES.VI) {
+          toast.error("Thời gian đã chọn không hợp lệ");
+        } else {
+          toast.error("Invalid selected time");
+        }
         return;
       }
     }
@@ -93,10 +119,18 @@ class ManageSchedule extends Component {
     });
 
     if (res && res.errCode === 0) {
-      toast.success("Save Infor Succeed!");
+      if (this.props.language === LANGUAGES.VI) {
+        toast.success("Lưu thành công");
+      } else {
+        toast.success("Save successfully");
+      }
       this.setBtnSelectedDefault();
     } else {
-      toast.error("Error saveBulkScheduleDoctor");
+      if (this.props.language === LANGUAGES.VI) {
+        toast.error("Lưu thất bại");
+      } else {
+        toast.error("Save failed");
+      }
     }
   };
 
@@ -108,6 +142,37 @@ class ManageSchedule extends Component {
     this.setState({
       rangeTime: data,
       currentDate: "",
+    });
+  };
+
+  getScheduleFromChild = (scheduleSelectedFromChild) => {
+    this.setState({
+      scheduleSelected: scheduleSelectedFromChild,
+    });
+  };
+
+  compareSchedule = () => {
+    let listScheduleParent = this.state.rangeTime;
+    let listScheduleChild = this.state.scheduleSelected;
+
+    listScheduleParent
+      .filter(
+        (value) =>
+          listScheduleChild
+            .map((value1) => value1.timeType)
+            .indexOf(value.keyMap) !== -1
+      )
+      .forEach((item) => (item.isSelected = true));
+
+    this.setState({
+      rangeTime: listScheduleParent,
+      currentDate: this.state.currentDate,
+    });
+  };
+
+  toggleHandleDelete = () => {
+    this.setState({
+      isHandleDelete: !this.state.isHandleDelete,
     });
   };
 
@@ -179,6 +244,8 @@ class ManageSchedule extends Component {
               <TableManageSchedule
                 doctorId={userInfo.id}
                 currentDate={this.state.currentDate}
+                getScheduleFromChild={this.getScheduleFromChild}
+                toggleFromParent={this.toggleHandleDelete}
               />
             </div>
           </div>

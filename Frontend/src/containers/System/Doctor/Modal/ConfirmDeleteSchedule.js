@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 import { Modal } from "reactstrap";
 import { deleteScheduleSelected } from "../../../../services/userService";
 import { LANGUAGES } from "../../../../utils";
@@ -30,6 +31,18 @@ class ChangePassword extends Component {
         listScheduleDelete.date,
         listScheduleDelete.timeType
       );
+      if (this.props.language === LANGUAGES.VI) {
+        toast.success("Xóa thành công");
+      } else {
+        toast.success("Delete successful");
+      }
+    } else {
+      if (this.props.language === LANGUAGES.VI) {
+        toast.error("Xóa thất bại");
+      } else {
+        toast.error("Delete failed");
+      }
+      return;
     }
     this.toggle();
   };
