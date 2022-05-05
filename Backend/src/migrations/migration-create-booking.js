@@ -25,6 +25,9 @@ module.exports = {
             date: {
                 type: Sequelize.STRING,
             },
+            reason: {
+                type: Sequelize.STRING,
+            },
             timeType: {
                 type: Sequelize.STRING,
             },
