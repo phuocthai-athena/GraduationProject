@@ -65,7 +65,7 @@ class DoctorSchedule extends Component {
                         .format("ddd - DD/MM");
                 }
             }
-            object.value = moment(new Date()).add(i, "days").startOf("day").valueOf();
+            object.value = moment(new Date()).add(i, "days").startOf("day").unix();
             allDays.push(object);
         }
 
@@ -117,26 +117,6 @@ class DoctorSchedule extends Component {
         });
     };
 
-    validateScheduleTime = (item) => {
-        console.log(item);
-        let currentNumber = item.currentNumber ? item.currentNumber : 0;
-        let maxNumber = item.maxNumber;
-        let currentDate = new Date();
-        let time = item.timeTypeData.valueVi;
-        let scheduleTime = parseInt(time.substr(0, time.indexOf(":")));
-        let scheduleDate = new Date(parseInt(item.date));
-
-        if (currentNumber >= maxNumber) {
-            return true;
-        }
-        if (scheduleDate.getDate() === currentDate.getDate()) {
-            if (currentDate.getHours() >= scheduleTime) {
-                return true;
-            }
-        }
-        return false;
-    };
-
     render() {
         let { allDays, allAvailableTime, isOpenModalBooking, dataScheduleTimeModal } = this.state;
         let { language } = this.props;
@@ -170,8 +150,6 @@ class DoctorSchedule extends Component {
                                 <>
                                     <div className="time-content-btn">
                                         {allAvailableTime.map((item, index) => {
-                                            console.log(item);
-                                            let isUnavailable = this.validateScheduleTime(item);
                                             let timeDisplay =
                                                 language === LANGUAGES.VI
                                                     ? item.timeTypeData.valueVi
@@ -186,12 +164,6 @@ class DoctorSchedule extends Component {
                                                     }
                                                     onClick={() =>
                                                         this.handleClickScheduleTime(item)
-                                                    }
-                                                    disabled={isUnavailable}
-                                                    style={
-                                                        isUnavailable
-                                                            ? { backgroundColor: "#A0A0A0" }
-                                                            : { backgroundColor: "#FFFF33" }
                                                     }
                                                 >
                                                     {timeDisplay}

@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import "./HomeHeader.scss";
-import logo from "../../assets/images/logo.svg";
 import { FormattedMessage } from "react-intl";
-import { LANGUAGES } from "../../utils";
-import { changeLanguageApp } from "../../store/actions";
+import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { getAllClinic, getAllDoctors, getAllSpecialty } from "../../services/userService";
 import SearchResult from "./SearchResults";
 import { Link } from "react-router-dom";
+import logo from "../../assets/images/logo.svg";
+import { changeLanguageApp } from "../../store/actions";
+import { LANGUAGES } from "../../utils";
+import "./HomeHeader.scss";
 
 class HomeHeader extends Component {
     constructor(props) {

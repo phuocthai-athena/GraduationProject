@@ -95,7 +95,6 @@ export const createNewUser = (data) => {
         try {
             let res = await createNewUserService(data);
             if (res && res.errCode === 0) {
-                toast.success("Create a new user succeed!");
                 dispatch(saveUserSuccess());
                 dispatch(fetchAllUserStart());
             } else {
@@ -148,17 +147,14 @@ export const deleteAUser = (userId) => {
         try {
             let res = await deleteUserService(userId);
             if (res && res.errCode === 0) {
-                toast.success("Xóa người dùng thành công!");
                 dispatch(deleteUserSuccess());
                 dispatch(fetchAllUserStart());
             } else {
-                toast.error("Xóa người dùng thất bại!");
                 dispatch(deleteUserFailed());
             }
         } catch (e) {
-            toast.error("Xóa người dùng thành công!");
             dispatch(deleteUserFailed());
-            console.log("Xóa người dùng thất bại", e);
+            console.log("deleteUserFailed error", e);
         }
     };
 };
@@ -176,15 +172,12 @@ export const editAUser = (data) => {
         try {
             let res = await editUserService(data);
             if (res && res.errCode === 0) {
-                toast.success("Cập nhật thông tin bác sĩ thành công!");
                 dispatch(editUserSuccess());
                 dispatch(fetchAllUserStart());
             } else {
-                toast.error("Cập nhật thông tin bác sĩ thất bại!");
                 dispatch(editUserFailed());
             }
         } catch (e) {
-            toast.error("Cập nhật thông tin bác sĩ thất bại!");
             dispatch(editUserFailed());
             console.log("updateUserFailed error", e);
         }

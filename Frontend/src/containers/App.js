@@ -1,29 +1,27 @@
+import { ConnectedRouter as Router } from "connected-react-router";
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { Route, Switch } from "react-router-dom";
-import { ConnectedRouter as Router } from "connected-react-router";
-import { history } from "../redux";
 import { ToastContainer } from "react-toastify";
-import { userIsAuthenticated, userIsNotAuthenticated } from "../hoc/authentication";
-import { path } from "../utils";
-import Home from "../routes/Home";
-import Login from "./Auth/Login";
-import System from "../routes/System";
-import HomePage from "./HomePage/HomePage";
-import VerifyEmail from "./Patient/VerifyEmail";
-
-import { CustomToastCloseButton } from "../components/CustomToast";
 import ConfirmModal from "../components/ConfirmModal";
 import CustomScrollbars from "../components/CustomScrollbars";
-import DetailSpecialty from "./Patient/Specialty/DetailSpecialty";
-import DetailDoctor from "./Patient/Doctor/DetailDoctor";
-import AllDoctors from "./Patient/Doctor/AllDoctors";
-import AllClinics from "./Patient/Clinic/AllClinics";
+import { userIsAuthenticated, userIsNotAuthenticated } from "../hoc/authentication";
+import { history } from "../redux";
 import Doctor from "../routes/Doctor";
+import Home from "../routes/Home";
+import System from "../routes/System";
+import { path } from "../utils";
+import Login from "./Auth/Login";
+import HomePage from "./HomePage/HomePage";
 import DetailClinic from "./Patient/Clinic/DetailClinic";
+import DetailDoctor from "./Patient/Doctor/DetailDoctor";
+import DetailSpecialty from "./Patient/Specialty/DetailSpecialty";
+import VerifyEmail from "./Patient/VerifyEmail";
 import AllSpecialties from "./Patient/Specialty/AllSpecialties";
 import DetailHandBook from "./Patient/Handbook/DetailHandBook";
 import AllHandBooks from "./Patient/Handbook/AllHandBooks";
+import AllClinics from "./Patient/Clinic/AllClinics";
+import AllDoctors from "./Patient/Doctor/AllDoctors";
 
 class App extends Component {
     handlePersistorState = () => {
@@ -73,15 +71,7 @@ class App extends Component {
                                     />
                                     <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
                                     <Route path={path.DETAIL_CLINIC} component={DetailClinic} />
-                                    <Route
-                                        path={path.GET_ALL_SPECIALTIES}
-                                        component={AllSpecialties}
-                                    />
-                                    <Route path={path.DETAIL_HANDBOOK} component={DetailHandBook} />
 
-                                    <Route path={path.GET_ALL_DOCTORS} component={AllDoctors} />
-                                    <Route path={path.GET_ALL_CLINICS} component={AllClinics} />
-                                    <Route path={path.GET_ALL_HANDBOOKS} component={AllHandBooks} />
                                     <Route
                                         path={path.VERIFY_EMAIL_BOOKING}
                                         component={VerifyEmail}

@@ -1,19 +1,19 @@
+import moment from "moment";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { FormattedDate, FormattedMessage } from "react-intl";
-import DatePicker from "../../../components/Input/DatePicker";
-import "./ManagePatient.scss";
-import { getAllPatientForDoctor, postSendRemedy } from "../../../services/userService";
-import moment from "moment";
-import { LANGUAGES } from "../../../utils";
-import RemedyModal from "./RemedyModal";
 import { toast } from "react-toastify";
+import DatePicker from "../../../components/Input/DatePicker";
+import { FormattedMessage } from "react-intl";
+import { getAllPatientForDoctor, postSendRemedy } from "../../../services/userService";
+import { LANGUAGES } from "../../../utils";
+import "./ManagePatient.scss";
+import RemedyModal from "./RemedyModal";
 
 class ManagePatient extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentDate: moment(new Date()).startOf("day").valueOf(),
+            currentDate: "",
             dataPatient: [],
             isOpenRemedyModal: false,
             dataModal: {},
@@ -27,7 +27,7 @@ class ManagePatient extends Component {
     getDataPatient = async () => {
         let { user } = this.props;
         let { currentDate } = this.state;
-        let formatedDate = new Date(currentDate).getTime();
+        let formatedDate = moment(currentDate).unix();
         let res = await getAllPatientForDoctor({
             doctorId: user.id,
             date: formatedDate,
@@ -68,6 +68,7 @@ class ManagePatient extends Component {
             dataModal: data,
         });
     };
+
     closeRemedyModal = () => {
         this.setState({
             isOpenRemedyModal: false,
@@ -96,13 +97,11 @@ class ManagePatient extends Component {
     };
 
     render() {
-        console.log(">>>>", this.state);
         let { dataPatient, isOpenRemedyModal, dataModal } = this.state;
         let { language } = this.props;
-        console.log(dataPatient);
         return (
             <>
-                <div className="manage-patient-container">
+                <div className="manage-patient-container container">
                     <div className="m-p-title">
                         <FormattedMessage id="manage-patient.title" />
                     </div>
@@ -110,34 +109,35 @@ class ManagePatient extends Component {
                     <div className="manage-patient-body row">
                         <div className="col-4 form-group">
                             <label>
-                                <FormattedMessage id="manage-patient.booking" />
+                                <FormattedMessage id="manage-patient.choose-date" />
                             </label>
-                            <DatePicker
-                                onChange={this.handleOnChangeDatePicker}
-                                className="form-control"
-                                value={this.state.currentDate}
-                            />
+                            <div className="date-picker">
+                                <DatePicker
+                                    onChange={this.handleOnChangeDatePicker}
+                                    className="form-control choose-date"
+                                    value={this.state.currentDate}
+                                />
+                                <i className="fas fa-calendar-alt calendar"></i>
+                            </div>
                         </div>
                         <div className="col-12 table-manage-patient">
-                            <table style={{ width: "100%" }}>
+                            <table id="TableManagerPatient" style={{ width: "100%" }}>
                                 <tbody>
                                     <tr>
+                                        <th>STT</th>
                                         <th>
-                                            <FormattedMessage id="manage-patient.number" />
+                                            {language === LANGUAGES.VI
+                                                ? "Lịch đã chọn"
+                                                : "Selected calendar"}
                                         </th>
                                         <th>
-                                            <FormattedMessage id="manage-patient.time" />
+                                            {language === LANGUAGES.VI ? "Họ tên" : "Full name"}
                                         </th>
+                                        <th>{language === LANGUAGES.VI ? "Địa chỉ" : "Address"}</th>
                                         <th>
-                                            <FormattedMessage id="manage-patient.fullname" />
+                                            {language === LANGUAGES.VI ? "Giới tính" : "Gender"}
                                         </th>
-                                        <th>
-                                            <FormattedMessage id="manage-patient.address" />
-                                        </th>
-                                        <th>
-                                            <FormattedMessage id="manage-patient.gender" />
-                                        </th>
-                                        <th>Actions</th>
+                                        <th>{language === LANGUAGES.VI ? "Tác vụ" : "Actions"}</th>
                                     </tr>
                                     {dataPatient && dataPatient.length > 0 ? (
                                         dataPatient.map((item, index) => {

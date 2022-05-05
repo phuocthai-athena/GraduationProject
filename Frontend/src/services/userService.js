@@ -96,6 +96,16 @@ const getScheduleDoctorByDate = (doctorId, date) => {
     return axios.get(`/api/get-schedule-doctor-by-date?doctorId=${doctorId}&date=${date}`);
 };
 
+const deleteScheduleSelected = (userId, currentDate, timeType) => {
+    return axios.delete(`/api/delete-schedule-selected`, {
+        data: {
+            doctorId: userId,
+            date: currentDate,
+            timeType: timeType,
+        },
+    });
+};
+
 const getExtraInforDoctorById = (doctorId) => {
     return axios.get(`/api/get-extra-infor-doctor-by-id?doctorId=${doctorId}`);
 };
@@ -149,6 +159,10 @@ const deleteSpecialtyById = (specialtyId) => {
 const updateSpecialtyById = (data) => {
     const url = `/api/update-specialty-by-id`;
     return axios.put(url, data);
+};
+
+const changePassword = (data) => {
+    return axios.post("/api/change-password", data);
 };
 
 export {

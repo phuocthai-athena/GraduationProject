@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { FormattedMessage } from "react-intl";
-import "./ProfileDoctor.scss";
-import { getProfileDoctorById } from "../../../services/userService";
-import { LANGUAGES } from "../../../utils";
-import NumberFormat from "react-number-format";
 import _ from "lodash";
 import moment from "moment";
-import localization from "moment/locale/vi";
+import React, { Component } from "react";
+import { FormattedMessage } from "react-intl";
+import NumberFormat from "react-number-format";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { getProfileDoctorById } from "../../../services/userService";
+import { LANGUAGES } from "../../../utils";
+import "./ProfileDoctor.scss";
+import localization from "moment/locale/vi";
 
 class ProfileDoctor extends Component {
     constructor(props) {
@@ -35,9 +35,9 @@ class ProfileDoctor extends Component {
     };
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.language != prevProps.language) {
+        if (this.props.language !== prevProps.language) {
         }
-        if (this.props.doctorId != prevProps.doctorId) {
+        if (this.props.doctorId !== prevProps.doctorId) {
         }
     }
 

@@ -122,6 +122,210 @@ class UserRedux extends Component {
 
         let formatedDate = moment(birthday).unix();
 
+        if (action === CRUD_ACTIONS.CREATE) {
+            if (!this.isPasswordConfirmed(this.state.password, this.state.confirmPassword)) {
+                if (this.props.language === LANGUAGES.VI) {
+                    toast.error("Mật khẩu không khớp");
+                } else {
+                    toast.error("Password incorrect");
+                }
+                return;
+            }
+        }
+
+        if (action === CRUD_ACTIONS.CREATE) {
+            //fire redux action
+            if (
+                {
+                    email: this.state.email,
+                    password: this.state.password,
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName,
+                    address: this.state.address,
+                    phonenumber: this.state.phoneNumber,
+                    birthday: formatedDate,
+                    gender: this.state.gender,
+                    roleId: this.state.role,
+                    positionId: this.state.position,
+                    avatar: this.state.avatar,
+                }
+            ) {
+                this.props.createNewUser({
+                    email: this.state.email,
+                    password: this.state.password,
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName,
+                    address: this.state.address,
+                    phonenumber: this.state.phoneNumber,
+                    birthday: formatedDate,
+                    gender: this.state.gender,
+                    roleId: this.state.role,
+                    positionId: this.state.position,
+                    avatar: this.state.avatar,
+                });
+                if (this.props.language === LANGUAGES.VI) {
+                    toast.success("Tạo mới người dùng thành công!");
+                } else {
+                    toast.success("Successfully created new user!");
+                }
+            } else {
+                if (this.props.language === LANGUAGES.VI) {
+                    toast.error("Tạo mới người dùng thất bại!");
+                } else {
+                    toast.error("New user creation failed!");
+                }
+                return;
+            }
+        }
+        if (action === CRUD_ACTIONS.EDIT) {
+            //fire redux edit user
+            if (
+                {
+                    id: this.state.userEditId,
+                    email: this.state.email,
+                    password: this.state.password,
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName,
+                    address: this.state.address,
+                    birthday: formatedDate,
+                    phonenumber: this.state.phoneNumber,
+                    gender: this.state.gender,
+                    roleId: this.state.role,
+                    positionId: this.state.position,
+                    avatar: this.state.avatar,
+                }
+            ) {
+                this.props.editAUserRedux({
+                    id: this.state.userEditId,
+                    email: this.state.email,
+                    password: this.state.password,
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName,
+                    address: this.state.address,
+                    birthday: formatedDate,
+                    phonenumber: this.state.phoneNumber,
+                    gender: this.state.gender,
+                    roleId: this.state.role,
+                    positionId: this.state.position,
+                    avatar: this.state.avatar,
+                });
+                if (this.props.language === LANGUAGES.VI) {
+                    toast.success("Cập nhật người dùng thành công!");
+                } else {
+                    toast.success("User Update Successful!");
+                }
+            } else {
+                if (this.props.language === LANGUAGES.VI) {
+                    toast.error("Cập nhật người dùng thất bại!");
+                } else {
+                    toast.error("User update failed!");
+                }
+                return;
+            }
+        }
+    };
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.genderRedux !== this.props.genderRedux) {
+            let arrGenders = this.props.genderRedux;
+            this.setState({
+                genderArr: arrGenders,
+                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].keyMap : "",
+            });
+        }
+        if (prevProps.positionRedux !== this.props.positionRedux) {
+            let arrPositions = this.props.positionRedux;
+            this.setState({
+                positionArr: arrPositions,
+                position: arrPositions && arrPositions.length > 0 ? arrPositions[0].keyMap : "",
+            });
+        }
+        if (prevProps.roleRedux !== this.props.roleRedux) {
+            let arrRoles = this.props.roleRedux;
+            this.setState({
+                roleArr: arrRoles,
+                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : "",
+            });
+        }
+        if (prevProps.listUsers !== this.props.listUsers) {
+            let arrGenders = this.props.genderRedux;
+            let arrPositions = this.props.positionRedux;
+            let arrRoles = this.props.roleRedux;
+
+            this.setState({
+                email: "",
+                password: "",
+                confirmPassword: "",
+                firstName: "",
+                lastName: "",
+                phoneNumber: "",
+                address: "",
+                birthday: "",
+                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].keyMap : "",
+                position: arrPositions && arrPositions.length > 0 ? arrPositions[0].keyMap : "",
+                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : "",
+                avatar: "",
+                action: CRUD_ACTIONS.CREATE,
+                previewImgURL: "",
+            });
+        }
+    }
+
+    handleOnChangeImage = async (event) => {
+        let data = event.target.files;
+        let file = data[0];
+        if (file) {
+            let base64 = await CommonUtils.getBase64(file);
+            let objectUrl = URL.createObjectURL(file);
+            this.setState({
+                previewImgURL: objectUrl,
+                avatar: base64,
+            });
+        }
+    };
+
+    openPreviewImage = () => {
+        if (!this.state.previewImgURL) return;
+        this.setState({
+            isOpen: true,
+        });
+    };
+
+    handleSaveUser = (user) => {
+        let isValid = this.checkValidateInput();
+        if (isValid === false) return;
+
+        handleEditUserFromParent = (user) => {
+            let imageBase64 = "";
+            if (user.image) {
+                imageBase64 = new Buffer(user.image, "base64").toString("binary");
+            }
+            let parseDate = "";
+            if (user.birthday === null) {
+                parseDate = "";
+            } else {
+                parseDate = moment.unix(user.birthday).toDate();
+            }
+            this.setState({
+                email: user.email,
+                password: "hardcode",
+                firstName: user.firstName,
+                lastName: user.lastName,
+                phoneNumber: user.phonenumber,
+                address: user.address,
+                birthday: parseDate,
+                gender: user.gender,
+                position: user.positionId,
+                role: user.roleId,
+                avatar: "",
+                previewImgURL: imageBase64,
+                action: CRUD_ACTIONS.EDIT,
+                userEditId: user.id,
+            });
+        };
+
+        let formatedDate = moment(birthday).unix();
+
         if (!this.isPasswordConfirmed(this.state.password, this.state.confirmPassword)) {
             if (this.props.language === LANGUAGES.VI) {
                 toast.error("Mật khẩu không khớp");

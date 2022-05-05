@@ -1,7 +1,10 @@
+import bcrypt from "bcryptjs";
+import _ from "lodash";
 import db from "../models/index";
-require("dotenv").config();
-import _, { reject } from "lodash";
 import emailService from "../services/emailService";
+require("dotenv").config();
+
+const salt = bcrypt.genSaltSync(10);
 
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
 
@@ -598,6 +601,89 @@ let getPassword = (idInput) => {
     });
 };
 
+let hashUserPassword = (password) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let hashPassword = await bcrypt.hashSync(password, salt);
+            resolve(hashPassword);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
+let changePassword = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.id) {
+                resolve({
+                    errCode: 2,
+                    errMessage: "Missing required parameters",
+                });
+            }
+            let user = await db.User.findOne({
+                raw: false,
+                where: { id: data.id },
+            });
+            let hashPasswordFromBcrypt = await hashUserPassword(data.password);
+            if (user) {
+                user.password = hashPasswordFromBcrypt;
+
+                await user.save();
+
+                resolve({
+                    errCode: 0,
+                    message: "Update User Successfully",
+                });
+            } else {
+                resolve({
+                    errCode: 1,
+                    errMessage: `User's not found`,
+                });
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
+let handleDeleteSchedule = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.doctorId || !data.date || !data.timeType) {
+                resolve({
+                    errCode: -1,
+                    errMessage: "Missing required parameters",
+                });
+            } else {
+                let scheduleSelected = await db.Schedule.findOne({
+                    where: {
+                        doctorId: data.doctorId,
+                        date: data.date,
+                        timeType: data.timeType,
+                    },
+                });
+                if (!scheduleSelected) {
+                    resolve({
+                        errCode: 2,
+                        errMessage: `The schedule isn't exist!`,
+                    });
+                }
+                await db.Schedule.destroy({
+                    where: { timeType: data.timeType, date: data.date },
+                });
+
+                resolve({
+                    errCode: 0,
+                    message: `The schedule is deleted`,
+                });
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctors: getAllDoctors,
@@ -610,4 +696,6 @@ module.exports = {
     getListPatientForDoctor: getListPatientForDoctor,
     sendRemedy: sendRemedy,
     getPassword: getPassword,
+    changePassword: changePassword,
+    handleDeleteSchedule: handleDeleteSchedule,
 };
