@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import { Modal } from "reactstrap";
-import { deleteScheduleSelected } from "../../../../services/userService";
+import * as actions from "../../../../store/actions";
 import { LANGUAGES } from "../../../../utils";
-import "./ConfirmDeleteSchedule.scss";
+import "./ConfirmDeleteUser.scss";
 
-class ConfirmDeleteSchedule extends Component {
+class ConfirmDeleteUser extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -24,13 +24,8 @@ class ConfirmDeleteSchedule extends Component {
   };
 
   handleConfirmDelete = async () => {
-    let listScheduleDelete = this.props.listSchedule;
-    if (listScheduleDelete) {
-      await deleteScheduleSelected(
-        listScheduleDelete.doctorId,
-        listScheduleDelete.date,
-        listScheduleDelete.timeType
-      );
+    if (this.props.userDelete.id) {
+      this.props.deleteAUserRedux(this.props.userDelete.id);
       if (this.props.language === LANGUAGES.VI) {
         toast.success("Xóa thành công");
       } else {
@@ -76,8 +71,8 @@ class ConfirmDeleteSchedule extends Component {
           <div className="confirm-delete-body">
             <span className="confirm-delete-text">
               {language === LANGUAGES.VI
-                ? "Bạn có chắc bạn muốn xóa mục này?"
-                : "Are you sure you want to delete this item?"}
+                ? "Bạn có chắc bạn muốn xóa người dùng này?"
+                : "Are you sure you want to delete this user?"}
             </span>
           </div>
           <div className="confirm-delete-footer">
@@ -109,10 +104,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return { deleteAUserRedux: (id) => dispatch(actions.deleteAUser(id)) };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ConfirmDeleteSchedule);
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmDeleteUser);

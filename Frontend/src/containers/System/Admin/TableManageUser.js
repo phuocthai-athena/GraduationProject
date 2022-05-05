@@ -3,12 +3,17 @@ import "react-markdown-editor-lite/lib/index.css";
 import { connect } from "react-redux";
 import * as actions from "../../../store/actions";
 import "./TableManageUser.scss";
+import ConfirmDeleteUser from "./Modal/ConfirmDeleteUser.js";
+import { LANGUAGES } from "../../../utils";
+import moment from "moment";
 
 class TableManageUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
       usersRedux: [],
+      isOpenConfirmDelete: false,
+      userDelete: {},
     };
   }
 
@@ -25,15 +30,27 @@ class TableManageUser extends Component {
   }
 
   handleDeleteUser = (user) => {
-    this.props.deleteAUserRedux(user.id);
+    this.setState({ userDelete: user });
+    this.handleOpenModal();
+  };
+
+  handleOpenModal = () => {
+    this.setState({ isOpenConfirmDelete: true });
   };
 
   handleEditUser = (user) => {
     this.props.handleEditUserFromParent(user);
   };
 
+  toggleConfirmDelete = () => {
+    this.setState({
+      isOpenConfirmDelete: !this.state.isOpenConfirmDelete,
+    });
+  };
+
   render() {
     let arrUsers = this.state.usersRedux;
+    let { language } = this.props;
     return (
       <React.Fragment>
         <table id="tableManagerUser">
@@ -41,10 +58,18 @@ class TableManageUser extends Component {
             <tr>
               <th>Stt</th>
               <th>Email</th>
-              <th>First name</th>
-              <th>Last name</th>
-              <th>Address</th>
-              <th>Actions</th>
+              <th>{language === LANGUAGES.VI ? "Tên" : "First name"}</th>
+              <th>{language === LANGUAGES.VI ? "Họ" : "Last name"}</th>
+              <th>
+                {language === LANGUAGES.VI ? "Ngày sinh" : "Date of birht"}
+              </th>
+              <th>
+                {language === LANGUAGES.VI ? "Số điện thoại" : "Phone number"}
+              </th>
+              <th>{language === LANGUAGES.VI ? "Địa chỉ" : "Address"}</th>
+              <th className="text-center">
+                {language === LANGUAGES.VI ? "Tác vụ" : "Actions"}
+              </th>
             </tr>
             {arrUsers &&
               arrUsers.length > 0 &&
@@ -55,8 +80,14 @@ class TableManageUser extends Component {
                     <td>{item.email}</td>
                     <td>{item.firstName}</td>
                     <td>{item.lastName}</td>
-                    <td>{item.address}</td>
                     <td>
+                      {item.birthday === null
+                        ? ""
+                        : moment.unix(item.birthday).format("MM/DD/YYYY")}
+                    </td>
+                    <td>{item.phonenumber}</td>
+                    <td>{item.address}</td>
+                    <td className="text-center">
                       <button
                         className="btn-edit"
                         onClick={() => this.handleEditUser(item)}
@@ -75,6 +106,11 @@ class TableManageUser extends Component {
               })}
           </tbody>
         </table>
+        <ConfirmDeleteUser
+          isOpenModal={this.state.isOpenConfirmDelete}
+          toggleFromParent={this.toggleConfirmDelete}
+          userDelete={this.state.userDelete}
+        />
       </React.Fragment>
     );
   }
@@ -83,13 +119,13 @@ class TableManageUser extends Component {
 const mapStateToProps = (state) => {
   return {
     listUsers: state.admin.users,
+    language: state.app.language,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchUserRedux: () => dispatch(actions.fetchAllUserStart()),
-    deleteAUserRedux: (id) => dispatch(actions.deleteAUser(id)),
   };
 };
 

@@ -95,7 +95,6 @@ export const createNewUser = (data) => {
     try {
       let res = await createNewUserService(data);
       if (res && res.errCode === 0) {
-        toast.success("Create a new user succeed!");
         dispatch(saveUserSuccess());
         dispatch(fetchAllUserStart());
       } else {
@@ -148,15 +147,12 @@ export const deleteAUser = (userId) => {
     try {
       let res = await deleteUserService(userId);
       if (res && res.errCode === 0) {
-        toast.success("Delete the user succeed!");
         dispatch(deleteUserSuccess());
         dispatch(fetchAllUserStart());
       } else {
-        toast.error("Delete the user error!");
         dispatch(deleteUserFailed());
       }
     } catch (e) {
-      toast.error("Delete the user error!");
       dispatch(deleteUserFailed());
       console.log("deleteUserFailed error", e);
     }
@@ -176,15 +172,12 @@ export const editAUser = (data) => {
     try {
       let res = await editUserService(data);
       if (res && res.errCode === 0) {
-        toast.success("Update the user succeed!");
         dispatch(editUserSuccess());
         dispatch(fetchAllUserStart());
       } else {
-        toast.error("Update the user error!");
         dispatch(editUserFailed());
       }
     } catch (e) {
-      toast.error("Update the user error!");
       dispatch(editUserFailed());
       console.log("updateUserFailed error", e);
     }
@@ -304,13 +297,18 @@ export const getRequiredDoctorInfor = () => {
       let resPayment = await getAllCodeService("PAYMENT");
       let resProvince = await getAllCodeService("PROVINCE");
       let resSpecialty = await getAllSpecialty();
-      let resClinic = await  getAllClinic();
+      let resClinic = await getAllClinic();
       if (
-        resPrice && resPrice.errCode === 0 
-        && resPayment && resPayment.errCode === 0 
-        && resProvince && resProvince.errCode === 0
-        && resSpecialty && resSpecialty.errCode === 0
-        && resClinic && resClinic.errCode ===0
+        resPrice &&
+        resPrice.errCode === 0 &&
+        resPayment &&
+        resPayment.errCode === 0 &&
+        resProvince &&
+        resProvince.errCode === 0 &&
+        resSpecialty &&
+        resSpecialty.errCode === 0 &&
+        resClinic &&
+        resClinic.errCode === 0
       ) {
         let data = {
           resPrice: resPrice.data,
