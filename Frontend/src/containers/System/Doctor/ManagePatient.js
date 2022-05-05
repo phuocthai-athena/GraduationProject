@@ -1,13 +1,15 @@
+import moment from "moment";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { FormattedDate, FormattedMessage } from "react-intl";
-import DatePicker from "../../../components/Input/DatePicker";
-import "./ManagePatient.scss";
-import { getAllPatientForDoctor, postSendRemedy } from "../../../services/userService";
-import moment from "moment";
-import { LANGUAGES } from "../../../utils";
-import RemedyModal from "./RemedyModal";
 import { toast } from "react-toastify";
+import DatePicker from "../../../components/Input/DatePicker";
+import {
+  getAllPatientForDoctor,
+  postSendRemedy
+} from "../../../services/userService";
+import { LANGUAGES } from "../../../utils";
+import "./ManagePatient.scss";
+import RemedyModal from "./RemedyModal";
 
 class ManagePatient extends Component {
   constructor(props) {
@@ -18,10 +20,7 @@ class ManagePatient extends Component {
       isOpenRemedyModal: false,
       dataModal: {},
     };
-
   }
-
-
 
   async componentDidMount() {
     this.getDataPatient();
@@ -34,13 +33,13 @@ class ManagePatient extends Component {
     let res = await getAllPatientForDoctor({
       doctorId: user.id,
       date: formatedDate,
-    })
+    });
     if (res && res.errCode === 0) {
       this.setState({
-        dataPatient: res.data
-      })
+        dataPatient: res.data,
+      });
     }
-  }
+  };
 
   async componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.language !== prevProps.language) {
@@ -48,33 +47,35 @@ class ManagePatient extends Component {
   }
 
   handleOnChangeDatePicker = (date) => {
-    this.setState({
-      currentDate: date[0],
-    }, async () => {
-      await this.getDataPatient();
-    });
+    this.setState(
+      {
+        currentDate: date[0],
+      },
+      async () => {
+        await this.getDataPatient();
+      }
+    );
   };
 
   handleBtnConfirm = (item) => {
-    
     let data = {
       doctorId: item.doctorId,
       patientId: item.patientId,
       email: item.patientData.email,
       timeType: item.timeType,
       patientName: item.patientData.firstName,
-    }
+    };
     this.setState({
       isOpenRemedyModal: true,
       dataModal: data,
-    })
+    });
   };
   closeRemedyModal = () => {
     this.setState({
       isOpenRemedyModal: false,
       dataModal: {},
-    })
-  }
+    });
+  };
   sendRemedy = async (dataChild) => {
     let { dataModal } = this.state;
     let res = await postSendRemedy({
@@ -94,30 +95,30 @@ class ManagePatient extends Component {
       toast.error("Something wrong ...");
       console.log("Erorr send remedy: ", res);
     }
-  }
+  };
 
   render() {
-    console.log(">>>>", this.state);
     let { dataPatient, isOpenRemedyModal, dataModal } = this.state;
     let { language } = this.props;
     return (
       <>
         <div className="manage-patient-container">
-          <div className="m-p-title">
-            Quản lý bệnh nhân khám bệnh
-          </div>
+          <div className="m-p-title">Quản lý bệnh nhân khám bệnh</div>
 
           <div className="manage-patient-body row">
             <div className="col-4 form-group">
               <label>Chọn ngày khám</label>
-              <DatePicker
-                onChange={this.handleOnChangeDatePicker}
-                className="form-control"
-                value={this.state.currentDate}
-              />
+              <div className="date-picker">
+                <DatePicker
+                  onChange={this.handleOnChangeDatePicker}
+                  className="form-control choose-date"
+                  value={this.state.currentDate}
+                />
+                <i className="fas fa-calendar-alt calendar"></i>
+              </div>
             </div>
             <div className="col-12 table-manage-patient">
-              <table style={{ width: '100%' }}>
+              <table style={{ width: "100%" }}>
                 <tbody>
                   <tr>
                     <th>STT</th>
@@ -127,12 +128,16 @@ class ManagePatient extends Component {
                     <th>Giới tính</th>
                     <th>Actions</th>
                   </tr>
-                  {dataPatient && dataPatient.length > 0 ?
+                  {dataPatient && dataPatient.length > 0 ? (
                     dataPatient.map((item, index) => {
-                      let time = language === LANGUAGES.VI ?
-                        item.timeTypeDataPatient.valueVi : item.timeTypeDataPatient.valueEn;
-                      let gender = language === LANGUAGES.VI ?
-                        item.patientData.genderData.valueVi : item.patientData.genderData.valueEn;
+                      let time =
+                        language === LANGUAGES.VI
+                          ? item.timeTypeDataPatient.valueVi
+                          : item.timeTypeDataPatient.valueEn;
+                      let gender =
+                        language === LANGUAGES.VI
+                          ? item.patientData.genderData.valueVi
+                          : item.patientData.genderData.valueEn;
                       return (
                         <tr key={index}>
                           <td>{index + 1}</td>
@@ -141,25 +146,27 @@ class ManagePatient extends Component {
                           <td>{item.patientData.address}</td>
                           <td>{gender}</td>
                           <td>
-                            <button className="mb-btn-confirm"
+                            <button
+                              className="mb-btn-confirm"
                               onClick={() => this.handleBtnConfirm(item)}
-                            >Xác nhận</button>
-
+                            >
+                              Xác nhận
+                            </button>
                           </td>
-
                         </tr>
-                      )
+                      );
                     })
-                    : <tr>
-                      <td colSpan={"6"} style={{textAlign:"center"}}>No data</td>
+                  ) : (
+                    <tr>
+                      <td colSpan={"6"} style={{ textAlign: "center" }}>
+                        No data
+                      </td>
                     </tr>
-                  }
-
+                  )}
                 </tbody>
               </table>
             </div>
           </div>
-
         </div>
         <RemedyModal
           isOpenModal={isOpenRemedyModal}

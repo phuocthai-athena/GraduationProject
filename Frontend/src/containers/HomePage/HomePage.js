@@ -1,16 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import HomeFooter from "./HomeFooter";
 import HomeHeader from "./HomeHeader";
-import Specialty from "./Section/Specialty";
+import "./HomePage.scss";
+import HandBook from "./Section/HandBook";
 import MedicalFacility from "./Section/MedicalFacility";
 import OutstandingDoctor from "./Section/OutstandingDoctor";
-import HandBook from "./Section/HandBook";
-import About from "./Section/About";
-import HomeFooter from "./HomeFooter";
-import "./HomePage.scss";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import BookingModal from "../Patient/Doctor/Modal/BookingModal";
+import Specialty from "./Section/Specialty";
 
 class HomePage extends Component {
   constructor(props) {
@@ -34,7 +32,6 @@ class HomePage extends Component {
         <MedicalFacility settings={settings} />
         <OutstandingDoctor settings={settings} />
         <HandBook settings={settings} />
-        <About />
         <HomeFooter />
       </div>
     );

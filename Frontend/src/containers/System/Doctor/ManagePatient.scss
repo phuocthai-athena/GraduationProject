@@ -6,6 +6,26 @@
         text-transform: uppercase;
     }
 
+    .date-picker {
+        position: relative;
+        display: flex;
+
+        .choose-date {
+            z-index: 10;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .calendar {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            z-index: 9;
+        }
+    }
+
     .manage-patient-body {
         padding: 0 20px;
 

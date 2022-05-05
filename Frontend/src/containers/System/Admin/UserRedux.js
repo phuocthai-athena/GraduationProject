@@ -124,49 +124,111 @@ class UserRedux extends Component {
 
     let formatedDate = moment(birthday).unix();
 
-    if (
-      !this.isPasswordConfirmed(this.state.password, this.state.confirmPassword)
-    ) {
-      if (this.props.language === LANGUAGES.VI) {
-        toast.error("Mật khẩu không khớp");
-      } else {
-        toast.error("Password incorrect");
+    if (action === CRUD_ACTIONS.CREATE) {
+      if (
+        !this.isPasswordConfirmed(
+          this.state.password,
+          this.state.confirmPassword
+        )
+      ) {
+        if (this.props.language === LANGUAGES.VI) {
+          toast.error("Mật khẩu không khớp");
+        } else {
+          toast.error("Password incorrect");
+        }
+        return;
       }
-      return;
     }
 
     if (action === CRUD_ACTIONS.CREATE) {
       //fire redux action
-      this.props.createNewUser({
-        email: this.state.email,
-        password: this.state.password,
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        address: this.state.address,
-        phonenumber: this.state.phoneNumber,
-        birthday: formatedDate,
-        gender: this.state.gender,
-        roleId: this.state.role,
-        positionId: this.state.position,
-        avatar: this.state.avatar,
-      });
+      if (
+        {
+          email: this.state.email,
+          password: this.state.password,
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          address: this.state.address,
+          phonenumber: this.state.phoneNumber,
+          birthday: formatedDate,
+          gender: this.state.gender,
+          roleId: this.state.role,
+          positionId: this.state.position,
+          avatar: this.state.avatar,
+        }
+      ) {
+        this.props.createNewUser({
+          email: this.state.email,
+          password: this.state.password,
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          address: this.state.address,
+          phonenumber: this.state.phoneNumber,
+          birthday: formatedDate,
+          gender: this.state.gender,
+          roleId: this.state.role,
+          positionId: this.state.position,
+          avatar: this.state.avatar,
+        });
+        if (this.props.language === LANGUAGES.VI) {
+          toast.success("Tạo mới người dùng thành công!");
+        } else {
+          toast.success("Successfully created new user!");
+        }
+      } else {
+        if (this.props.language === LANGUAGES.VI) {
+          toast.error("Tạo mới người dùng thất bại!");
+        } else {
+          toast.error("New user creation failed!");
+        }
+        return;
+      }
     }
     if (action === CRUD_ACTIONS.EDIT) {
       //fire redux edit user
-      this.props.editAUserRedux({
-        id: this.state.userEditId,
-        email: this.state.email,
-        password: this.state.password,
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        address: this.state.address,
-        birthday: formatedDate,
-        phonenumber: this.state.phoneNumber,
-        gender: this.state.gender,
-        roleId: this.state.role,
-        positionId: this.state.position,
-        avatar: this.state.avatar,
-      });
+      if (
+        {
+          id: this.state.userEditId,
+          email: this.state.email,
+          password: this.state.password,
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          address: this.state.address,
+          birthday: formatedDate,
+          phonenumber: this.state.phoneNumber,
+          gender: this.state.gender,
+          roleId: this.state.role,
+          positionId: this.state.position,
+          avatar: this.state.avatar,
+        }
+      ) {
+        this.props.editAUserRedux({
+          id: this.state.userEditId,
+          email: this.state.email,
+          password: this.state.password,
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          address: this.state.address,
+          birthday: formatedDate,
+          phonenumber: this.state.phoneNumber,
+          gender: this.state.gender,
+          roleId: this.state.role,
+          positionId: this.state.position,
+          avatar: this.state.avatar,
+        });
+        if (this.props.language === LANGUAGES.VI) {
+          toast.success("Cập nhật người dùng thành công!");
+        } else {
+          toast.success("User Update Successful!");
+        }
+      } else {
+        if (this.props.language === LANGUAGES.VI) {
+          toast.error("Cập nhật người dùng thất bại!");
+        } else {
+          toast.error("User update failed!");
+        }
+        return;
+      }
     }
   };
 
@@ -215,7 +277,12 @@ class UserRedux extends Component {
     if (user.image) {
       imageBase64 = new Buffer(user.image, "base64").toString("binary");
     }
-    let parseDate = moment.unix(user.birthday).toDate();
+    let parseDate = "";
+    if (user.birthday === null) {
+      parseDate = "";
+    } else {
+      parseDate = moment.unix(user.birthday).toDate();
+    }
     this.setState({
       email: user.email,
       password: "hardcode",
@@ -279,9 +346,7 @@ class UserRedux extends Component {
       gender,
       position,
       role,
-      avatar,
     } = this.state;
-    console.log(this.state.previewImgURL);
     return (
       <div className="user-redux-container">
         <div className="title">

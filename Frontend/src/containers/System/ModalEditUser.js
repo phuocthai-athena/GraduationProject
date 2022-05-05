@@ -1,9 +1,8 @@
+import _ from "lodash";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
-import _ from "lodash";
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
-import { FormattedMessage } from "react-intl";
 
 class ModalEditUser extends Component {
   constructor(props) {

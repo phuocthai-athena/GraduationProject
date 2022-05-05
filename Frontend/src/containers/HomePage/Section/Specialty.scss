@@ -1,9 +1,10 @@
-.specialty-child{
+.specialty-child {
     cursor: pointer;
-    .specialty-name{
+
+    .specialty-name {
         padding: 10px 0;
 
-        &:hover{
+        &:hover {
             color: blue;
         }
     }

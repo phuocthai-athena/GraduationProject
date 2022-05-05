@@ -70,7 +70,7 @@ class DoctorExtraInfor extends Component {
               <FormattedMessage id="patient.extra-infor-doctor.price" />
               {extraInfor &&
                 extraInfor.priceTypeData &&
-                language == LANGUAGES.VI && (
+                language === LANGUAGES.VI && (
                   <NumberFormat
                     className="currency"
                     value={extraInfor.priceTypeData.valueVi}
@@ -81,7 +81,7 @@ class DoctorExtraInfor extends Component {
                 )}
               {extraInfor &&
                 extraInfor.priceTypeData &&
-                language == LANGUAGES.EN && (
+                language === LANGUAGES.EN && (
                   <NumberFormat
                     className="currency"
                     value={extraInfor.priceTypeData.valueEn}
@@ -111,7 +111,7 @@ class DoctorExtraInfor extends Component {
                   <span className="right">
                     {extraInfor &&
                       extraInfor.priceTypeData &&
-                      language == LANGUAGES.VI && (
+                      language === LANGUAGES.VI && (
                         <NumberFormat
                           className="currency"
                           value={extraInfor.priceTypeData.valueVi}
@@ -122,7 +122,7 @@ class DoctorExtraInfor extends Component {
                       )}
                     {extraInfor &&
                       extraInfor.priceTypeData &&
-                      language == LANGUAGES.EN && (
+                      language === LANGUAGES.EN && (
                         <NumberFormat
                           className="currency"
                           value={extraInfor.priceTypeData.valueEn}
