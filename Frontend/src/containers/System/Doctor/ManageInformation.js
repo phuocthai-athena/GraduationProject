@@ -10,7 +10,7 @@ import { CommonUtils, CRUD_ACTIONS, LANGUAGES } from "../../../utils";
 import "./ManageInformation.scss";
 import ChangePassword from "./Modal/ChangePassword";
 
-class ManageSchedule extends Component {
+class ManageInformation extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -455,4 +455,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageSchedule);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageInformation);
