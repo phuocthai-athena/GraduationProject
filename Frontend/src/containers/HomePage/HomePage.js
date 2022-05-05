@@ -8,7 +8,6 @@ import "./HomePage.scss";
 import MedicalFacility from "./Section/MedicalFacility";
 import OutstandingDoctor from "./Section/OutstandingDoctor";
 import HandBook from "./Section/HandBook";
-import HomeFooter from "./HomeFooter";
 import "./HomePage.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";

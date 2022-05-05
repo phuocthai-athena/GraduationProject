@@ -164,6 +164,10 @@ const updateSpecialtyById = (data) => {
 const changePassword = (data) => {
     return axios.post("/api/change-password", data);
 };
+const getAllDetailSpecialtyById = (data) => {
+    return axios.get(`
+    /api/get-detail-specialty-by-id?id=${data.id}&location=${data.location}`);
+};
 
 export {
     handleLoginApi,
@@ -200,4 +204,7 @@ export {
     updateSpecialtyById,
     deleteClinicById,
     updateClinicById,
+    getAllDetailSpecialtyById,
+    changePassword,
+    deleteScheduleSelected,
 };

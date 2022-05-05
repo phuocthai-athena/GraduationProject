@@ -76,6 +76,13 @@ class App extends Component {
                                         path={path.VERIFY_EMAIL_BOOKING}
                                         component={VerifyEmail}
                                     />
+                                    <Route
+                                        path={path.GET_ALL_SPECIALTIES}
+                                        component={AllSpecialties}
+                                    />
+                                    <Route path={path.GET_ALL_CLINICS} component={AllClinics} />
+                                    <Route path={path.GET_ALL_DOCTORS} component={AllDoctors} />
+                                    <Route path={path.GET_ALL_HANDBOOKS} component={AllHandBooks} />
                                 </Switch>
                             </CustomScrollbars>
                         </div>
