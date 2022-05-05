@@ -9,7 +9,12 @@ export const path = {
 
     DOCTOR: "/doctor",
     DETAIL_DOCTOR: "/detail-doctor/:id",
+    DETAIL_HANDBOOK: "/detail-handbook/:id",
     VERIFY_EMAIL_BOOKING: "/verify-booking",
+    GET_ALL_SPECIALTIES: "/get-all-specialties",
+    GET_ALL_DOCTORS: "/get-all-doctors",
+    GET_ALL_CLINICS: "/get-all-clinics",
+    GET_ALL_HANDBOOKS: "/get-all-handbooks",
 };
 
 export const LANGUAGES = {

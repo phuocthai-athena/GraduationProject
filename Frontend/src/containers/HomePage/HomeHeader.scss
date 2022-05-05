@@ -37,6 +37,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            text-decoration: none;
 
             .child-content {
                 text-align: center;
@@ -104,6 +105,15 @@
     }
 }
 
+.item {
+    text-decoration: none;
+    color: #000;
+    &:hover {
+        color: #000;
+    }
+    gap: 8px;
+}
+
 .home-header-banner {
     background: url("../../assets/images/background.jpg");
     height: 750px;
@@ -144,6 +154,7 @@
             padding: 10px;
             border-radius: 25px;
             background: #f7d800;
+            position: relative;
 
             input {
                 height: 30px;
@@ -205,4 +216,11 @@
             }
         }
     }
+}
+
+.search-result-container {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    width: 100%;
 }
