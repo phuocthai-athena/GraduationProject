@@ -58,6 +58,16 @@ export const adminMenu = [
       },
     ],
   },
+  {
+    // Thống kê
+    name: "menu.admin.statistical",
+    menus: [
+      {
+        name: "menu.admin.manage-statistical",
+        link: "/system/manage-statistical",
+      },
+    ],
+  },
 ];
 
 export const doctorMenu = [

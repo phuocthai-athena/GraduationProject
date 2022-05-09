@@ -15,6 +15,7 @@ import AddHandBook from "../containers/System/HandBook/AddHandBook";
 import UpdateHandBook from "../containers/System/HandBook/UpdateHandBook";
 import AddClinic from "../containers/System/Clinic/AddClinic";
 import UpdateClinic from "../containers/System/Clinic/UpdateClinic";
+import ManageStatistical from "../containers/System/Statistical/ManageStatistical";
 
 class System extends Component {
     render() {
@@ -29,6 +30,7 @@ class System extends Component {
                             <Route path="/system/user-redux" component={UserRedux} />
                             <Route path="/system/manager-doctor" component={ManageDoctor} />
                             <Route path="/system/history-patient" component={ManageHistoryPatient} />
+                            <Route path="/system/manage-statistical" component={ManageStatistical} />
 
 
                             <Route

@@ -37,7 +37,8 @@
       "manage-specialty": "Specialty Management",
       "handbook": "Handbook",
       "manage-handbook": "Handbook Management",
-      "history-patient": "Manage history patient"
+      "history-patient": "Manage history patient",
+      "manage-statistical": "Statistical Management"
     },
     "doctor": {
       "manage-schedule": "Manage doctor's schedule",
