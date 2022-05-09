@@ -11,7 +11,6 @@
     "support": "Support",
     "welcome": "Welcome, ",
     "clinic": "Clinic"
-
   },
   "banner": {
     "title1": "MEDICAL PLATFORM",
@@ -38,7 +37,8 @@
       "handbook": "Handbook",
       "manage-handbook": "Handbook Management",
       "history-patient": "Manage history patient",
-      "manage-statistical": "Statistical Management"
+      "manage-statistical": "Statistical Management",
+      "statistical": "Statistical"
     },
     "doctor": {
       "manage-schedule": "Manage doctor's schedule",
@@ -100,7 +100,6 @@
   "history-patient": {
     "title": "Manage history patient",
     "choose-date": "Choose a date"
-
   },
   "homepage": {
     "outstanding-doctor": "Top doctors of the week",
@@ -109,7 +108,6 @@
     "medical-facility": "Medical facilities",
     "handbook": "HandBook",
     "list-handbook": "Top handbooks"
-
   },
   "manage-schedule": {
     "title": "Manage doctor's examination plan",
@@ -135,20 +133,20 @@
       "payment": "The patient can pay the cost in the form of:",
       "hide-price": "Hide price list"
     },
-    "booking-modal" : {
-        "title": "Information to book a medical appointment",
-        "fullName": "Full name",
-        "phoneNumber": "Phone number",
-        "email": "Email",
-        "address": "Address",
-        "reason": "Reasons for medical examination",
-        "birthday": "Date of birth",
-        "genders": "Gender",
-        "btnConfirm": "Confirm",
-        "btnCancel": "Cancel",
-        "price": "Price",
-        "bookingPrice": "Free booking"
-      }
+    "booking-modal": {
+      "title": "Information to book a medical appointment",
+      "fullName": "Full name",
+      "phoneNumber": "Phone number",
+      "email": "Email",
+      "address": "Address",
+      "reason": "Reasons for medical examination",
+      "birthday": "Date of birth",
+      "genders": "Gender",
+      "btnConfirm": "Confirm",
+      "btnCancel": "Cancel",
+      "price": "Price",
+      "bookingPrice": "Free booking"
+    }
   },
   "admin": {
     "manage-doctor": {

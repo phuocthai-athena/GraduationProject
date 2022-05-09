@@ -37,7 +37,8 @@
       "handbook": "Cẩm nang",
       "manage-handbook": "Quản lý cẩm nang",
       "history-patient": "Quản lý lịch sử bệnh nhân khám bệnh",
-      "manage-statistical": "Quản lý thống kê"
+      "manage-statistical": "Quản lý thống kê",
+      "statistical": "Thống kê"
     },
     "doctor": {
       "manage-schedule": "Quản lý kế hoạch khám bệnh",

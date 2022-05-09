@@ -51,8 +51,7 @@ class TableClinicStatistical extends Component {
                   : "Clinic address"}
               </th>
             </tr>
-            {arrClinics &&
-              arrClinics.length > 0 &&
+            {arrClinics && arrClinics.length > 0 ? (
               arrClinics.map((item, index) => {
                 return (
                   <tr key={index}>
@@ -68,7 +67,14 @@ class TableClinicStatistical extends Component {
                     <td>{item.address}</td>
                   </tr>
                 );
-              })}
+              })
+            ) : (
+              <tr>
+                <td colSpan={"6"} style={{ textAlign: "center" }}>
+                  {language === LANGUAGES.VI ? "Không có dữ liệu" : "No data"}
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </React.Fragment>

@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { Component } from "react";
 import "react-markdown-editor-lite/lib/index.css";
 import { connect } from "react-redux";
@@ -47,21 +48,44 @@ class TablePatientStatistical extends Component {
               <th>Email</th>
               <th>{language === LANGUAGES.VI ? "Tên" : "First name"}</th>
               <th>{language === LANGUAGES.VI ? "Họ" : "Last name"}</th>
+              <th>{language === LANGUAGES.VI ? "Giới tính" : "Gender"}</th>
+              <th>
+                {language === LANGUAGES.VI ? "Ngày sinh" : "Date of birth"}
+              </th>
+              <th>
+                {language === LANGUAGES.VI ? "Số điện thoại" : "Phone number"}
+              </th>
               <th>{language === LANGUAGES.VI ? "Địa chỉ" : "Address"}</th>
             </tr>
             {arrUsers &&
               arrUsers.length > 0 &&
               arrUsers.map((item, index) => {
-                if (item.roleId === "R3")
+                if (item.roleId === "R3") {
+                  let sex = "";
+                  if (item.gender === "M") {
+                    sex = "Nam";
+                  } else if (item.gender === "N") {
+                    sex = "Nữ";
+                  } else {
+                    sex = "Khác";
+                  }
                   return (
                     <tr key={index}>
                       <td>{index}</td>
                       <td>{item.email}</td>
                       <td>{item.firstName}</td>
                       <td>{item.lastName}</td>
+                      <td>{sex}</td>
+                      <td>
+                        {item.birthday === null
+                          ? ""
+                          : moment.unix(item.birthday).format("MM/DD/YYYY")}
+                      </td>
+                      <td>{item.phonenumber}</td>
                       <td>{item.address}</td>
                     </tr>
                   );
+                }
               })}
           </tbody>
         </table>

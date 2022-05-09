@@ -214,8 +214,8 @@ class ManageStatistical extends Component {
           <div className="col-12 table-manage">
             {isOpenTableDoctor ? <TableDoctorStatistical /> : <></>}
             {isOpenTablePatient ? <TablePatientStatistical /> : <></>}
-            {isOpenTableClinic? <TableClinicStatistical /> : <></>}
-            {isOpenTableSpecialty? <TableSpecialtyStatistical /> : <></>}
+            {isOpenTableClinic ? <TableClinicStatistical /> : <></>}
+            {isOpenTableSpecialty ? <TableSpecialtyStatistical /> : <></>}
           </div>
         </div>
       </div>

@@ -49,8 +49,7 @@ class TableSpecialtyStatistical extends Component {
                   : "Specialist photo"}
               </th>
             </tr>
-            {arrSpecialtys &&
-              arrSpecialtys.length > 0 &&
+            {arrSpecialtys && arrSpecialtys.length > 0 ? (
               arrSpecialtys.map((item, index) => {
                 return (
                   <tr key={index}>
@@ -65,7 +64,14 @@ class TableSpecialtyStatistical extends Component {
                     </td>
                   </tr>
                 );
-              })}
+              })
+            ) : (
+              <tr>
+                <td colSpan={"6"} style={{ textAlign: "center" }}>
+                  {language === LANGUAGES.VI ? "Không có dữ liệu" : "No data"}
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </React.Fragment>
