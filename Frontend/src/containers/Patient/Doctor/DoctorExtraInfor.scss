@@ -1,58 +1,70 @@
-.doctor-extra-infor-container{
+.doctor-extra-infor-container {
     padding-left: 15px;
-    .content-up{
+
+    .content-up {
         margin-bottom: 10px;
-        .text-address{
+
+        .text-address {
             text-transform: uppercase;
-            color: #333;
+            color         : #333;
         }
-        .name-clinic{
-            padding: 5px 0;
+
+        .name-clinic {
+            padding    : 5px 0;
             font-weight: 600;
-            color: #333;
+            color      : #333;
         }
-        .detail-address{
+
+        .detail-address {
             font-weight: 600;
-            color: #333;
+            color      : #333;
         }
     }
-    .content-down{
-        .short-infor{
-            .detail{
+
+    .content-down {
+        .short-infor {
+            .detail {
                 cursor: pointer;
-                color: rgb(38,160,231);
+                color : rgb(38, 160, 231);
             }
-            .currency{
-                margin:0 5px ;
+
+            .currency {
+                margin: 0 5px;
             }
         }
-        .title-price{
+
+        .title-price {
             margin-bottom: 10px;
         }
-        .detail-infor{
-            border: 1px solid #ddd;
-            padding: 5px;
+
+        .detail-infor {
+            border          : 1px solid #ddd;
+            padding         : 5px;
             background-color: #f8f8f8;
-            .price{
+
+            .price {
                 padding-bottom: 5px;
-                .right{
+
+                .right {
                     float: right;
                 }
             }
-            .note{
 
-            }
+            .note {}
         }
-        .payment{
-            border: 1px solid #ddd;
-            padding: 5px;
+
+        .payment {
+            border          : 1px solid #ddd;
+            padding         : 5px;
             background-color: #eee;
         }
-        .hide-price{
+
+        .hide-price {
             margin-top: 10px;
-            span{
+
+            span {
                 cursor: pointer;
-                color: rgb(38,160,231);
+                color : rgb(38, 160, 231);
             }
         }
     }

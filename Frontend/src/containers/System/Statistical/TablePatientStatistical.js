@@ -40,7 +40,11 @@ class TablePatientStatistical extends Component {
     let { language } = this.props;
     return (
       <React.Fragment>
-        <div className="ms-title">Danh sách bệnh nhân</div>
+        <div className="statiscal-title">
+          {language === LANGUAGES.VI
+            ? "Danh sách bệnh nhân"
+            : "List of patients"}
+        </div>
         <table id="tableManagerUser">
           <tbody>
             <tr>

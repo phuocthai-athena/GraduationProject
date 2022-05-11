@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import {
   createNewUserService,
   deleteUserService,
-  editUserService, getAllUsers
+  editUserService,
+  getAllUsers,
 } from "../../services/userService";
 import { emitter } from "../../utils/emitter";
 import ModalEditUser from "./ModalEditUser";

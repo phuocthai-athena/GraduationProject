@@ -19,7 +19,7 @@ class Doctor extends Component {
                 component={ManageSchedule}
               />
               <Route path="/doctor/manage-patient" component={ManagePatient} />
-              
+
               <Route
                 path="/doctor/manage-information"
                 component={ManageInformation}

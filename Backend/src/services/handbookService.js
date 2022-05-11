@@ -3,7 +3,6 @@ const db = require("../models");
 let createHandBook = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log("data", data);
       if (!data.name || !data.imageBase64 || !data.descriptionHTML) {
         resolve({
           errCode: 1,
@@ -92,9 +91,6 @@ let deleteHandBookById = (handBookId) => {
       await db.HandBook.destroy({
         where: { id: handBookId },
       });
-
-      console.log("destroy hand book sucessfully");
-
       resolve({
         errCode: 0,
         message: `Xóa cẩm nang thành công!`,

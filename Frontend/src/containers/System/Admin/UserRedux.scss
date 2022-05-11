@@ -5,21 +5,21 @@
 
   .date-picker {
     position: relative;
-    display: flex;
+    display : flex;
 
     .choose-date {
-      z-index: 10;
+      z-index   : 10;
       background: transparent;
-      cursor: pointer;
+      cursor    : pointer;
     }
 
     .calendar {
-      position: absolute;
-      top: 50%;
-      right: 0;
+      position : absolute;
+      top      : 50%;
+      right    : 0;
       transform: translate(-50%, -50%);
       font-size: 20px;
-      z-index: 9;
+      z-index  : 9;
     }
   }
 
@@ -28,18 +28,18 @@
 
     i {
       position: absolute;
-      right: 5px;
-      top: 10px;
-      cursor: pointer;
+      right   : 5px;
+      top     : 10px;
+      cursor  : pointer;
     }
   }
 
   .preview-img-container {
     .label-upload {
-      padding: 6px;
+      padding      : 6px;
       border-radius: 5px;
-      background: #ddd;
-      cursor: pointer;
+      background   : #ddd;
+      cursor       : pointer;
 
       i {
         margin-left: 10px;
@@ -51,12 +51,12 @@
     }
 
     .preview-image {
-      height: 50px;
-      width: 100%;
-      border: 1px solid #ddd;
-      background: center center no-repeat;
+      height         : 50px;
+      width          : 100%;
+      border         : 1px solid #ddd;
+      background     : center center no-repeat;
       background-size: contain;
-      cursor: pointer;
+      cursor         : pointer;
     }
   }
 

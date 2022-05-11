@@ -84,13 +84,12 @@ export const doctorMenu = [
         name: "menu.doctor.manage-patient",
         link: "/doctor/manage-patient",
       },
-      
+
       {
         // Quản lý thông tin cá nhân bác sĩ
         name: "menu.doctor.manage-infor",
         link: "/doctor/manage-information",
       },
-      
     ],
   },
 ];

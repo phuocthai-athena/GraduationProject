@@ -1,16 +1,24 @@
-.bg-image-doctor {
-    height: 50px;
-    width: 50px;
-    border: 1px solid #ddd;
-    background: center center no-repeat;
-    background-size: cover;
-    cursor: pointer;
-}
+.doctors-content {
+    margin: 0 100px;
 
-.doctor-name {
-    font-size: 16px;
-}
+    .doctors-child {
+        margin: 10px 0;
 
-.doctor-specialty {
-    font-size: 13px;
+        .bg-image-doctor {
+            height         : 50px;
+            width          : 50px;
+            border         : 1px solid #ddd;
+            background     : center center no-repeat;
+            background-size: cover;
+            cursor         : pointer;
+        }
+
+        .doctor-name {
+            font-size: 16px;
+        }
+
+        .doctor-specialty {
+            font-size: 13px;
+        }
+    }
 }

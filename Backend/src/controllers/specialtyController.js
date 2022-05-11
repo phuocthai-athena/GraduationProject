@@ -30,7 +30,6 @@ let getDetailSpecialtyById = async (req, res) => {
       req.query.id,
       req.query.location
     );
-    console.log({ infor });
     return res.status(200).json(infor);
   } catch (err) {
     console.log(err);
@@ -43,7 +42,6 @@ let getDetailSpecialtyById = async (req, res) => {
 
 let deleteSpecialtyById = async (req, res) => {
   const { specialtyId } = req.params;
-  console.log(specialtyId);
   try {
     const result = await specialtyService.deleteSpecialtyById(specialtyId);
     return res.status(200).send(result);

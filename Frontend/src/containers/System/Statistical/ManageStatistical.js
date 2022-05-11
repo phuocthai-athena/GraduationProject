@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { FormattedMessage } from "react-intl";
-import "./ManageStatistical.scss";
 import {
-  getAllUsers,
-  getAllSpecialty,
   getAllClinic,
+  getAllSpecialty,
+  getAllUsers,
 } from "../../../services/userService";
+import { LANGUAGES } from "../../../utils";
+import "./ManageStatistical.scss";
+import TableClinicStatistical from "./TableClinicStatistical";
 import TableDoctorStatistical from "./TableDoctorStatistical";
 import TablePatientStatistical from "./TablePatientStatistical";
-import TableClinicStatistical from "./TableClinicStatistical";
 import TableSpecialtyStatistical from "./TableSpecialtyStatistical";
 
 class ManageStatistical extends Component {
@@ -147,16 +147,23 @@ class ManageStatistical extends Component {
       isOpenTableClinic,
       isOpenTableSpecialty,
     } = this.state;
+    let { language } = this.props;
     return (
       <div className="manage-statiscal-container container">
-        <div className="ms-title mb-5 mt-5 display-5">Thống kê</div>
+        <div className="statiscal-title">
+          {language === LANGUAGES.VI ? "Thống kê" : "Statistical"}
+        </div>
         <div className="row">
           <div className="col-md-3 mb-3">
             <div
               className="card text-white bg-primary h-100"
               onClick={() => this.handleOpenTableDoctor()}
             >
-              <div className="card-header text-center">THỐNG KÊ BÁC SĨ</div>
+              <div className="card-header text-center text-uppercase">
+                {language === LANGUAGES.VI
+                  ? "Thống kê bác sĩ"
+                  : "Doctor statistics"}
+              </div>
               <div className="card-body">
                 <h3 className="card-title text-center">
                   <i className="fas fa-user-md"></i>
@@ -170,7 +177,12 @@ class ManageStatistical extends Component {
               className="card text-white bg-warning h-100"
               onClick={() => this.handleOpenTablePatient()}
             >
-              <div className="card-header text-center">THỐNG KÊ BỆNH NHÂN</div>
+              <div className="card-header text-center text-uppercase">
+                {" "}
+                {language === LANGUAGES.VI
+                  ? "Thống kê bệnh nhân"
+                  : "Patient statistics"}
+              </div>
               <div className="card-body">
                 <h3 className="card-title text-center">
                   <i class="fas fa-procedures"></i>
@@ -184,8 +196,10 @@ class ManageStatistical extends Component {
               className="card text-white bg-success h-100"
               onClick={() => this.handleOpenTableSpecialty()}
             >
-              <div className="card-header text-center">
-                THỐNG KÊ CHUYÊN KHOA
+              <div className="card-header text-center text-uppercase">
+                {language === LANGUAGES.VI
+                  ? "Thống kê chuyên khoa"
+                  : "Specialized statistics"}
               </div>
               <div className="card-body">
                 <h3 className="card-title text-center">
@@ -200,7 +214,11 @@ class ManageStatistical extends Component {
               className="card text-white bg-danger h-100"
               onClick={() => this.handleOpenTableClinic()}
             >
-              <div className="card-header text-center">THỐNG KÊ CƠ SỞ Y TẾ</div>
+              <div className="card-header text-center text-uppercase">
+                {language === LANGUAGES.VI
+                  ? "Thống kê cơ sở y tế"
+                  : "Statistics of medical facilities"}
+              </div>
               <div className="card-body">
                 <h3 className="card-title text-center">
                   <i class="fas fa-hospital"></i>

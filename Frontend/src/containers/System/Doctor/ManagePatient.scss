@@ -1,28 +1,28 @@
 .manage-patient-container {
     .m-p-title {
-        font-size: 15px;
-        margin: 10px 0;
-        text-align: center;
+        font-size     : 15px;
+        margin        : 10px 0;
+        text-align    : center;
         text-transform: uppercase;
     }
 
     .date-picker {
         position: relative;
-        display: flex;
+        display : flex;
 
         .choose-date {
-            z-index: 10;
+            z-index   : 10;
             background: transparent;
-            cursor: pointer;
+            cursor    : pointer;
         }
 
         .calendar {
-            position: absolute;
-            top: 50%;
-            right: 0;
+            position : absolute;
+            top      : 50%;
+            right    : 0;
             transform: translate(-50%, -50%);
             font-size: 20px;
-            z-index: 9;
+            z-index  : 9;
         }
     }
 
@@ -34,34 +34,34 @@
             table,
             th,
             td {
-                border: 1px solid black;
+                border         : 1px solid black;
                 border-collapse: collapse;
             }
 
             th,
             td {
-                padding: 5px;
+                padding   : 5px;
                 text-align: left;
             }
 
             button {
-                border: none;
+                border : none;
                 outline: none;
-                cursor: pointer;
+                cursor : pointer;
             }
 
             .mb-btn-confirm {
-                margin-right: 10px;
-                height: 30px;
+                margin-right : 10px;
+                height       : 30px;
                 border-radius: 3px;
-                background: orange;
+                background   : orange;
             }
 
             .mb-btn-remedy {
-                margin-right: 10px;
-                height: 30px;
+                margin-right : 10px;
+                height       : 30px;
                 border-radius: 3px;
-                background: #39dca0;
+                background   : #39dca0;
             }
         }
     }
@@ -69,14 +69,14 @@
 
 
 #TableManagerPatient {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family    : Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    width: 100%;
+    width          : 100%;
 }
 
 #TableManagerPatient td,
 #TableManagerPatient th {
-    border: 1px solid #ddd;
+    border : 1px solid #ddd;
     padding: 8px;
 }
 
@@ -89,9 +89,9 @@
 }
 
 #TableManagerPatient th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
+    padding-top     : 12px;
+    padding-bottom  : 12px;
+    text-align      : left;
     background-color: #04aa60;
-    color: white;
+    color           : white;
 }
