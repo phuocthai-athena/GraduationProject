@@ -58,8 +58,8 @@ class TableManageUser extends Component {
             <tr>
               <th>Stt</th>
               <th>Email</th>
-              <th>{language === LANGUAGES.VI ? "Tên" : "First name"}</th>
               <th>{language === LANGUAGES.VI ? "Họ" : "Last name"}</th>
+              <th>{language === LANGUAGES.VI ? "Tên" : "First name"}</th>
               <th>
                 {language === LANGUAGES.VI ? "Ngày sinh" : "Date of birht"}
               </th>
@@ -67,6 +67,7 @@ class TableManageUser extends Component {
                 {language === LANGUAGES.VI ? "Số điện thoại" : "Phone number"}
               </th>
               <th>{language === LANGUAGES.VI ? "Địa chỉ" : "Address"}</th>
+              <th>{language === LANGUAGES.VI ? "Vai trò" : "Address"}</th>
               <th className="text-center">
                 {language === LANGUAGES.VI ? "Tác vụ" : "Actions"}
               </th>
@@ -74,12 +75,32 @@ class TableManageUser extends Component {
             {arrUsers &&
               arrUsers.length > 0 &&
               arrUsers.map((item, index) => {
+                let role = "";
+                if (item.roleId === "R1") {
+                  if (language === LANGUAGES.VI) {
+                    role = "Quản trị viên";
+                  } else {
+                    role = "Admin";
+                  }
+                } else if (item.roleId === "R2") {
+                  if (language === LANGUAGES.VI) {
+                    role = "Bác sĩ";
+                  } else {
+                    role = "Doctor";
+                  }
+                } else if (item.roleId === "R3") {
+                  if (language === LANGUAGES.VI) {
+                    role = "Bệnh nhân";
+                  } else {
+                    role = "Patient";
+                  }
+                }
                 return (
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{item.email}</td>
-                    <td>{item.firstName}</td>
                     <td>{item.lastName}</td>
+                    <td>{item.firstName}</td>
                     <td>
                       {item.birthday === null
                         ? ""
@@ -87,6 +108,7 @@ class TableManageUser extends Component {
                     </td>
                     <td>{item.phonenumber}</td>
                     <td>{item.address}</td>
+                    <td>{role}</td>
                     <td className="text-center">
                       <button
                         className="btn-edit"

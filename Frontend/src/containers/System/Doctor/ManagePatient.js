@@ -1,10 +1,13 @@
 import moment from "moment";
 import React, { Component } from "react";
+import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import DatePicker from "../../../components/Input/DatePicker";
-import { FormattedMessage } from "react-intl";
-import { getAllPatientForDoctor, postSendRemedy } from "../../../services/userService";
+import {
+  getAllPatientForDoctor,
+  postSendRemedy,
+} from "../../../services/userService";
 import { LANGUAGES } from "../../../utils";
 import "./ManagePatient.scss";
 import RemedyModal from "./RemedyModal";
@@ -124,21 +127,19 @@ class ManagePatient extends Component {
                 <tbody>
                   <tr>
                     <th>STT</th>
-                    <th>{language === LANGUAGES.VI
-                      ? "Lịch đã chọn"
-                      : "Selected calendar"}</th>
-                    <th>{language === LANGUAGES.VI
-                      ? "Họ tên"
-                      : "Full name"}</th>
-                    <th>{language === LANGUAGES.VI
-                      ? "Địa chỉ"
-                      : "Address"}</th>
-                    <th>{language === LANGUAGES.VI
-                      ? "Giới tính"
-                      : "Gender"}</th>
-                    <th>{language === LANGUAGES.VI
-                      ? "Tác vụ"
-                      : "Actions"}</th>
+                    <th>
+                      {language === LANGUAGES.VI
+                        ? "Lịch đã chọn"
+                        : "Selected calendar"}
+                    </th>
+                    <th>
+                      {language === LANGUAGES.VI ? "Họ tên" : "Full name"}
+                    </th>
+                    <th>{language === LANGUAGES.VI ? "Địa chỉ" : "Address"}</th>
+                    <th>
+                      {language === LANGUAGES.VI ? "Giới tính" : "Gender"}
+                    </th>
+                    <th>{language === LANGUAGES.VI ? "Tác vụ" : "Actions"}</th>
                   </tr>
                   {dataPatient && dataPatient.length > 0 ? (
                     dataPatient.map((item, index) => {

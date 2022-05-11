@@ -174,8 +174,6 @@ let handleDeleteSchedule = async (req, res) => {
   }
 };
 
-
-
 module.exports = {
   getTopDoctorHome: getTopDoctorHome,
   getAllDoctors: getAllDoctors,

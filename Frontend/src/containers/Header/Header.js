@@ -29,7 +29,7 @@ class Header extends Component {
         menu = adminMenu;
       }
 
-      if ((role === USER_ROLE.DOCTOR)) {
+      if (role === USER_ROLE.DOCTOR) {
         menu = doctorMenu;
       }
     }

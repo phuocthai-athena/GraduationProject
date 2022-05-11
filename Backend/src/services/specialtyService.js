@@ -113,9 +113,6 @@ let deleteSpecialtyById = (specialtyId) => {
       await db.Specialty.destroy({
         where: { id: specialtyId },
       });
-
-      console.log("specialty destroyed sucessfully");
-
       resolve({
         errCode: 0,
         message: `Xóa chuyên khoa thành công!`,
