@@ -7,12 +7,15 @@
     margin : 0 100px;
 
     .content-left {
-      width        : 30%;
-      background   : center center no-repeat;
-      width        : 150px;
-      height       : 150px;
-      border-radius: 50%;
-      margin       : 10px 20px;
+      width              : 30%;
+      // background   : center center no-repeat;
+      background-size    : cover;
+      background-repeat  : no-repeat;
+      background-position: center;
+      width              : 150px;
+      height             : 150px;
+      border-radius      : 50%;
+      margin             : 10px 20px;
     }
 
     .content-right {
@@ -29,6 +32,10 @@
 
       .down {
         padding-top: 10px;
+
+        .like-share-plugin {
+          margin: 10px 0 20px 0;
+        }
       }
     }
   }
@@ -56,7 +63,8 @@
     border-top      : 1px solid #ccc;
     border-bottom   : 1px solid #ccc;
 
-
+    h1,
+    h2,
     h3 {
       font-size: 17px;
     }
@@ -68,6 +76,6 @@
 
   //layout comment doctor
   .comment-doctor {
-    height: 50px;
+    padding: 10px 100px;
   }
 }

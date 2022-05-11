@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { getDetailInforDoctor } from "../../../services/userService";
 import { LANGUAGES } from "../../../utils";
 import HomeHeader from "../../HomePage/HomeHeader";
+import Comment from "../SocialPlugin/Comment";
+import LikeAndShare from "../SocialPlugin/LikeAndShare";
 import "./DetailDoctor.scss";
 import DoctorExtraInfor from "./DoctorExtraInfor";
 import DoctorSchedule from "./DoctorSchedule";
@@ -48,6 +50,9 @@ class DetailDoctor extends Component {
       nameVi = `${detailDoctor.positionData.valueVi}, ${detailDoctor.lastName} ${detailDoctor.firstName} `;
       nameEn = `${detailDoctor.positionData.valueEn}, ${detailDoctor.firstName} ${detailDoctor.lastName} `;
     }
+    let currentURL =
+      process.env.REACT_APP_IS_LOCALHOST === 1 ? "" : window.location.href;
+
     return (
       <>
         <HomeHeader isShowBanner={false} />
@@ -69,6 +74,9 @@ class DetailDoctor extends Component {
                 {detailDoctor.Markdown && detailDoctor.Markdown.description && (
                   <span>{detailDoctor.Markdown.description}</span>
                 )}
+                <div className="like-share-plugin">
+                  <LikeAndShare dataHref={currentURL} />
+                </div>
               </div>
             </div>
           </div>
@@ -93,7 +101,9 @@ class DetailDoctor extends Component {
                 ></div>
               )}
           </div>
-          <div className="comment-doctor"></div>
+          <div className="comment-doctor">
+            <Comment dataHref={currentURL} width={"100%"} />
+          </div>
         </div>
       </>
     );
