@@ -1,59 +1,62 @@
 .manage-history-patient {
-  .m-p-title {
-    font-size: 16px;
-    margin: 10px 0;
-    text-align: center;
+  .history-title {
+    text-align    : center;
+    margin        : 15px 0;
+    font-size     : 20px;
     text-transform: uppercase;
+    font-weight   : 600;
   }
+
   .date-picker {
     position: relative;
-    display: flex;
+    display : flex;
 
     .choose-date {
-        z-index: 10;
-        background: transparent;
-        cursor: pointer;
+      z-index   : 10;
+      background: transparent;
+      cursor    : pointer;
     }
 
     .calendar {
-        position: absolute;
-        top: 50%;
-        right: 0;
-        transform: translate(-50%, -50%);
-        font-size: 20px;
-        z-index: 9;
+      position : absolute;
+      top      : 50%;
+      right    : 0;
+      transform: translate(-50%, -50%);
+      font-size: 20px;
+      z-index  : 9;
     }
-}
+  }
 
   .manage-history-patient-body {
     padding: 0 20px;
   }
 
   .table-manage-history-patient {
+
     table,
     th,
     td {
-      border: 1px solid black;
+      border         : 1px solid black;
       border-collapse: collapse;
     }
 
     th,
     td {
-      padding: 5px;
+      padding   : 5px;
       text-align: left;
     }
   }
 }
 
 #TableManagerPatient {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family    : Arial, Helvetica, sans-serif;
   border-collapse: collapse;
-  width: 100%;
+  width          : 100%;
 }
 
 #TableManagerPatient td,
 #TableManagerPatient th {
-  border: 1px solid #ddd;
+  border : 1px solid #ddd;
   padding: 8px;
 }
 
@@ -66,9 +69,9 @@
 }
 
 #TableManagerPatient th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
+  padding-top     : 12px;
+  padding-bottom  : 12px;
+  text-align      : left;
   background-color: #04aa60;
-  color: white;
+  color           : white;
 }

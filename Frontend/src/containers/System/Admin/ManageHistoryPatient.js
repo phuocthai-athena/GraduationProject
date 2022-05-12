@@ -1,12 +1,11 @@
+import moment from "moment";
 import React, { Component } from "react";
+import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
-import './ManageHistoryPatient.scss'
 import DatePicker from "../../../components/Input/DatePicker";
 import { getAllPatientForHistory } from "../../../services/userService";
-import moment from "moment";
 import { LANGUAGES } from "../../../utils";
-import { FormattedMessage } from "react-intl";
-
+import "./ManageHistoryPatient.scss";
 
 class ManageHistoryPatient extends Component {
   constructor(props) {
@@ -28,13 +27,13 @@ class ManageHistoryPatient extends Component {
     let res = await getAllPatientForHistory({
       doctorId: user.id,
       date: formatedDate,
-    })
+    });
     if (res && res.errCode === 0) {
       this.setState({
-        dataPatient: res.data
-      })
+        dataPatient: res.data,
+      });
     }
-  }
+  };
 
   async componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.language !== prevProps.language) {
@@ -42,32 +41,34 @@ class ManageHistoryPatient extends Component {
   }
 
   handleOnChangeDatePicker = (date) => {
-    this.setState({
-      currentDate: date[0],
-    }, async () => {
-      await this.getDataPatient();
-    });
+    this.setState(
+      {
+        currentDate: date[0],
+      },
+      async () => {
+        await this.getDataPatient();
+      }
+    );
   };
 
   status = (item) => {
     if (item === "S1") {
-      return "Lịch hẹn mới"
+      return "Lịch hẹn mới";
     } else if (item === "S2") {
-      return "Đã xác nhận"
+      return "Đã xác nhận";
     } else if (item === "S3") {
-      return "Đã khám xong"
+      return "Đã khám xong";
     } else if (item === "S4") {
-      return "Đã hủy"
+      return "Đã hủy";
     }
-  }
+  };
 
   render() {
     let { dataPatient } = this.state;
     let { language } = this.props;
-    console.log(this.state);
     return (
       <div className="manage-history-patient container">
-        <div className="m-p-title">
+        <div className="history-title">
           <FormattedMessage id="history-patient.title" />
         </div>
         <div className="manage-history-patient-body row">
@@ -83,39 +84,36 @@ class ManageHistoryPatient extends Component {
               />
               <i className="fas fa-calendar-alt calendar"></i>
             </div>
-
           </div>
 
           <div className="col-12 table-manage-history-patient">
-            <table id="TableManagerPatient" style={{ width: '100%' }}>
+            <table id="TableManagerPatient" style={{ width: "100%" }}>
               <tbody>
                 <tr>
                   <th>STT</th>
-                  <th>{language === LANGUAGES.VI
-                    ? "Lịch khám"
-                    : "Selected calendar"}</th>
-                  <th>{language === LANGUAGES.VI
-                    ? "Họ tên"
-                    : "Full name"}</th>
-                  <th>{language === LANGUAGES.VI
-                    ? "Địa chỉ"
-                    : "Address"}</th>
-                  <th>{language === LANGUAGES.VI
-                    ? "Giới tính"
-                    : "Gender"}</th>
-                  <th>{language === LANGUAGES.VI
-                    ? "Lý do khám bệnh"
-                    : "Reason"}</th>
-                  <th>{language === LANGUAGES.VI
-                    ? "Trạng thái"
-                    : "Status"}</th>
+                  <th>
+                    {language === LANGUAGES.VI
+                      ? "Lịch khám"
+                      : "Selected calendar"}
+                  </th>
+                  <th>{language === LANGUAGES.VI ? "Họ tên" : "Full name"}</th>
+                  <th>{language === LANGUAGES.VI ? "Địa chỉ" : "Address"}</th>
+                  <th>{language === LANGUAGES.VI ? "Giới tính" : "Gender"}</th>
+                  <th>
+                    {language === LANGUAGES.VI ? "Lý do khám bệnh" : "Reason"}
+                  </th>
+                  <th>{language === LANGUAGES.VI ? "Trạng thái" : "Status"}</th>
                 </tr>
-                {dataPatient && dataPatient.length > 0 ?
+                {dataPatient && dataPatient.length > 0 ? (
                   dataPatient.map((item, index) => {
-                    let time = language === LANGUAGES.VI ?
-                      item.timeTypeDataPatient.valueVi : item.timeTypeDataPatient.valueEn;
-                    let gender = language === LANGUAGES.VI ?
-                      item.patientData.genderData.valueVi : item.patientData.genderData.valueEn;
+                    let time =
+                      language === LANGUAGES.VI
+                        ? item.timeTypeDataPatient.valueVi
+                        : item.timeTypeDataPatient.valueEn;
+                    let gender =
+                      language === LANGUAGES.VI
+                        ? item.patientData.genderData.valueVi
+                        : item.patientData.genderData.valueEn;
                     return (
                       <tr key={index}>
                         <td>{index + 1}</td>
@@ -126,13 +124,15 @@ class ManageHistoryPatient extends Component {
                         <td>{item.reason}</td>
                         <td>{this.status(item.statusId)}</td>
                       </tr>
-                    )
+                    );
                   })
-                  :
+                ) : (
                   <tr>
-                    <td colSpan={"7"} style={{ textAlign: "center" }}>No data</td>
+                    <td colSpan={"7"} style={{ textAlign: "center" }}>
+                      No data
+                    </td>
                   </tr>
-                }
+                )}
               </tbody>
             </table>
           </div>
@@ -153,4 +153,7 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageHistoryPatient);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ManageHistoryPatient);

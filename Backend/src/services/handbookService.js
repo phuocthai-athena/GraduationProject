@@ -3,7 +3,6 @@ const db = require("../models");
 let createHandBook = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log("data", data);
       if (!data.name || !data.imageBase64 || !data.descriptionHTML) {
         resolve({
           errCode: 1,
@@ -33,7 +32,7 @@ let getAllHandBook = () => {
       let data = await db.HandBook.findAll({});
       if (data && data.length > 0) {
         data.map((item) => {
-          item.image = new Buffer(item.image, "base64").toString("binary");
+          item.image = Buffer.from(item.image, "base64").toString("binary");
           return item;
         });
       }
@@ -63,7 +62,7 @@ let getDetailHandBookById = (inputId) => {
           },
         });
         if (data && data.image) {
-          data.image = new Buffer(data.image, "base64").toString("binary");
+          data.image = Buffer.from(data.image, "base64").toString("binary");
         }
         resolve({
           errCode: 0,
@@ -92,9 +91,6 @@ let deleteHandBookById = (handBookId) => {
       await db.HandBook.destroy({
         where: { id: handBookId },
       });
-
-      console.log("destroy hand book sucessfully");
-
       resolve({
         errCode: 0,
         message: `Xóa cẩm nang thành công!`,

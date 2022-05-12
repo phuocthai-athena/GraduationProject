@@ -38,7 +38,8 @@
                 gap      : 15px;
                 flex-wrap: wrap;
 
-                button {
+                .btn-vi {
+                    min-width       : 120px;
                     padding         : 5px 10px;
                     border          : none;
                     outline         : none;
@@ -53,12 +54,52 @@
                     }
                 }
 
-                .btn-vi {
-                    min-width: 120px;
+                .btn-en {
+                    min-width       : 170px;
+                    padding         : 5px 10px;
+                    border          : none;
+                    outline         : none;
+                    background-color: #fff04b;
+                    border-radius   : 3px;
+                    font-weight     : 600;
+                    color           : #333;
+
+                    &:hover {
+                        background-color: #45c3d2;
+                        color           : #fff;
+                    }
                 }
 
-                .btn-en {
-                    min-width: 170px;
+                .disabled-vi {
+                    min-width       : 120px;
+                    padding         : 5px 10px;
+                    border          : none;
+                    outline         : none;
+                    border-radius   : 3px;
+                    font-weight     : 600;
+                    background-color: #e9ecef;
+                    color           : rgb(100, 100, 100);
+
+                    &:hover {
+                        background-color: #e9ecef;
+                        color           : rgb(100, 100, 100);
+                    }
+                }
+
+                .disabled-en {
+                    min-width       : 170px;
+                    padding         : 5px 10px;
+                    border          : none;
+                    outline         : none;
+                    border-radius   : 3px;
+                    font-weight     : 600;
+                    background-color: #e9ecef;
+                    color           : rgb(100, 100, 100);
+
+                    &:hover {
+                        background-color: #e9ecef;
+                        color           : rgb(100, 100, 100);
+                    }
                 }
 
                 .no-schedule {

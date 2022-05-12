@@ -259,7 +259,8 @@ let getListHistoryPatient = (date) => {
                   model: db.Allcode,
                   as: "genderData",
                   attributes: ["valueEn", "valueVi"],
-                }],
+                },
+              ],
             },
             {
               model: db.Allcode,
@@ -270,7 +271,7 @@ let getListHistoryPatient = (date) => {
 
           raw: false,
           nest: true,
-        })
+        });
         resolve({
           errCode: 0,
           data: data,
@@ -279,7 +280,7 @@ let getListHistoryPatient = (date) => {
     } catch (e) {
       reject(e);
     }
-  })
+  });
 };
 
 module.exports = {

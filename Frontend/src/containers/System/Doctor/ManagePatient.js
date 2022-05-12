@@ -1,16 +1,16 @@
 import moment from "moment";
 import React, { Component } from "react";
+import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import DatePicker from "../../../components/Input/DatePicker";
-import { FormattedMessage } from "react-intl";
 import {
   getAllPatientForDoctor,
   postSendRemedy,
-  postCancelMedicalAppointment
 } from "../../../services/userService";
 import { LANGUAGES } from "../../../utils";
 import "./ManagePatient.scss";
+import ConfirmDeletePatient from "./Modal/ConfirmDeletePatient";
 import RemedyModal from "./RemedyModal";
 
 class ManagePatient extends Component {
@@ -19,13 +19,22 @@ class ManagePatient extends Component {
     this.state = {
       currentDate: "",
       dataPatient: [],
+      isOpenConfirmDelete: false,
       isOpenRemedyModal: false,
+      isDeleteSucceed: false,
       dataModal: {},
+      itemDelete: {},
     };
   }
 
-  async componentDidMount() {
-    this.getDataPatient();
+  async componentDidMount() {}
+
+  async componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.language !== prevProps.language) {
+    }
+    if (this.state.isOpenConfirmDelete !== prevState.isOpenConfirmDelete) {
+      await this.getDataPatient();
+    }
   }
 
   getDataPatient = async () => {
@@ -43,10 +52,20 @@ class ManagePatient extends Component {
     }
   };
 
-  async componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props.language !== prevProps.language) {
-    }
-  }
+  handleDeletePatient = async (item) => {
+    this.setState({ itemDelete: item });
+    this.handleOpenModal();
+  };
+
+  handleOpenModal = () => {
+    this.setState({ isOpenConfirmDelete: true });
+  };
+
+  toggleConfirmDelete = () => {
+    this.setState({
+      isOpenConfirmDelete: !this.state.isOpenConfirmDelete,
+    });
+  };
 
   handleOnChangeDatePicker = (date) => {
     this.setState(
@@ -58,21 +77,6 @@ class ManagePatient extends Component {
       }
     );
   };
-
-  handleBtnCancel = async (item) => {
-    let res = await postCancelMedicalAppointment({
-      doctorId: item.doctorId,
-      patientId: item.patientId,
-      timeType: item.timeType
-    });
-    if (res && res.errCode === 0) {
-      toast.success("Cancel succeeds:");
-      await this.getDataPatient();
-    } else {
-      toast.error("Something wrong ...");
-      console.log("Erorr Cancel: ", res);
-    }
-  }
 
   handleBtnConfirm = (item) => {
     let data = {
@@ -94,6 +98,7 @@ class ManagePatient extends Component {
       dataModal: {},
     });
   };
+
   sendRemedy = async (dataChild) => {
     let { dataModal } = this.state;
     let res = await postSendRemedy({
@@ -106,12 +111,19 @@ class ManagePatient extends Component {
       patientName: dataModal.patientName,
     });
     if (res && res.errCode === 0) {
-      toast.success("Send Remedy succeeds:");
+      if (this.props.language === LANGUAGES.VI) {
+        toast.success("Gửi biện pháp khắc phục thành công");
+      } else {
+        toast.success("Send remedy succeeds");
+      }
       this.closeRemedyModal();
       await this.getDataPatient();
     } else {
-      toast.error("Something wrong ...");
-      console.log("Erorr send remedy: ", res);
+      if (this.props.language === LANGUAGES.VI) {
+        toast.error("Có gì đó không đúng...");
+      } else {
+        toast.error("Something wrong...");
+      }
     }
   };
 
@@ -121,7 +133,7 @@ class ManagePatient extends Component {
     return (
       <>
         <div className="manage-patient-container container">
-          <div className="m-p-title">
+          <div className="title">
             <FormattedMessage id="manage-patient.title" />
           </div>
 
@@ -145,21 +157,23 @@ class ManagePatient extends Component {
                   <tbody>
                     <tr>
                       <th>STT</th>
-                      <th>{language === LANGUAGES.VI
-                        ? "Lịch đã chọn"
-                        : "Selected calendar"}</th>
-                      <th>{language === LANGUAGES.VI
-                        ? "Họ tên"
-                        : "Full name"}</th>
-                      <th>{language === LANGUAGES.VI
-                        ? "Địa chỉ"
-                        : "Address"}</th>
-                      <th>{language === LANGUAGES.VI
-                        ? "Giới tính"
-                        : "Gender"}</th>
-                      <th>{language === LANGUAGES.VI
-                        ? "Tác vụ"
-                        : "Actions"}</th>
+                      <th>
+                        {language === LANGUAGES.VI
+                          ? "Lịch đã chọn"
+                          : "Selected calendar"}
+                      </th>
+                      <th>
+                        {language === LANGUAGES.VI ? "Họ tên" : "Full name"}
+                      </th>
+                      <th>
+                        {language === LANGUAGES.VI ? "Địa chỉ" : "Address"}
+                      </th>
+                      <th>
+                        {language === LANGUAGES.VI ? "Giới tính" : "Gender"}
+                      </th>
+                      <th className="text-center">
+                        {language === LANGUAGES.VI ? "Tác vụ" : "Actions"}
+                      </th>
                     </tr>
                     {dataPatient && dataPatient.length > 0 ? (
                       dataPatient.map((item, index) => {
@@ -178,16 +192,21 @@ class ManagePatient extends Component {
                             <td>{item.patientData.firstName}</td>
                             <td>{item.patientData.address}</td>
                             <td>{gender}</td>
-                            <td>
+                            <td className="text-center">
                               <button
-                                className="mb-btn-confirm"
+                                className="btn btn-info"
                                 onClick={() => this.handleBtnConfirm(item)}
                               >
-                                Xác nhận
+                                {language === LANGUAGES.VI
+                                  ? "Xác nhận"
+                                  : "Confirm"}
                               </button>
-                              <button className="mb-btn-cancel"
-                                onClick={() => this.handleBtnCancel(item)}
-                              >Hủy bỏ</button>
+                              <button
+                                className="btn btn-danger mb-btn-cancel"
+                                onClick={() => this.handleDeletePatient(item)}
+                              >
+                                {language === LANGUAGES.VI ? "Hủy" : "Cancel"}
+                              </button>
                             </td>
                           </tr>
                         );
@@ -210,6 +229,11 @@ class ManagePatient extends Component {
           dataModal={dataModal}
           closeRemedyModal={this.closeRemedyModal}
           sendRemedy={this.sendRemedy}
+        />
+        <ConfirmDeletePatient
+          isOpenModal={this.state.isOpenConfirmDelete}
+          toggleFromParent={this.toggleConfirmDelete}
+          item={this.state.itemDelete}
         />
       </>
     );

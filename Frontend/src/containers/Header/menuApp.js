@@ -58,6 +58,16 @@ export const adminMenu = [
       },
     ],
   },
+  {
+    // Thống kê
+    name: "menu.admin.statistical",
+    menus: [
+      {
+        name: "menu.admin.manage-statistical",
+        link: "/system/manage-statistical",
+      },
+    ],
+  },
 ];
 
 export const doctorMenu = [
@@ -74,13 +84,12 @@ export const doctorMenu = [
         name: "menu.doctor.manage-patient",
         link: "/doctor/manage-patient",
       },
-      
+
       {
         // Quản lý thông tin cá nhân bác sĩ
         name: "menu.doctor.manage-infor",
         link: "/doctor/manage-information",
       },
-      
     ],
   },
 ];
