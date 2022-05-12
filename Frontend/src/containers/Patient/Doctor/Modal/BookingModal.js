@@ -12,6 +12,7 @@ import * as actions from "../../../../store/actions";
 import { LANGUAGES } from "../../../../utils";
 import ProfileDoctor from "../ProfileDoctor";
 import "./BookingModal.scss";
+import LoadingOverlay from "react-loading-overlay";
 
 class BookingModal extends Component {
   constructor(props) {
@@ -276,7 +277,7 @@ class BookingModal extends Component {
   render() {
     let { isOpenModalBooking, handleCloseModal, dataTime } = this.props;
     return (
-      <div>
+      <LoadingOverlay active={this.state.loading} spinner text="Loading...">
         <Modal
           isOpen={isOpenModalBooking}
           centered
@@ -419,7 +420,7 @@ class BookingModal extends Component {
             </div>
           </div>
         </Modal>
-      </div>
+      </LoadingOverlay>
     );
   }
 }

@@ -13,7 +13,7 @@ let sendSimpleEmail = async (dataSend) => {
   });
 
   let info = await transporter.sendMail({
-    from: '"Dotor Care 👻" <trungtinh3022@gmail.com>',
+    from: '"Dotor Care 👻" <doctorcare@gmail.com>',
     to: dataSend.receiverEmail,
     subject: getTitle(dataSend.language),
     html: getBodyHTMLEmail(dataSend),
@@ -58,7 +58,7 @@ let sendAttachment = async (dataSend) => {
       });
 
       let info = await transporter.sendMail({
-        from: '"Dotor Care 👻" <trungtinh3022@gmail.com>',
+        from: '"Dotor Care 👻" <doctorcare@gmail.com>',
         to: dataSend.email,
         subject: "Kết quả đặt lịch khám bệnh",
         html: getBodyHTMLEmailRemedy(dataSend),
