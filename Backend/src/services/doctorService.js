@@ -672,7 +672,40 @@ let handleDeleteSchedule = (data) => {
         await db.Schedule.destroy({
           where: { timeType: data.timeType, date: data.date },
         });
+        resolve({
+          errCode: 0,
+          message: `The schedule is deleted`,
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 
+let cancelMedicalAppointment = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!data.doctorId || !data.patientId || !data.timeType) {
+        resolve({
+          errCode: -1,
+          errMessage: "Missing required parameters",
+        });
+      } else {
+        //update patient status
+        let appointment = await db.Booking.findOne({
+          where: {
+            doctorId: data.doctorId,
+            patientId: data.patientId,
+            timeType: data.timeType,
+            statusId: "S2",
+          },
+          raw: false,
+        });
+        if (appointment) {
+          appointment.statusId = "S4";
+          await appointment.save();
+        }
         resolve({
           errCode: 0,
           message: `The schedule is deleted`,
@@ -698,4 +731,5 @@ module.exports = {
   getPassword: getPassword,
   changePassword: changePassword,
   handleDeleteSchedule: handleDeleteSchedule,
+  cancelMedicalAppointment: cancelMedicalAppointment,
 };
