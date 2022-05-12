@@ -149,7 +149,7 @@ class ManageInformation extends Component {
   handleEditUserFromParent = (user) => {
     let imageBase64 = "";
     if (user.image) {
-      imageBase64 = new Buffer(user.image, "base64").toString("binary");
+      imageBase64 = Buffer.from(user.image, "base64").toString("binary");
     }
     let parseDate = moment.unix(user.birthday).toDate();
     this.setState({

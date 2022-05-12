@@ -38,7 +38,7 @@ let getAllClinic = () => {
       let data = await db.Clinic.findAll({});
       if (data && data.length > 0) {
         data.map((item) => {
-          item.image = new Buffer(item.image, "Base64").toString("binary");
+          item.image = Buffer.from(item.image, "Base64").toString("binary");
           return item;
         });
       }
@@ -71,7 +71,7 @@ let getDetailClinicById = (inputId) => {
 
         if (data) {
           if (data && data.image) {
-            data.image = new Buffer(data.image, "base64").toString("binary");
+            data.image = Buffer.from(data.image, "base64").toString("binary");
           }
           let doctorClinic = [];
           doctorClinic = await db.Doctor_Infor.findAll({

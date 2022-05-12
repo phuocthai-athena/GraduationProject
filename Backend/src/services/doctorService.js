@@ -89,7 +89,7 @@ let getAllDoctors = () => {
       });
       if (doctors && doctors.length > 0) {
         doctors.map((item) => {
-          item.image = new Buffer(item.image, "Base64").toString("binary");
+          item.image = Buffer.from(item.image, "Base64").toString("binary");
           return item;
         });
       }
@@ -258,7 +258,7 @@ let getProfileDoctorById = (doctorId) => {
           nest: true,
         });
         if (data && data.image) {
-          data.image = new Buffer(data.image, "base64").toString("binary");
+          data.image = Buffer.from(data.image, "base64").toString("binary");
         }
         if (!data) data = {};
         resolve({
@@ -326,7 +326,7 @@ let getDetailDoctorById = (inputId) => {
         });
 
         if (data && data.image) {
-          data.image = new Buffer(data.image, "base64").toString("binary");
+          data.image = Buffer.from(data.image, "base64").toString("binary");
         }
 
         if (!data) data = {};

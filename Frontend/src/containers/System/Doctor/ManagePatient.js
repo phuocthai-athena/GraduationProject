@@ -104,7 +104,7 @@ class ManagePatient extends Component {
     return (
       <>
         <div className="manage-patient-container container">
-          <div className="m-p-title">
+          <div className="title">
             <FormattedMessage id="manage-patient.title" />
           </div>
 
@@ -139,6 +139,9 @@ class ManagePatient extends Component {
                     <th>
                       {language === LANGUAGES.VI ? "Giới tính" : "Gender"}
                     </th>
+                    <th>
+                      {language === LANGUAGES.VI ? "Lý do khám bệnh" : "Reason"}
+                    </th>
                     <th>{language === LANGUAGES.VI ? "Tác vụ" : "Actions"}</th>
                   </tr>
                   {dataPatient && dataPatient.length > 0 ? (
@@ -158,6 +161,7 @@ class ManagePatient extends Component {
                           <td>{item.patientData.firstName}</td>
                           <td>{item.patientData.address}</td>
                           <td>{gender}</td>
+                          <td>{item.reason}</td>
                           <td>
                             <button
                               className="mb-btn-confirm"
@@ -171,7 +175,7 @@ class ManagePatient extends Component {
                     })
                   ) : (
                     <tr>
-                      <td colSpan={"6"} style={{ textAlign: "center" }}>
+                      <td colSpan={"10"} style={{ textAlign: "center" }}>
                         No data
                       </td>
                     </tr>
