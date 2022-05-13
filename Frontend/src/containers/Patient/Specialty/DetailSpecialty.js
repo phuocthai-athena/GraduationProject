@@ -51,7 +51,6 @@ class DetailSpecialty extends Component {
             });
           }
         }
-        console.log("test7");
         let dataProvince = resProvince.data;
         if (dataProvince && dataProvince.length > 0) {
           dataProvince.unshift({
@@ -114,9 +113,6 @@ class DetailSpecialty extends Component {
   render() {
     let { arrDoctorId, dataDetailSpecialty, listProvince } = this.state;
     let { language } = this.props;
-    console.log("test2", listProvince);
-    console.log("test3", listProvince);
-    console.log("test4", listProvince);
     return (
       <div className="detail-specialty-container">
         <HomeHeader />
@@ -136,7 +132,10 @@ class DetailSpecialty extends Component {
                 listProvince.length > 0 &&
                 listProvince.map((item, index) => {
                   return (
-                    <option key={index} value={item.keyMap}>
+                    <option
+                      key={index}
+                      value={item.keyMap}
+                    >
                       {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
                     </option>
                   );

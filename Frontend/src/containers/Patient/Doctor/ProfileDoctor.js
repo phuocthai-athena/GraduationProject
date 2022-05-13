@@ -104,7 +104,6 @@ class ProfileDoctor extends Component {
               })`,
             }}
           ></div>
-
           <div className="content-right">
             <div className="up">
               {language === LANGUAGES.VI ? nameVi : nameEn}
@@ -120,7 +119,12 @@ class ProfileDoctor extends Component {
         </div>
         {isShowLinkDetail === true && (
           <div className="view-detail-doctor">
-            <Link to={`/detail-doctor/${doctorId}`}>Xem thêm</Link>
+            <Link
+              to={`/detail-doctor/${doctorId}`}
+              style={{ textDecoration: "none" }}
+            >
+              Xem thêm
+            </Link>
           </div>
         )}
 

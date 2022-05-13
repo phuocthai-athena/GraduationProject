@@ -383,13 +383,18 @@ class BookingModal extends Component {
                   <label>
                     <FormattedMessage id="patient.booking-modal.birthday" />
                   </label>
-                  <DatePicker
-                    className="form-control"
-                    onChange={this.handleOnChangeBirthDay}
-                    value={this.state.birthday}
-                    maxDate={new Date()}
-                  />
-                  <span className="error">{this.state.errors["birthday"]}</span>
+                  <div className="date-picker">
+                    <DatePicker
+                      className="form-control choose-date"
+                      onChange={this.handleOnChangeBirthDay}
+                      value={this.state.birthday}
+                      maxDate={new Date()}
+                    />
+                    <span className="error">
+                      {this.state.errors["birthday"]}
+                    </span>
+                    <i className="fas fa-calendar-alt calendar"></i>
+                  </div>
                 </div>
                 <div className="col-6 form-group">
                   <label>

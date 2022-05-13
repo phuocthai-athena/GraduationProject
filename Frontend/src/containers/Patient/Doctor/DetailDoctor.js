@@ -52,7 +52,6 @@ class DetailDoctor extends Component {
     }
     let currentURL =
       process.env.REACT_APP_IS_LOCALHOST === 1 ? "" : window.location.href;
-
     return (
       <>
         <HomeHeader isShowBanner={false} />
