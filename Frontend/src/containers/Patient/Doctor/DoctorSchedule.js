@@ -146,6 +146,9 @@ class DoctorSchedule extends Component {
       dataScheduleTimeModal,
     } = this.state;
     let { language } = this.props;
+    let allAvailableTimeNew = allAvailableTime.sort((a, b) =>
+      a.timeType > b.timeType ? 1 : b.timeType > a.timeType ? -1 : 0
+    );
     return (
       <>
         <div className="doctor-schedule-container">
@@ -172,10 +175,10 @@ class DoctorSchedule extends Component {
             </div>
             <div className="time-content">
               <></>
-              {allAvailableTime && allAvailableTime.length > 0 ? (
+              {allAvailableTimeNew && allAvailableTimeNew.length > 0 ? (
                 <>
                   <div className="time-content-btn">
-                    {allAvailableTime.map((item, index) => {
+                    {allAvailableTimeNew.map((item, index) => {
                       let isUnavailable = this.validateScheduleTime(item);
                       let timeDisplay =
                         language === LANGUAGES.VI
