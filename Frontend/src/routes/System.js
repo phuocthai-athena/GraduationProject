@@ -16,6 +16,7 @@ import UpdateHandBook from "../containers/System/HandBook/UpdateHandBook";
 import AddClinic from "../containers/System/Clinic/AddClinic";
 import UpdateClinic from "../containers/System/Clinic/UpdateClinic";
 import ManageStatistical from "../containers/System/Statistical/ManageStatistical";
+import LoginSuccess from "../containers/System/LoginSuccess";
 
 class System extends Component {
   render() {
@@ -37,7 +38,7 @@ class System extends Component {
                 path="/system/manage-statistical"
                 component={ManageStatistical}
               />
-
+              <Route path="/system/loginsuccess" component={LoginSuccess} />
               <Route
                 path="/system/manage-specialty"
                 exact
