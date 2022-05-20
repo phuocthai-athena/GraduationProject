@@ -162,8 +162,14 @@ class ManagePatient extends Component {
                           ? "Lịch đã chọn"
                           : "Selected calendar"}
                       </th>
+                      <th>{language === LANGUAGES.VI ? "Họ" : "Last name"}</th>
                       <th>
-                        {language === LANGUAGES.VI ? "Họ tên" : "Full name"}
+                        {language === LANGUAGES.VI ? "Tên" : "First name"}
+                      </th>
+                      <th>
+                        {language === LANGUAGES.VI
+                          ? "Ngày sinh"
+                          : "Date of birth"}
                       </th>
                       <th>
                         {language === LANGUAGES.VI ? "Địa chỉ" : "Address"}
@@ -171,6 +177,7 @@ class ManagePatient extends Component {
                       <th>
                         {language === LANGUAGES.VI ? "Giới tính" : "Gender"}
                       </th>
+                      <th>{language === LANGUAGES.VI ? "Lí do" : "Reason"}</th>
                       <th className="text-center">
                         {language === LANGUAGES.VI ? "Tác vụ" : "Actions"}
                       </th>
@@ -190,9 +197,18 @@ class ManagePatient extends Component {
                           <tr key={index}>
                             <td>{index + 1}</td>
                             <td>{time}</td>
+                            <td>{item.patientData.lastName}</td>
                             <td>{item.patientData.firstName}</td>
+                            <td>
+                              {item.patientData.birthday === null
+                                ? ""
+                                : moment
+                                    .unix(item.patientData.birthday)
+                                    .format("DD/MM/YYYY")}
+                            </td>
                             <td>{item.patientData.address}</td>
                             <td>{gender}</td>
+                            <td>{item.reason}</td>
                             <td className="text-center">
                               <button
                                 className="btn btn-info"
@@ -214,7 +230,7 @@ class ManagePatient extends Component {
                       })
                     ) : (
                       <tr>
-                        <td colSpan={"6"} style={{ textAlign: "center" }}>
+                        <td colSpan={"10"} style={{ textAlign: "center" }}>
                           No data
                         </td>
                       </tr>

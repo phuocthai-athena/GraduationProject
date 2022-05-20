@@ -4,7 +4,10 @@ import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import DatePicker from "../../../components/Input/DatePicker";
-import { saveBulkScheduleDoctor } from "../../../services/userService";
+import {
+  getScheduleDoctorByDate,
+  saveBulkScheduleDoctor,
+} from "../../../services/userService";
 import * as actions from "../../../store/actions";
 import { LANGUAGES } from "../../../utils";
 import "./ManageSchedule.scss";
@@ -94,19 +97,42 @@ class ManageSchedule extends Component {
 
     if (rangeTime && rangeTime.length > 0) {
       let selectedTime = rangeTime.filter((item) => item.isSelected === true);
-      if (selectedTime && selectedTime.length > 0) {
-        selectedTime.map((schedule, index) => {
-          let object = {};
-          object.doctorId = userInfo.id;
-          object.date = formatedDate;
-          object.timeType = schedule.keyMap;
-          result.push(object);
-        });
+      let res = await getScheduleDoctorByDate(userInfo.id, formatedDate);
+      if (selectedTime.length >= res.data.length) {
+        if (!this.equal(selectedTime, res.data)) {
+          if (selectedTime && selectedTime.length > 0) {
+            selectedTime.map((schedule, index) => {
+              let object = {};
+              object.doctorId = userInfo.id;
+              object.date = formatedDate;
+              object.timeType = schedule.keyMap;
+              result.push(object);
+            });
+          } else {
+            if (this.props.language === LANGUAGES.VI) {
+              toast.error("Thời gian đã chọn không hợp lệ");
+            } else {
+              toast.error("Invalid selected time");
+            }
+            return;
+          }
+        } else {
+          if (this.props.language === LANGUAGES.VI) {
+            toast.error(
+              "Thời gian đã được chọn. Vui lòng chọn thời gian khác!"
+            );
+          } else {
+            toast.error("Time has been selected. Please choose another time!");
+          }
+          return;
+        }
       } else {
         if (this.props.language === LANGUAGES.VI) {
-          toast.error("Thời gian đã chọn không hợp lệ");
+          toast.error(
+            "Bạn chỉ có thể hủy chọn thời gian bằng cách xóa ở bảng dưới!"
+          );
         } else {
-          toast.error("Invalid selected time");
+          toast.error("The time has been chosen inappropriately!");
         }
         return;
       }
@@ -132,6 +158,20 @@ class ManageSchedule extends Component {
         toast.error("Save failed");
       }
     }
+  };
+
+  equal = (a, b) => {
+    return (
+      a.length === b.length && // same length and
+      a.every(
+        // every element in a
+        (e1) =>
+          b.some(
+            // has a match in b
+            (e2) => e1.keyMap === e2.timeType
+          )
+      )
+    );
   };
 
   setBtnSelectedDefault = () => {
