@@ -213,7 +213,9 @@ class ManageInformation extends Component {
     return (
       <>
         <div className="user-redux-container">
-          <div className="title">Thông tin cá nhân của bác sĩ</div>
+          <div className="title">
+            <FormattedMessage id="manage-user.doctor" />
+          </div>
           <div className="user-redux-body">
             <div className="container">
               <div className="row">

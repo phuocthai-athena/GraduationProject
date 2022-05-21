@@ -26,6 +26,7 @@ class BookingModal extends Component {
       birthday: "",
       selectedGender: "",
       doctorId: "",
+      price: "",
       genders: "",
       timeType: "",
       errors: {},
@@ -107,6 +108,7 @@ class BookingModal extends Component {
       email: this.state.email,
       address: this.state.address,
       reason: this.state.reason,
+      price: this.state.price,
       birthday: date,
       date: this.props.dataTime.date,
       selectedGender: this.state.selectedGender.value,
@@ -274,6 +276,10 @@ class BookingModal extends Component {
     return formIsValid;
   }
 
+  getPrice = (priceChild) => {
+    this.setState({ price: priceChild });
+  };
+
   render() {
     let { isOpenModalBooking, handleCloseModal, dataTime } = this.props;
     return (
@@ -313,6 +319,7 @@ class BookingModal extends Component {
                   isShowDescriptionDoctor={false}
                   isShowLinkDetail={false}
                   isShowPrice={true}
+                  priceParent={this.getPrice}
                 />
               </div>
               <div className="row">

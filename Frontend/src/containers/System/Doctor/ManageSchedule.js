@@ -98,7 +98,10 @@ class ManageSchedule extends Component {
     if (rangeTime && rangeTime.length > 0) {
       let selectedTime = rangeTime.filter((item) => item.isSelected === true);
       let res = await getScheduleDoctorByDate(userInfo.id, formatedDate);
-      if (selectedTime.length >= res.data.length) {
+      if (
+        selectedTime.length > res.data.length &&
+        !this.equal(selectedTime, res.data)
+      ) {
         if (!this.equal(selectedTime, res.data)) {
           if (selectedTime && selectedTime.length > 0) {
             selectedTime.map((schedule, index) => {
@@ -224,7 +227,7 @@ class ManageSchedule extends Component {
     let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
     return (
       <div className="manage-schedule-container">
-        <div className="m-s-title">
+        <div className="title">
           <FormattedMessage id="manage-schedule.title" />
         </div>
         <div className="container">
