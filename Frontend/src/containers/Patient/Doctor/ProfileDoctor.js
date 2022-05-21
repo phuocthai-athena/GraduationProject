@@ -21,6 +21,7 @@ class ProfileDoctor extends Component {
   async componentDidMount() {
     let data = await this.getInfoDoctor(this.props.doctorId);
     this.setState({ dataProfile: data });
+    this.getPrice();
   }
 
   getInfoDoctor = async (id) => {
@@ -66,6 +67,16 @@ class ProfileDoctor extends Component {
       );
     }
     return <></>;
+  };
+
+  getPrice = () => {
+    let { dataProfile } = this.state;
+
+    let result =
+      this.props.language === LANGUAGES.VI
+        ? dataProfile.Doctor_Infor.priceTypeData.valueVi
+        : dataProfile.Doctor_Infor.priceTypeData.valueEn;
+    this.props.priceParent(result);
   };
 
   render() {

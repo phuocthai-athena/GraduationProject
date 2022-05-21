@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import Lightbox from "react-image-lightbox";
 import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 import DatePicker from "../../../components/Input/DatePicker";
 import { getAllUsers } from "../../../services/userService";
 import * as actions from "../../../store/actions";
@@ -96,6 +97,18 @@ class ManageInformation extends Component {
         positionId: this.state.position,
         avatar: this.state.avatar,
       });
+      if (this.props.language === LANGUAGES.VI) {
+        toast.success("Cập nhật người dùng thành công!");
+      } else {
+        toast.success("User Update Successful!");
+      }
+    } else {
+      if (this.props.language === LANGUAGES.VI) {
+        toast.error("Cập nhật người dùng thất bại!");
+      } else {
+        toast.error("User update failed!");
+      }
+      return;
     }
   };
 
@@ -200,7 +213,9 @@ class ManageInformation extends Component {
     return (
       <>
         <div className="user-redux-container">
-          <div className="title">Thông tin cá nhân của bác sĩ</div>
+          <div className="title">
+            <FormattedMessage id="manage-user.doctor" />
+          </div>
           <div className="user-redux-body">
             <div className="container">
               <div className="row">

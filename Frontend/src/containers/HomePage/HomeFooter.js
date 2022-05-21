@@ -75,7 +75,7 @@ class HomeFooter extends Component {
                 <small>@ 2022 DoctorCare.</small>
               </div>
               <div className="col-8 chu-phai">
-                <a target="_blank" href="https://www.facebook.com/BPT99/">
+                <a target="_blank" href="https://www.facebook.com/DoctorCareCompany">
                   <img
                     className="nut-mxh"
                     width="32px"
