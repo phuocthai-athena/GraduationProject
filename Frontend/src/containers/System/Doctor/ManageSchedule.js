@@ -263,20 +263,6 @@ class ManageSchedule extends Component {
                                 <i className="fas fa-calendar-alt calendar"></i>
                             </div>
                         </div>
-                        <div className="col-3 form-group">
-                            <label>
-                                <FormattedMessage id="manage-schedule.choose-date" />
-                            </label>
-                            <div className="date-picker">
-                                <DatePicker
-                                    onChange={this.handleOnChangeDatePicker}
-                                    className="form-control choose-date"
-                                    value={this.state.currentDate}
-                                    minDate={yesterday}
-                                />
-                                <i className="fas fa-calendar-alt calendar"></i>
-                            </div>
-                        </div>
                         <div className="col-12 pick-hour-container">
                             {rangeTime &&
                                 rangeTime.length > 0 &&
