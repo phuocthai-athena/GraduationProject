@@ -78,7 +78,8 @@
     "list-clinics": "Bệnh viện, phòng khám",
     "new-clinic": "Thêm mới phòng khám",
     "add": "Thêm mới",
-    "update": "Cập nhật"
+    "update": "Cập nhật",
+    "edit-title" : "Cập nhật phòng khám"
   },
   "manage-specialty": {
     "title": "Quản lý chuyên khoa",
@@ -91,7 +92,7 @@
   },
   "history-patient": {
     "title": "Quản lý lịch sử bệnh nhân khám bệnh",
-    "choose-date": "chọn ngày khám"
+    "choose-date": "Chọn ngày khám"
   },
   "homepage": {
     "outstanding-doctor": "Bác sĩ nổi bật",
@@ -105,7 +106,8 @@
     "title": "Quản lý lịch khám",
     "choose-doctor": "Bác sĩ",
     "choose-date": "Chọn ngày",
-    "save": "Lưu thông tin"
+    "save": "Lưu thông tin",
+    "max-patients": "Số lượng bệnh nhân:"
   },
   "manage-patient": {
     "title": "Xác nhận khám bệnh",
@@ -115,6 +117,7 @@
     "sum": "Tổng tiền",
     "total-scheduled": "Tổng số lượt đặt khám"
   },
+
   "patient": {
     "detail-doctor": {
       "schedule": "Lịch khám",

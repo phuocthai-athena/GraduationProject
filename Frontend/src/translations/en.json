@@ -78,7 +78,8 @@
     "list-clinics": "Clinics, medical facillity",
     "new-clinic": "Add new clinic",
     "add": "Add",
-    "update": "Update"
+    "update": "Update",    
+    "edit-title" : "Edit clinic"
   },
   "manage-specialty": {
     "title": "Specialized Management",
@@ -105,7 +106,8 @@
     "title": "Manage medical appointments",
     "choose-doctor": "A doctor",
     "choose-date": "Choose a date",
-    "save": "Save"
+    "save": "Save",
+    "max-patients": "Max number of patients:"
   },
   "manage-patient": {
     "title": "Medical examination confirmation",
@@ -168,7 +170,8 @@
       "image": "Specialty image",
       "name": "Speciialty name",
       "add": "Add",
-      "update": "Update"
+      "update": "Update",
+      "edit-title": "Edit specialty"
     },
     "manage-handbook": {
       "title": "Manage handbook",
