@@ -101,7 +101,7 @@ let getAllCode = async (req, res) => {
 
 let getListHistoryPatient = async (req, res) => {
     try {
-        let response = await userService.getListHistoryPatient(req.query.date);
+        let response = await userService.getListHistoryPatient(req.query.doctorId, req.query.date);
         return res.status(200).json(response);
     } catch (error) {
         console.log(error);

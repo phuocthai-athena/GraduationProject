@@ -26,6 +26,7 @@ class BookingModal extends Component {
             birthday: "",
             selectedGender: "",
             doctorId: "",
+            price: "",
             genders: "",
             timeType: "",
             errors: {},
@@ -35,7 +36,6 @@ class BookingModal extends Component {
 
     async componentDidMount() {
         this.props.getGenders();
-        let doctorId = this.props.dataTime.doctorId;
     }
 
     buildDataGender = (data) => {
@@ -108,6 +108,7 @@ class BookingModal extends Component {
             email: this.state.email,
             address: this.state.address,
             reason: this.state.reason,
+            price: this.state.price,
             birthday: date,
             date: this.props.dataTime.date,
             selectedGender: this.state.selectedGender.value,
@@ -118,7 +119,6 @@ class BookingModal extends Component {
             doctorName: doctorName,
         });
         this.setState({ ...this.state, loading: false });
-        console.log(res);
         if (res && res.errCode === 0) {
             let message =
                 language === LANGUAGES.VI
@@ -262,6 +262,10 @@ class BookingModal extends Component {
         return formIsValid;
     }
 
+    getPrice = (priceChild) => {
+        this.setState({ price: priceChild });
+    };
+
     render() {
         let { isOpenModalBooking, handleCloseModal, dataTime } = this.props;
         return (
@@ -301,6 +305,7 @@ class BookingModal extends Component {
                                     isShowDescriptionDoctor={false}
                                     isShowLinkDetail={false}
                                     isShowPrice={true}
+                                    priceParent={this.getPrice}
                                 />
                             </div>
                             <div className="row">
@@ -378,12 +383,10 @@ class BookingModal extends Component {
                                             value={this.state.birthday}
                                             maxDate={new Date()}
                                         />
-                                        <i className="fas fa-calendar-alt calendar"></i>
-                                    </div>
-                                    <div>
                                         <span className="error">
                                             {this.state.errors["birthday"]}
                                         </span>
+                                        <i className="fas fa-calendar-alt calendar"></i>
                                     </div>
                                 </div>
                                 <div className="col-6 form-group">

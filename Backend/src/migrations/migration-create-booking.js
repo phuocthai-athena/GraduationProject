@@ -28,6 +28,9 @@ module.exports = {
             reason: {
                 type: Sequelize.STRING,
             },
+            money: {
+                type: Sequelize.STRING,
+            },
             timeType: {
                 type: Sequelize.STRING,
             },

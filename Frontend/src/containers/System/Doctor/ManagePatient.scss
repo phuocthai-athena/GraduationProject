@@ -23,6 +23,33 @@
         }
     }
 
+    .number-patient {
+        position     : relative;
+        display      : flex;
+        height       : 33.5px;
+        border       : 1px solid #ced4da;
+        border-radius: 0.25rem;
+
+        .patient-text {
+            font-size  : 20px;
+            font-weight: bold;
+            color      : #000;
+            position   : absolute;
+            top        : 50%;
+            left       : 50%;
+            transform  : translate(-50%, -50%);
+        }
+
+        .icons {
+            position : absolute;
+            top      : 50%;
+            right    : 0;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            z-index  : 9;
+        }
+    }
+
     .manage-patient-body {
         padding: 0 20px;
 
@@ -48,7 +75,7 @@
             }
 
             .mb-btn-cancel {
-                margin-left : 10px
+                margin-left: 10px
             }
         }
     }

@@ -129,7 +129,7 @@ const getAllPatientForDoctor = (data) => {
 };
 
 const getAllPatientForHistory = (data) => {
-    return axios.get(`/api/get-list-history-patient?date=${data.date}`);
+    return axios.get(`/api/get-list-history-patient?doctorId=${data.doctorId}&date=${data.date}`);
 };
 
 const postSendRemedy = (data) => {

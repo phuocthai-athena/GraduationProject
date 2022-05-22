@@ -311,10 +311,10 @@ let getAllCodeService = (typeInput) => {
     });
 };
 
-let getListHistoryPatient = (date) => {
+let getListHistoryPatient = (doctorId, date) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!date) {
+            if (!doctorId || !date) {
                 resolve({
                     errCode: -1,
                     errMessage: "Missing required parameters",
@@ -323,12 +323,20 @@ let getListHistoryPatient = (date) => {
                 let data = await db.Booking.findAll({
                     where: {
                         date: date,
+                        doctorId: doctorId,
                     },
                     include: [
                         {
                             model: db.User,
                             as: "patientData",
-                            attributes: ["email", "firstName", "address", "gender"],
+                            attributes: [
+                                "email",
+                                "firstName",
+                                "address",
+                                "gender",
+                                "lastName",
+                                "birthday",
+                            ],
                             include: [
                                 {
                                     model: db.Allcode,

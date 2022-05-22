@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import DatePicker from "../../../components/Input/DatePicker";
-import { saveBulkScheduleDoctor } from "../../../services/userService";
+import { getScheduleDoctorByDate, saveBulkScheduleDoctor } from "../../../services/userService";
 import * as actions from "../../../store/actions";
 import { LANGUAGES } from "../../../utils";
 import "./ManageSchedule.scss";
@@ -95,19 +95,38 @@ class ManageSchedule extends Component {
 
         if (rangeTime && rangeTime.length > 0) {
             let selectedTime = rangeTime.filter((item) => item.isSelected === true);
-            if (selectedTime && selectedTime.length > 0) {
-                selectedTime.map((schedule, index) => {
-                    let object = {};
-                    object.doctorId = userInfo.id;
-                    object.date = formatedDate;
-                    object.timeType = schedule.keyMap;
-                    result.push(object);
-                });
+            let res = await getScheduleDoctorByDate(userInfo.id, formatedDate);
+            if (selectedTime.length >= res.data.length || this.equal(selectedTime, res.data)) {
+                if (!this.equal(selectedTime, res.data)) {
+                    if (selectedTime && selectedTime.length > 0) {
+                        selectedTime.map((schedule, index) => {
+                            let object = {};
+                            object.doctorId = userInfo.id;
+                            object.date = formatedDate;
+                            object.timeType = schedule.keyMap;
+                            result.push(object);
+                        });
+                    } else {
+                        if (this.props.language === LANGUAGES.VI) {
+                            toast.error("Thời gian đã chọn không hợp lệ");
+                        } else {
+                            toast.error("Invalid selected time");
+                        }
+                        return;
+                    }
+                } else {
+                    if (this.props.language === LANGUAGES.VI) {
+                        toast.error("Thời gian đã được chọn. Vui lòng chọn thời gian khác!");
+                    } else {
+                        toast.error("Time has been selected. Please choose another time!");
+                    }
+                    return;
+                }
             } else {
                 if (this.props.language === LANGUAGES.VI) {
-                    toast.error("Thời gian đã chọn không hợp lệ");
+                    toast.error("Bạn chỉ có thể hủy chọn thời gian bằng cách xóa ở bảng dưới!");
                 } else {
-                    toast.error("Invalid selected time");
+                    toast.error("The time has been chosen inappropriately!");
                 }
                 return;
             }
@@ -134,6 +153,20 @@ class ManageSchedule extends Component {
                 toast.error("Save failed");
             }
         }
+    };
+
+    equal = (a, b) => {
+        return (
+            a.length === b.length && // same length and
+            a.every(
+                // every element in a
+                (e1) =>
+                    b.some(
+                        // has a match in b
+                        (e2) => e1.keyMap === e2.timeType
+                    )
+            )
+        );
     };
 
     setBtnSelectedDefault = () => {
@@ -198,9 +231,10 @@ class ManageSchedule extends Component {
         let nameEn = `${userInfo.firstName} ${userInfo.lastName}`;
         let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
         const exceptThisSymbols = ["e", "E", "+", "-", "."];
+
         return (
             <div className="manage-schedule-container">
-                <div className="m-s-title">
+                <div className="title">
                     <FormattedMessage id="manage-schedule.title" />
                 </div>
                 <div className="container">
@@ -215,7 +249,21 @@ class ManageSchedule extends Component {
                                 disabled
                             />
                         </div>
-                        <div className="col-6 form-group">
+                        <div className="col-3 form-group">
+                            <label>
+                                <FormattedMessage id="manage-schedule.choose-date" />
+                            </label>
+                            <div className="date-picker">
+                                <DatePicker
+                                    onChange={this.handleOnChangeDatePicker}
+                                    className="form-control choose-date"
+                                    value={this.state.currentDate}
+                                    minDate={yesterday}
+                                />
+                                <i className="fas fa-calendar-alt calendar"></i>
+                            </div>
+                        </div>
+                        <div className="col-3 form-group">
                             <label>
                                 <FormattedMessage id="manage-schedule.choose-date" />
                             </label>

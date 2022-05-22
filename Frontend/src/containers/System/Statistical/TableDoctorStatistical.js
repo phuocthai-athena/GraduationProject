@@ -37,6 +37,7 @@ class TableDoctorStatistical extends Component {
 
   render() {
     let arrUsers = this.state.arrUsers;
+    let arrDoctor = arrUsers.filter((value) => value.roleId === "R2");
     let { language } = this.props;
     return (
       <React.Fragment>
@@ -48,8 +49,8 @@ class TableDoctorStatistical extends Component {
             <tr>
               <th>Stt</th>
               <th>Email</th>
-              <th>{language === LANGUAGES.VI ? "Tên" : "First name"}</th>
               <th>{language === LANGUAGES.VI ? "Họ" : "Last name"}</th>
+              <th>{language === LANGUAGES.VI ? "Tên" : "First name"}</th>
               <th>{language === LANGUAGES.VI ? "Giới tính" : "Gender"}</th>
               <th>
                 {language === LANGUAGES.VI ? "Ngày sinh" : "Date of birth"}
@@ -59,35 +60,33 @@ class TableDoctorStatistical extends Component {
               </th>
               <th>{language === LANGUAGES.VI ? "Địa chỉ" : "Address"}</th>
             </tr>
-            {arrUsers &&
-              arrUsers.length > 0 &&
-              arrUsers.map((item, index) => {
-                if (item.roleId === "R2") {
-                  let sex = "";
-                  if (item.gender === "M") {
-                    sex = "Nam";
-                  } else if (item.gender === "N") {
-                    sex = "Nữ";
-                  } else {
-                    sex = "Khác";
-                  }
-                  return (
-                    <tr key={index}>
-                      <td>{index}</td>
-                      <td>{item.email}</td>
-                      <td>{item.firstName}</td>
-                      <td>{item.lastName}</td>
-                      <td>{sex}</td>
-                      <td>
-                        {item.birthday === null
-                          ? ""
-                          : moment.unix(item.birthday).format("MM/DD/YYYY")}
-                      </td>
-                      <td>{item.phonenumber}</td>
-                      <td>{item.address}</td>
-                    </tr>
-                  );
+            {arrDoctor &&
+              arrDoctor.length > 0 &&
+              arrDoctor.map((item, index) => {
+                let sex = "";
+                if (item.gender === "M") {
+                  sex = "Nam";
+                } else if (item.gender === "F") {
+                  sex = "Nữ";
+                } else {
+                  sex = "Khác";
                 }
+                return (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{item.email}</td>
+                    <td>{item.lastName}</td>
+                    <td>{item.firstName}</td>
+                    <td>{sex}</td>
+                    <td>
+                      {item.birthday === null
+                        ? ""
+                        : moment.unix(item.birthday).format("MM/DD/YYYY")}
+                    </td>
+                    <td>{item.phonenumber}</td>
+                    <td>{item.address}</td>
+                  </tr>
+                );
               })}
           </tbody>
         </table>

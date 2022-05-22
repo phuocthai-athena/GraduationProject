@@ -41,13 +41,14 @@
       "statistical": "Statistical"
     },
     "doctor": {
-      "manage-schedule": "Manage doctor's schedule",
-      "manage-patient": "Manage doctor's patient",
-      "manage-infor": "Manage doctor's information"
+      "manage-schedule": "Manage medical appointments",
+      "manage-patient": "Medical examination confirmation",
+      "manage-infor": "Personal information management"
     }
   },
   "manage-user": {
     "title": "User Management",
+    "doctor": "Personal information management",
     "add": "Add a new user",
     "email": "Email",
     "password": "Password",
@@ -80,15 +81,6 @@
     "update": "Update",    
     "edit-title" : "Edit clinic"
   },
-  "manage-patient": {
-    "title": "Patient Booking Management",
-    "number": "No",
-    "time": "Time",
-    "fullname": "Full name",
-    "address": "Address",
-    "gender": "Gender",
-    "booking": "Choose booking date"
-  },
   "manage-specialty": {
     "title": "Specialized Management",
     "name": "Specialized name",
@@ -111,11 +103,19 @@
     "list-handbook": "Top handbooks"
   },
   "manage-schedule": {
-    "title": "Manage doctor's examination plan",
+    "title": "Manage medical appointments",
     "choose-doctor": "A doctor",
     "choose-date": "Choose a date",
     "save": "Save",
     "max-patients": "Max number of patients:"
+  },
+  "manage-patient": {
+    "title": "Medical examination confirmation",
+    "choose-date": "Choose a date of examination",
+    "number-patient-examined": "Patient examined",
+    "number-patient-cancel": "Patient canceled",
+    "sum": "Total money",
+    "total-scheduled": "Tổng số lượt đặt khám"
   },
   "patient": {
     "detail-doctor": {
