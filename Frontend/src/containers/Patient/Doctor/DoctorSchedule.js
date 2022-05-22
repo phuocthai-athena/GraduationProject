@@ -126,7 +126,6 @@ class DoctorSchedule extends Component {
     let time = item.timeTypeData.valueVi;
     let scheduleTime = parseInt(time.substr(0, time.indexOf(":")));
     let scheduleDate = new Date(parseInt(item.date) * 1000);
-
     if (currentNumber >= maxNumber) {
       return true;
     }
