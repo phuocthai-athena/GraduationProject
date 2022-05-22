@@ -77,7 +77,8 @@
     "list-clinics": "Clinics, medical facillity",
     "new-clinic": "Add new clinic",
     "add": "Add",
-    "update": "Update"
+    "update": "Update",    
+    "edit-title" : "Edit clinic"
   },
   "manage-patient": {
     "title": "Patient Booking Management",
@@ -113,11 +114,8 @@
     "title": "Manage doctor's examination plan",
     "choose-doctor": "A doctor",
     "choose-date": "Choose a date",
-    "save": "Save"
-  },
-  "manage-patient": {
-    "title": "Manage doctor's examination plan",
-    "choose-date": "Choose a date of examination"
+    "save": "Save",
+    "max-patients": "Max number of patients:"
   },
   "patient": {
     "detail-doctor": {
@@ -172,7 +170,8 @@
       "image": "Specialty image",
       "name": "Speciialty name",
       "add": "Add",
-      "update": "Update"
+      "update": "Update",
+      "edit-title": "Edit specialty"
     },
     "manage-handbook": {
       "title": "Manage handbook",
