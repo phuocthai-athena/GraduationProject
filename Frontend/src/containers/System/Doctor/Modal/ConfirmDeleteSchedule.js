@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import { Modal } from "reactstrap";
-import { deleteScheduleSelected } from "../../../../services/userService";
+import {
+  deleteScheduleSelected,
+  getScheduleDoctorByDate,
+} from "../../../../services/userService";
 import { LANGUAGES } from "../../../../utils";
 import "./ConfirmDeleteSchedule.scss";
 
@@ -26,15 +29,24 @@ class ConfirmDeleteSchedule extends Component {
   handleConfirmDelete = async () => {
     let listScheduleDelete = this.props.listSchedule;
     if (listScheduleDelete) {
-      await deleteScheduleSelected(
-        listScheduleDelete.doctorId,
-        listScheduleDelete.date,
-        listScheduleDelete.timeType
-      );
-      if (this.props.language === LANGUAGES.VI) {
-        toast.success("Xóa thành công");
+      if (listScheduleDelete.currentNumber === null) {
+        await deleteScheduleSelected(
+          listScheduleDelete.doctorId,
+          listScheduleDelete.date,
+          listScheduleDelete.timeType
+        );
+        if (this.props.language === LANGUAGES.VI) {
+          toast.success("Xóa thành công");
+        } else {
+          toast.success("Delete successful");
+        }
       } else {
-        toast.success("Delete successful");
+        if (this.props.language === LANGUAGES.VI) {
+          toast.error("Không thể xóa vì đã có bệnh nhân đặt lịch");
+        } else {
+          toast.error("Can't delete because a patient already booked");
+        }
+        this.toggle();
       }
     } else {
       if (this.props.language === LANGUAGES.VI) {
@@ -42,7 +54,6 @@ class ConfirmDeleteSchedule extends Component {
       } else {
         toast.error("Delete failed");
       }
-      return;
     }
     this.toggle();
   };

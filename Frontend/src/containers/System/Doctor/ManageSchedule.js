@@ -99,8 +99,8 @@ class ManageSchedule extends Component {
       let selectedTime = rangeTime.filter((item) => item.isSelected === true);
       let res = await getScheduleDoctorByDate(userInfo.id, formatedDate);
       if (
-        selectedTime.length > res.data.length &&
-        !this.equal(selectedTime, res.data)
+        selectedTime.length >= res.data.length ||
+        this.equal(selectedTime, res.data)
       ) {
         if (!this.equal(selectedTime, res.data)) {
           if (selectedTime && selectedTime.length > 0) {
@@ -242,7 +242,21 @@ class ManageSchedule extends Component {
                 disabled
               />
             </div>
-            <div className="col-6 form-group">
+            <div className="col-3 form-group">
+              <label>
+                <FormattedMessage id="manage-schedule.choose-date" />
+              </label>
+              <div className="date-picker">
+                <DatePicker
+                  onChange={this.handleOnChangeDatePicker}
+                  className="form-control choose-date"
+                  value={this.state.currentDate}
+                  minDate={yesterday}
+                />
+                <i className="fas fa-calendar-alt calendar"></i>
+              </div>
+            </div>
+            <div className="col-3 form-group">
               <label>
                 <FormattedMessage id="manage-schedule.choose-date" />
               </label>

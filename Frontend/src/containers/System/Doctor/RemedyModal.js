@@ -76,6 +76,7 @@ class RemedyModal extends Component {
                 type="email"
                 value={this.state.email}
                 onChange={(event) => this.handleOnchangEmail(event)}
+                disabled
               />
             </div>
 
