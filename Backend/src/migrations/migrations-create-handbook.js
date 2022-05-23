@@ -1,7 +1,7 @@
 "use strict";
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable("handbooks", {
+        await queryInterface.createTable("HandBooks", {
             // name: DataTypes.STRING,
             // description: DataTypes.TEXT,
             // image: DataTypes.STRING,
@@ -31,6 +31,6 @@ module.exports = {
         });
     },
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable("handbooks");
+        await queryInterface.dropTable("HandBooks");
     },
 };
