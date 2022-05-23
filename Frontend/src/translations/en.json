@@ -78,8 +78,8 @@
     "list-clinics": "Clinics, medical facillity",
     "new-clinic": "Add new clinic",
     "add": "Add",
-    "update": "Update",    
-    "edit-title" : "Edit clinic"
+    "update": "Update",
+    "edit-title": "Edit clinic"
   },
   "manage-specialty": {
     "title": "Specialized Management",
@@ -115,7 +115,7 @@
     "number-patient-examined": "Patient examined",
     "number-patient-cancel": "Patient canceled",
     "sum": "Total money",
-    "total-scheduled": "Tổng số lượt đặt khám"
+    "total-scheduled": "Total number of bookings"
   },
   "patient": {
     "detail-doctor": {

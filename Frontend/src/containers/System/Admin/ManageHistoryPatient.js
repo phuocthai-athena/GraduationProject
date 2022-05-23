@@ -3,8 +3,9 @@ import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import DatePicker from "../../../components/Input/DatePicker";
-import { getAllPatientForHistory } from "../../../services/userService";
+import { getAllPatientForDoctor } from "../../../services/userService";
 import { LANGUAGES } from "../../../utils";
+import * as actions from "../../../store/actions";
 import "./ManageHistoryPatient.scss";
 
 class ManageHistoryPatient extends Component {
@@ -13,18 +14,20 @@ class ManageHistoryPatient extends Component {
     this.state = {
       currentDate: "",
       dataPatient: [],
+      usersRedux: [],
     };
   }
 
   async componentDidMount() {
     this.getDataPatient();
+    this.props.fetchUserRedux();
   }
 
   getDataPatient = async () => {
     let { user } = this.props;
     let { currentDate } = this.state;
     let formatedDate = moment(currentDate).unix();
-    let res = await getAllPatientForHistory({
+    let res = await getAllPatientForDoctor({
       doctorId: user.id,
       date: formatedDate,
     });
@@ -37,6 +40,11 @@ class ManageHistoryPatient extends Component {
 
   async componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.language !== prevProps.language) {
+    }
+    if (prevProps.listUsers !== this.props.listUsers) {
+      this.setState({
+        usersRedux: this.props.listUsers,
+      });
     }
   }
 
@@ -96,12 +104,17 @@ class ManageHistoryPatient extends Component {
                       ? "Lịch khám"
                       : "Selected calendar"}
                   </th>
-                  <th>{language === LANGUAGES.VI ? "Họ tên" : "Full name"}</th>
+                  <th>{language === LANGUAGES.VI ? "Họ" : "Last name"}</th>
+                  <th>{language === LANGUAGES.VI ? "Tên" : "First name"}</th>
+                  <th>
+                    {language === LANGUAGES.VI ? "Ngày sinh" : "Date of birth"}
+                  </th>
                   <th>{language === LANGUAGES.VI ? "Địa chỉ" : "Address"}</th>
                   <th>{language === LANGUAGES.VI ? "Giới tính" : "Gender"}</th>
                   <th>
                     {language === LANGUAGES.VI ? "Lý do khám bệnh" : "Reason"}
                   </th>
+                  <th>{language === LANGUAGES.VI ? "Giá tiền" : "Price"}</th>
                   <th>{language === LANGUAGES.VI ? "Trạng thái" : "Status"}</th>
                 </tr>
                 {dataPatient && dataPatient.length > 0 ? (
@@ -118,17 +131,26 @@ class ManageHistoryPatient extends Component {
                       <tr key={index}>
                         <td>{index + 1}</td>
                         <td>{time}</td>
+                        <td>{item.patientData.lastName}</td>
                         <td>{item.patientData.firstName}</td>
+                        <td>
+                          {item.patientData.birthday === null
+                            ? ""
+                            : moment
+                                .unix(item.patientData.birthday)
+                                .format("DD/MM/YYYY")}
+                        </td>
                         <td>{item.patientData.address}</td>
                         <td>{gender}</td>
                         <td>{item.reason}</td>
+                        <td>{item.money}</td>
                         <td>{this.status(item.statusId)}</td>
                       </tr>
                     );
                   })
                 ) : (
                   <tr>
-                    <td colSpan={"7"} style={{ textAlign: "center" }}>
+                    <td colSpan={"15"} style={{ textAlign: "center" }}>
                       No data
                     </td>
                   </tr>
@@ -146,11 +168,12 @@ const mapStateToProps = (state) => {
   return {
     language: state.app.language,
     user: state.user.userInfo,
+    listUsers: state.admin.users,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return { fetchUserRedux: () => dispatch(actions.fetchAllUserStart()) };
 };
 
 export default connect(

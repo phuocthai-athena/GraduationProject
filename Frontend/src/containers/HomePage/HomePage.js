@@ -12,6 +12,8 @@ import "./HomePage.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Specialty from "./Section/Specialty";
+import MessengerCustomerChat from "react-messenger-customer-chat";
+require("dotenv").config();
 
 class HomePage extends Component {
   constructor(props) {
@@ -36,6 +38,11 @@ class HomePage extends Component {
         <OutstandingDoctor settings={settings} />
         <HandBook settings={settings} />
         <HomeFooter />
+        <MessengerCustomerChat
+          language="vi_VN"
+          pageId={process.env.REACT_APP_PAGE_ID}
+          appId={process.env.REACT_APP_FACEBOOK_APP_ID}
+        />
       </div>
     );
   }

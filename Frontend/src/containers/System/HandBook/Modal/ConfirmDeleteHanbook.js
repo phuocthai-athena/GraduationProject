@@ -2,16 +2,19 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import { Modal } from "reactstrap";
-import { deleteClinicById } from "../../../../services/userService";
+import {
+  deleteClinicById,
+  deleteHandBookById,
+} from "../../../../services/userService";
 import * as actions from "../../../../store/actions";
 import { LANGUAGES } from "../../../../utils";
-import "./ConfirmDeleteClinic.scss";
+import "./ConfirmDeleteHanbook.scss";
 
-class ConfirmDeleteClinic extends Component {
+class ConfirmDeleteHanbook extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      newClinics: [],
+      newHandBooks: [],
     };
   }
 
@@ -27,18 +30,17 @@ class ConfirmDeleteClinic extends Component {
   };
 
   handleConfirmDelete = async () => {
-    let clinics = this.props.clinics;
+    let handBooks = this.props.handbooks;
     try {
-      let res = await deleteClinicById(this.props.clinicDelete);
-
+      const res = await deleteHandBookById(this.props.handbookDelete);
       if (res && res.errCode === 0) {
-        let newClinics = clinics.filter(
-          (clinic) => clinic.id !== this.props.clinicDelete
+        const newHandBooks = handBooks.filter(
+          (handBook) => handBook.id !== this.props.handbookDelete
         );
-        this.setState({ newClinics: newClinics });
+
+        this.setState({ newHandBooks: newHandBooks });
+
         toast.success(res.message);
-      } else if (res && res.errCode === 1) {
-        toast.error(res.message);
       } else {
         toast.error(res.message);
       }
@@ -77,8 +79,8 @@ class ConfirmDeleteClinic extends Component {
           <div className="confirm-delete-body">
             <span className="confirm-delete-text">
               {language === LANGUAGES.VI
-                ? "Bạn có chắc bạn muốn xóa phòng khám này?"
-                : "Are you sure you want to delete this clinic?"}
+                ? "Bạn có chắc bạn muốn xóa cẩm nang này?"
+                : "Are you sure you want to delete this hanbook?"}
             </span>
           </div>
           <div className="confirm-delete-footer">
@@ -116,4 +118,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ConfirmDeleteClinic);
+)(ConfirmDeleteHanbook);

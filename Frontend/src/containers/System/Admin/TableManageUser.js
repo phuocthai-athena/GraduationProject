@@ -50,6 +50,7 @@ class TableManageUser extends Component {
 
   render() {
     let arrUsers = this.state.usersRedux;
+    console.log(arrUsers);
     let { language } = this.props;
     return (
       <React.Fragment>
