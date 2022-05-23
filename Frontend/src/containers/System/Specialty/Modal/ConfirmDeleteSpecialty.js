@@ -2,16 +2,19 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import { Modal } from "reactstrap";
-import { deleteClinicById } from "../../../../services/userService";
+import {
+  deleteClinicById,
+  deleteSpecialtyById,
+} from "../../../../services/userService";
 import * as actions from "../../../../store/actions";
 import { LANGUAGES } from "../../../../utils";
-import "./ConfirmDeleteClinic.scss";
+import "./ConfirmDeleteSpecialty.scss";
 
-class ConfirmDeleteClinic extends Component {
+class ConfirmDeleteSpecialty extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      newClinics: [],
+      newSpecialties: [],
     };
   }
 
@@ -27,15 +30,14 @@ class ConfirmDeleteClinic extends Component {
   };
 
   handleConfirmDelete = async () => {
-    let clinics = this.props.clinics;
+    let specialties = this.props.specialties;
     try {
-      let res = await deleteClinicById(this.props.clinicDelete);
-
+      const res = await deleteSpecialtyById(this.props.specialtyDelete);
       if (res && res.errCode === 0) {
-        let newClinics = clinics.filter(
-          (clinic) => clinic.id !== this.props.clinicDelete
+        const newSpecialties = specialties.filter(
+          (specialty) => specialty.id !== this.props.specialtyDelete
         );
-        this.setState({ newClinics: newClinics });
+        this.setState({ newSpecialties: newSpecialties });
         toast.success(res.message);
       } else if (res && res.errCode === 1) {
         toast.error(res.message);
@@ -116,4 +118,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ConfirmDeleteClinic);
+)(ConfirmDeleteSpecialty);

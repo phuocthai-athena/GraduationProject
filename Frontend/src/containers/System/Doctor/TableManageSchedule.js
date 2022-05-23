@@ -69,6 +69,9 @@ class TableManageSchedule extends Component {
   render() {
     let { timeSelected } = this.state;
     let { language } = this.props;
+    timeSelected = timeSelected.sort((a, b) =>
+      a.timeType > b.timeType ? 1 : b.timeType > a.timeType ? -1 : 0
+    );
     return (
       <React.Fragment>
         <table id="TableManagerSchedule">
