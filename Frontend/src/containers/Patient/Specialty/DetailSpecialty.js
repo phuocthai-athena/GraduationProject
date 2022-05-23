@@ -7,9 +7,10 @@ import {
 } from "../../../services/userService";
 import { LANGUAGES } from "../../../utils";
 import HomeHeader from "../../HomePage/HomeHeader";
+import HomeFooter from "../../HomePage/HomeFooter";
 import DoctorExtraInfor from "../Doctor/DoctorExtraInfor";
 import DoctorSchedule from "../Doctor/DoctorSchedule";
-import ProfileDoctor from "../Doctor/ProfileDoctor";
+import ProfileDoctor1 from "../Doctor/ProfileDoctor1";
 import "./DetailSpecialty.scss";
 
 class DetailSpecialty extends Component {
@@ -33,6 +34,7 @@ class DetailSpecialty extends Component {
         id: id,
         location: "ALL",
       });
+      console.log(res);
 
       let resProvince = await getAllCodeService("PROVINCE");
       if (
@@ -44,7 +46,7 @@ class DetailSpecialty extends Component {
         let data = res.data;
         let arrDoctorId = [];
         if (data && !_.isEmpty(res.data)) {
-          let arr = data.doctorSpecialty;
+          let arr = res.doctorSpecialty;
           if (arr && arr.length > 0) {
             arr.map((item) => {
               arrDoctorId.push(item.doctorId);
@@ -94,14 +96,15 @@ class DetailSpecialty extends Component {
         let data = res.data;
         let arrDoctorId = [];
         if (data && !_.isEmpty(res.data)) {
-          let arr = data.doctorSpecialty;
+          let arr = res.doctorSpecialty;
           if (arr && arr.length > 0) {
             arr.map((item) => {
               arrDoctorId.push(item.doctorId);
             });
           }
         }
-
+        console.log(res.data);
+        console.log(arrDoctorId);
         this.setState({
           dataDetailSpecialty: res.data,
           arrDoctorId: arrDoctorId,
@@ -132,10 +135,7 @@ class DetailSpecialty extends Component {
                 listProvince.length > 0 &&
                 listProvince.map((item, index) => {
                   return (
-                    <option
-                      key={index}
-                      value={item.keyMap}
-                    >
+                    <option key={index} value={item.keyMap}>
                       {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
                     </option>
                   );
@@ -149,7 +149,7 @@ class DetailSpecialty extends Component {
                 <div className="each-doctor " key={index}>
                   <div className="dt-content-left">
                     <div className="profile-doctor">
-                      <ProfileDoctor
+                      <ProfileDoctor1
                         doctorId={item}
                         isShowDescriptionDoctor={true}
                         isShowLinkDetail={true}
@@ -169,6 +169,7 @@ class DetailSpecialty extends Component {
               );
             })}
         </div>
+        <HomeFooter />
       </div>
     );
   }
