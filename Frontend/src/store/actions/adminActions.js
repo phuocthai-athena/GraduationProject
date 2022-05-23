@@ -246,12 +246,10 @@ export const saveDetailDoctor = (data) => {
       let res = await saveDetailDoctorService(data);
       console.log(res);
       if (res && res.errCode === 0) {
-        toast.success("Save infor detail doctor succeed!");
         dispatch({
           type: actionTypes.SAVE_DETAIL_DOCTOR_SUCCESS,
         });
       } else {
-        toast.error("Save infor detail doctor error!");
         dispatch({
           type: actionTypes.SAVE_DETAIL_DOCTOR_FAILED,
         });

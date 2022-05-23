@@ -3,6 +3,7 @@ import { FormattedMessage } from "react-intl";
 import "react-markdown-editor-lite/lib/index.css";
 import { connect } from "react-redux";
 import Select from "react-select";
+import { toast } from "react-toastify";
 import { CKEditorComponent } from "../../../components/CkEditor";
 import { getDetailInforDoctor } from "../../../services/userService";
 import * as actions from "../../../store/actions";
@@ -165,22 +166,52 @@ class ManageDoctor extends Component {
 
   handleSaveContentMarkdown = () => {
     let { hasOldData } = this.state;
-    this.props.saveDetailDoctor({
-      contentHTML: this.state.contentHTML,
-      description: this.state.description,
-      doctorId: this.state.selectedOption.value,
-      action: hasOldData === true ? CRUD_ACTIONS.EDIT : CRUD_ACTIONS.CREATE,
+    if (
+      this.props.saveDetailDoctor({
+        contentHTML: this.state.contentHTML,
+        description: this.state.description,
+        doctorId: this.state.selectedOption.value,
+        action: hasOldData === true ? CRUD_ACTIONS.EDIT : CRUD_ACTIONS.CREATE,
 
-      selectedPrice: this.state.selectedPrice.value,
-      selectedPayment: this.state.selectedPayment.value,
-      selectedProvince: this.state.selectedProvince.value,
-      note: this.state.note,
-      clinicId:
-        this.state.selectedClinic && this.state.selectedClinic.value
-          ? this.state.selectedClinic.value
-          : "",
-      specialtyId: this.state.selectedSpecialty.value,
-    });
+        selectedPrice: this.state.selectedPrice.value,
+        selectedPayment: this.state.selectedPayment.value,
+        selectedProvince: this.state.selectedProvince.value,
+        note: this.state.note,
+        clinicId:
+          this.state.selectedClinic && this.state.selectedClinic.value
+            ? this.state.selectedClinic.value
+            : "",
+        specialtyId: this.state.selectedSpecialty.value,
+      })
+    ) {
+      this.props.saveDetailDoctor({
+        contentHTML: this.state.contentHTML,
+        description: this.state.description,
+        doctorId: this.state.selectedOption.value,
+        action: hasOldData === true ? CRUD_ACTIONS.EDIT : CRUD_ACTIONS.CREATE,
+
+        selectedPrice: this.state.selectedPrice.value,
+        selectedPayment: this.state.selectedPayment.value,
+        selectedProvince: this.state.selectedProvince.value,
+        note: this.state.note,
+        clinicId:
+          this.state.selectedClinic && this.state.selectedClinic.value
+            ? this.state.selectedClinic.value
+            : "",
+        specialtyId: this.state.selectedSpecialty.value,
+      });
+      if (this.props.language === LANGUAGES.VI) {
+        toast.success("Thêm mới thông tin bác sĩ thành công");
+      } else {
+        toast.success("New information about successful doctors");
+      }
+    } else {
+      if (this.props.language === LANGUAGES.VI) {
+        toast.success("Thêm mới thông tin bác sĩ thất bại");
+      } else {
+        toast.success("New information about doctors failing");
+      }
+    }
   };
 
   handleChangeSelect = async (selectedOption) => {
