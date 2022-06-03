@@ -1,11 +1,15 @@
 import _ from "lodash";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getAllDetailClinicById } from "../../../services/userService";
+import {
+  getAllCodeService,
+  getAllDetailClinicById,
+} from "../../../services/userService";
+import { LANGUAGES } from "../../../utils";
 import HomeHeader from "../../HomePage/HomeHeader";
 import DoctorExtraInfor from "../Doctor/DoctorExtraInfor";
 import DoctorSchedule from "../Doctor/DoctorSchedule";
-import ProfileDoctor from "../Doctor/ProfileDoctor";
+import ProfileDoctor1 from "../Doctor/ProfileDoctor1";
 import "./DetailClinic.scss";
 
 class DetailClinic extends Component {
@@ -14,6 +18,7 @@ class DetailClinic extends Component {
     this.state = {
       arrDoctorId: [],
       dataDetailClinic: {},
+      listProvince: [],
     };
   }
 
@@ -27,6 +32,57 @@ class DetailClinic extends Component {
 
       let res = await getAllDetailClinicById({
         id: id,
+      });
+
+      let resProvince = await getAllCodeService("PROVINCE");
+      if (
+        res &&
+        res.errCode === 0 &&
+        resProvince &&
+        resProvince.errCode === 0
+      ) {
+        let data = res.data;
+        let arrDoctorId = [];
+        if (data && !_.isEmpty(res.data)) {
+          let arr = data.doctorClinic;
+          if (arr && arr.length > 0) {
+            arr.map((item) => {
+              arrDoctorId.push(item.doctorId);
+            });
+          }
+        }
+        let dataProvince = resProvince.data;
+        if (dataProvince && dataProvince.length > 0) {
+          dataProvince.unshift({
+            createdAt: null,
+            keyMap: "ALL",
+            type: "PROVINCE",
+            valueEn: "ALL",
+            valueVi: "Toàn quốc",
+          });
+        }
+
+        this.setState({
+          dataDetailClinic: res.data,
+          arrDoctorId: arrDoctorId,
+          listProvince: dataProvince ? dataProvince : [],
+        });
+      }
+    }
+  }
+
+  handleOnChangeSelect = async (event) => {
+    if (
+      this.props.match &&
+      this.props.match.params &&
+      this.props.match.params.id
+    ) {
+      let id = this.props.match.params.id;
+      let location = event.target.value;
+
+      let res = await getAllDetailClinicById({
+        id: id,
+        location: location,
       });
 
       if (res && res.errCode === 0) {
@@ -47,7 +103,7 @@ class DetailClinic extends Component {
         });
       }
     }
-  }
+  };
 
   async componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.language !== prevProps.language) {
@@ -55,7 +111,8 @@ class DetailClinic extends Component {
   }
 
   render() {
-    let { arrDoctorId, dataDetailClinic } = this.state;
+    let { arrDoctorId, dataDetailClinic, listProvince } = this.state;
+    let { language } = this.props;
     return (
       <div className="detail-specialty-container">
         <HomeHeader />
@@ -72,7 +129,19 @@ class DetailClinic extends Component {
               </>
             )}
           </div>
-
+          <div className="search-sp-doctor">
+            <select onChange={(event) => this.handleOnChangeSelect(event)}>
+              {listProvince &&
+                listProvince.length > 0 &&
+                listProvince.map((item, index) => {
+                  return (
+                    <option key={index} value={item.keyMap}>
+                      {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
+                    </option>
+                  );
+                })}
+            </select>
+          </div>
           {arrDoctorId &&
             arrDoctorId.length > 0 &&
             arrDoctorId.map((item, index) => {
@@ -80,7 +149,7 @@ class DetailClinic extends Component {
                 <div className="each-doctor " key={index}>
                   <div className="dt-content-left">
                     <div className="profile-doctor">
-                      <ProfileDoctor
+                      <ProfileDoctor1
                         doctorId={item}
                         isShowDescriptionDoctor={true}
                         isShowLinkDetail={true}

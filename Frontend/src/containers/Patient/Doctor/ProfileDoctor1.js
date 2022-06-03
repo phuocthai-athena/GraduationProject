@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { getProfileDoctorById } from "../../../services/userService";
 import { LANGUAGES } from "../../../utils";
-import "./ProfileDoctor.scss";
+import "./ProfileDoctor1.scss";
 import localization from "moment/locale/vi";
 
 class ProfileDoctor extends Component {
@@ -22,7 +22,6 @@ class ProfileDoctor extends Component {
   async componentDidMount() {
     let data = await this.getInfoDoctor(this.props.doctorId);
     this.setState({ dataProfile: data });
-    this.getPrice();
   }
 
   getInfoDoctor = async (id) => {
@@ -68,18 +67,6 @@ class ProfileDoctor extends Component {
       );
     }
     return <></>;
-  };
-
-  getPrice = () => {
-    let { dataProfile } = this.state;
-
-    let resultNew =
-      this.props.language === LANGUAGES.VI
-        ? dataProfile.Doctor_Infor.priceTypeData.valueVi
-        : dataProfile.Doctor_Infor.priceTypeData.valueEn;
-
-    this.setState({ result: resultNew });
-    this.props.priceParent(this.state.result);
   };
 
   render() {

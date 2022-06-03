@@ -9,7 +9,7 @@ import { LANGUAGES } from "../../../utils";
 import HomeHeader from "../../HomePage/HomeHeader";
 import DoctorExtraInfor from "../Doctor/DoctorExtraInfor";
 import DoctorSchedule from "../Doctor/DoctorSchedule";
-import ProfileDoctor from "../Doctor/ProfileDoctor";
+import ProfileDoctor1 from "../Doctor/ProfileDoctor1";
 import "./DetailSpecialty.scss";
 
 class DetailSpecialty extends Component {
@@ -132,10 +132,7 @@ class DetailSpecialty extends Component {
                 listProvince.length > 0 &&
                 listProvince.map((item, index) => {
                   return (
-                    <option
-                      key={index}
-                      value={item.keyMap}
-                    >
+                    <option key={index} value={item.keyMap}>
                       {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
                     </option>
                   );
@@ -149,7 +146,7 @@ class DetailSpecialty extends Component {
                 <div className="each-doctor " key={index}>
                   <div className="dt-content-left">
                     <div className="profile-doctor">
-                      <ProfileDoctor
+                      <ProfileDoctor1
                         doctorId={item}
                         isShowDescriptionDoctor={true}
                         isShowLinkDetail={true}
