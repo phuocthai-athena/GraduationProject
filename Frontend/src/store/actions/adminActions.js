@@ -203,6 +203,7 @@ export const fetchTopDoctor = () => {
           type: actionTypes.FETCH_TOP_DOCTORS_SUCCESS,
           dataDoctors: res.data,
         });
+      console.log(res);
       } else {
         dispatch({
           type: actionTypes.FETCH_TOP_DOCTORS_FAILED,

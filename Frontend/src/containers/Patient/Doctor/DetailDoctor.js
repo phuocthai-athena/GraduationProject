@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getDetailInforDoctor } from "../../../services/userService";
 import { LANGUAGES } from "../../../utils";
+import HomeFooter from "../../HomePage/HomeFooter";
 import HomeHeader from "../../HomePage/HomeHeader";
 import Comment from "../SocialPlugin/Comment";
 import LikeAndShare from "../SocialPlugin/LikeAndShare";
@@ -54,8 +55,8 @@ class DetailDoctor extends Component {
       process.env.REACT_APP_IS_LOCALHOST === 1 ? "" : window.location.href;
     return (
       <>
-        <HomeHeader isShowBanner={false} />
         <div className="doctor-detail-container">
+        <HomeHeader isShowBanner={false} />
           <div className="intro-doctor">
             <div
               className="content-left"
@@ -103,6 +104,7 @@ class DetailDoctor extends Component {
           <div className="comment-doctor">
             <Comment dataHref={currentURL} width={"100%"} />
           </div>
+        <HomeFooter />
         </div>
       </>
     );

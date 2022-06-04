@@ -7,6 +7,7 @@ import {
 } from "../../../services/userService";
 import { LANGUAGES } from "../../../utils";
 import HomeHeader from "../../HomePage/HomeHeader";
+import HomeFooter from "../../HomePage/HomeFooter";
 import DoctorExtraInfor from "../Doctor/DoctorExtraInfor";
 import DoctorSchedule from "../Doctor/DoctorSchedule";
 import ProfileDoctor1 from "../Doctor/ProfileDoctor1";
@@ -89,7 +90,7 @@ class DetailClinic extends Component {
         let data = res.data;
         let arrDoctorId = [];
         if (data && !_.isEmpty(res.data)) {
-          let arr = data.doctorClinic;
+          let arr = res.doctorClinic;
           if (arr && arr.length > 0) {
             arr.map((item) => {
               arrDoctorId.push(item.doctorId);
@@ -169,6 +170,7 @@ class DetailClinic extends Component {
               );
             })}
         </div>
+        <HomeFooter />
       </div>
     );
   }
